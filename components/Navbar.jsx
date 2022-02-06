@@ -1,7 +1,10 @@
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
 
 const NavBar = () => {
+    const { data: session } = useSession();
+
     return (
         <>
             <Navbar bg="light" variant="light">
@@ -16,10 +19,24 @@ const NavBar = () => {
                         <Link href="#home" passHref>
                             <Nav.Link>Dashboard</Nav.Link>
                         </Link>
-                        <Button className="justify-content-right" variant="outline-success">
+                    </Nav>
+                    {session ? (
+                        <Button
+                            className="justify-content-right"
+                            variant="outline-success"
+                            onClick={() => signOut()}
+                        >
+                            Sign Out
+                        </Button>
+                    ) : (
+                        <Button
+                            className="justify-content-right"
+                            variant="outline-primary"
+                            onClick={() => signIn()}
+                        >
                             Sign In
                         </Button>
-                    </Nav>
+                    )}
                 </Container>
             </Navbar>
         </>
