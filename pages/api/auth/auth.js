@@ -23,7 +23,11 @@ export default async function handler(req, res) {
                               },
                           })
                         : finding;
-                res.status(200).json(result);
+                console.log('r', result);
+                res.status(200).json({
+                    message: 'This data is retrieved from db',
+                    data: result,
+                });
             }
             break;
         default:

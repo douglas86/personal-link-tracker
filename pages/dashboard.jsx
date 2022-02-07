@@ -15,16 +15,20 @@ const Dashboard = ({ user }) => {
                 return <Subscriber />;
         }
     };
+
     return (
         <>
-            {user && session ? Role(user.role) : <h1>You are not logged in</h1>}
+            {user && session ? (
+                Role(JSON.parse(user).role)
+            ) : (
+                <h1>You are not logged in</h1>
+            )}
         </>
     );
 };
 
 export const getServerSideProps = async (ctx) => {
     const session = await getSession(ctx);
-
     const user = session
         ? await prisma.user.findUnique({
               where: {
@@ -32,12 +36,7 @@ export const getServerSideProps = async (ctx) => {
               },
           })
         : null;
-
-    return {
-        props: {
-            user: JSON.stringify(user),
-        },
-    };
+    return { props: { user: JSON.stringify(user) } };
 };
 
 export default Dashboard;

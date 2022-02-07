@@ -1,11 +1,12 @@
-import Navbar from "./Navbar.jsx";
+import Navbar from './Navbar.jsx';
 
 const Layout = ({ children }) => {
-	return (
-		<>
-			<Navbar />
-		</>
-	);
+    return (
+        <>
+            <Navbar />
+            <main>{children}</main>
+        </>
+    );
 };
 
 export default Layout;
