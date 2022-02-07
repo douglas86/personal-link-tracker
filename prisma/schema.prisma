@@ -19,3 +19,19 @@ model User {
 	createdAt DateTime @default(now())
 	updatedAt DateTime @updatedAt
 }
+
+model Category {
+	id Int @id @default(autoincrement())
+	name String
+	slug String @unique
+	image String
+	content Content[] @relation(references: [id])
+	postedBy Int
+	createdAt DateTime @default(now())
+}
+
+model Content {
+	id Int @id @default(autoincrement()) @unique
+	type Json
+	category Category[] @relation(references: [id])
+}
