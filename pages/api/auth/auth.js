@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth';
+import { getSession } from 'next-auth/react';
 import prisma from '../../../lib/prisma';
 
 export default async function handler(req, res) {
@@ -25,7 +25,6 @@ export default async function handler(req, res) {
                         : finding;
                 res.status(200).json(result);
             }
-
             break;
         default:
             res.send('Nothing send from this method');

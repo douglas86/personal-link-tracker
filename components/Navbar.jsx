@@ -1,11 +1,13 @@
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { Get } from './api';
 
 const NavBar = () => {
     const { data: session } = useSession();
 
-    
+    // This will call the api for creating or retieving logged in user
+    Get('/api/auth/auth');
 
     return (
         <>
