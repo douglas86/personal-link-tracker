@@ -1,24 +1,50 @@
+import { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
+
 import { Get } from './api';
-import { useRouter } from 'next/router';
+import Home from '../public/Images/home.jpeg';
 
 const NavBar = () => {
+    // this shows and hides popup for mouse hover on home image
+    const [isShownHome, setIsShownHome] = useState(false);
+
     const { data: session } = useSession();
     const router = useRouter();
 
     // This will call the api for creating or retieving logged in user
     Get('/api/auth/auth');
 
+    // as soon as current page url changed it sets isShown to false
+    useEffect(() => {
+        setIsShownHome(false);
+    }, [router.pathname]);
+
     return (
         <>
             <Navbar bg="light" variant="light">
                 <Container>
                     {router.pathname !== '/' ? (
-                        <Link href="/" passHref>
-                            <Navbar.Brand>Home</Navbar.Brand>
-                        </Link>
+                        <>
+                            <Link href="/" passHref>
+                                <a
+                                    onMouseEnter={() => setIsShownHome(true)}
+                                    onMouseLeave={() => setIsShownHome(false)}
+                                >
+                                    <Image
+                                        src={Home}
+                                        alt="home page"
+                                        width={30}
+                                        height={30}
+                                    />
+                                </a>
+                            </Link>
+                            {isShownHome && <div>Home Page</div>}
+                        </>
                     ) : null}
                     <Nav className="me-auto">
                         {session !== undefined &&
