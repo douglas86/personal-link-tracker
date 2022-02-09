@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { AiFillDashboard } from 'react-icons/ai';
 
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -7,11 +8,14 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 
 import { Get } from './api';
+
+// Images
 import Home from '../public/Images/home.jpeg';
 
 const NavBar = () => {
     // this shows and hides popup for mouse hover on home image
     const [isShownHome, setIsShownHome] = useState(false);
+    const [isShownDashboard, setIsShownDashboard] = useState(false);
 
     const { data: session } = useSession();
     const router = useRouter();
@@ -22,6 +26,7 @@ const NavBar = () => {
     // as soon as current page url changed it sets isShown to false
     useEffect(() => {
         setIsShownHome(false);
+        setIsShownDashboard(false);
     }, [router.pathname]);
 
     return (
@@ -43,16 +48,31 @@ const NavBar = () => {
                                     />
                                 </a>
                             </Link>
-                            {isShownHome && <div>Home Page</div>}
+
+                            {isShownHome && <h4>Home Page</h4>}
                         </>
                     ) : null}
                     <Nav className="me-auto">
                         {session !== undefined &&
                         session !== null &&
                         router.pathname !== '/dashboard' ? (
-                            <Link href="/dashboard" passHref>
-                                <Nav.Link>Dashboard</Nav.Link>
-                            </Link>
+                            <>
+                                <Link href="/dashboard" passHref>
+                                    <a
+                                        onMouseEnter={() =>
+                                            setIsShownDashboard(true)
+                                        }
+                                        onMouseLeave={() =>
+                                            setIsShownDashboard(false)
+                                        }
+                                    >
+                                        <h4>
+                                            <AiFillDashboard />
+                                        </h4>
+                                    </a>
+                                </Link>
+                                {isShownDashboard && <h4>Dashboard</h4>}
+                            </>
                         ) : null}
                     </Nav>
                     {session ? (
