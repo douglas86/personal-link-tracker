@@ -4,7 +4,11 @@ import { ContextAdmin } from './Context';
 
 const CreateCategory = () => {
     const comp = useContext(ContextAdmin);
-    const [inputs, setInputs] = useState();
+    const [inputs, setInputs] = useState({
+        name: '',
+        desc: '',
+        
+    });
 
     return (
         <div>
