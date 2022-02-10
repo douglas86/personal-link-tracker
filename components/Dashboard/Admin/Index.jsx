@@ -1,17 +1,17 @@
 import { useContext } from 'react';
 import { ContextAdmin } from './Context';
 
-const CreateCategory = () => {
+const Index = () => {
     const comp = useContext(ContextAdmin);
-
     return (
         <div>
-            <h3>This is the CreateCategory page</h3>
-            <button onClick={() => comp.setIsComponent('Admin')}>
+            <h1>This is the admin page</h1>
+            <h4>This is the index page</h4>
+            <button onClick={() => comp.setIsComponent('CreateCategory')}>
                 Click me
             </button>
         </div>
     );
 };
 
-export default CreateCategory;
+export default Index;

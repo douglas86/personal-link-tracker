@@ -3,6 +3,7 @@ import prisma from '../lib/prisma';
 
 import Admin from '../components/Dashboard/Admin';
 import Subscriber from '../components/Dashboard/Subscriber';
+
 import { ProviderAdmin } from '../components/Dashboard/Admin/Context';
 
 const Dashboard = ({ user }) => {
