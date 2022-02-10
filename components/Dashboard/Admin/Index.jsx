@@ -1,15 +1,21 @@
 import { useContext } from 'react';
+import { Button } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
 
 const Index = () => {
     const comp = useContext(ContextAdmin);
+
+    console.log('comp', comp);
+
     return (
         <div>
-            <h1>This is the admin page</h1>
-            <h4>This is the index page</h4>
-            <button onClick={() => comp.setIsComponent('CreateCategory')}>
-                Click me
-            </button>
+            <h1>This is the Admin Page</h1>
+            <Button
+                variant="outline-primary"
+                onClick={() => comp.setIsComponent('CreateCategory')}
+            >
+                Create Category
+            </Button>
         </div>
     );
 };

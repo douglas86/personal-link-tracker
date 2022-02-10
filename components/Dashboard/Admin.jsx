@@ -8,8 +8,6 @@ const Admin = () => {
     const comp = useContext(ContextAdmin);
     const router = useRouter();
 
-    console.log('comp', comp);
-
     const isComponent = () => {
         switch (comp.isComponent) {
             case 'CreateCategory':
@@ -18,10 +16,6 @@ const Admin = () => {
                 return <Index />;
         }
     };
-
-    // useEffect(() => {
-    //     router.reload(window.location.pathname);
-    // }, [router]);
 
     return <>{isComponent()}</>;
 };

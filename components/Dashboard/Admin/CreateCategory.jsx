@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { Button, Container } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
 
 const CreateCategory = () => {
@@ -6,10 +7,16 @@ const CreateCategory = () => {
 
     return (
         <div>
-            <h3>This is the CreateCategory page</h3>
-            <button onClick={() => comp.setIsComponent('Admin')}>
-                Click me
-            </button>
+            <Container>
+                <Button
+                    variant="outline-info"
+                    size="lg"
+                    onClick={() => comp.setIsComponent('Admin')}
+                >
+                    Admin Dashboard
+                </Button>
+                <h3>Create a new Category here!!</h3>
+            </Container>
         </div>
     );
 };
