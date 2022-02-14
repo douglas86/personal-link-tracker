@@ -14,6 +14,7 @@ export default NextAuth({
         EmailProvider({
             server: process.env.NEXTAUTH_EMAIL_SERVER,
             from: process.env.NEXTAUTH_EMAIL_FROM,
+            maxAge: 0 * 0 * 0 * 60,
         }),
         GoogleProvider({
             clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
