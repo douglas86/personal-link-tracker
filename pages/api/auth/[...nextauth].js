@@ -5,13 +5,13 @@ import GoogleProvider from 'next-auth/providers/google';
 
 export default NextAuth({
     providers: [
-        GithubProvider({
-            clientId: process.env.NEXTAUTH_GITHUB_ID,
-            clientSecret: process.env.NEXTAUTH_GITHUB_SECRET,
-        }),
         GoogleProvider({
             clientId: process.env.NEXTAUTH_GOOGLE_CLIENT_ID,
             clientSecret: process.env.NEXTAUTH_GOOGLE_CLIENT_SECRET,
+        }),
+        GithubProvider({
+            clientId: process.env.NEXTAUTH_GITHUB_ID,
+            clientSecret: process.env.NEXTAUTH_GITHUB_SECRET,
         }),
     ],
     callbacks: {
