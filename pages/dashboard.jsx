@@ -18,11 +18,12 @@ const Dashboard = ({ user }) => {
 
     return (
         <>
-            {user && session ? (
+            <h1>This is the Dashboard</h1>
+            {/* {user && session ? (
                 Role(JSON.parse(user).role)
             ) : (
                 <h1>You are not logged in</h1>
-            )}
+            )} */}
         </>
     );
 };

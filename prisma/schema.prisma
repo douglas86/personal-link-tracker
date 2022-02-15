@@ -1,13 +1,10 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider          = "postgresql"
+  url               = env("DATABASE_URL")
   shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
 }
 
@@ -17,17 +14,16 @@ model Account {
   type               String
   provider           String
   providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
+  refresh_token      String?
+  access_token       String?
   expires_at         Int?
   token_type         String?
   scope              String?
-  id_token           String?  @db.Text
+  id_token           String?
   session_state      String?
   oauth_token_secret String?
   oauth_token        String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user               User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -41,14 +37,14 @@ model Session {
 }
 
 model User {
-	id String @id @default(cuid())
-	name String?
-	email String? @unique
-	emailVerified DateTime?
-	image String?
-	role String @default("subscriber")
-	accounts Account[]
-	sessions Session[]
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  role          String    @default("subscriber")
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model VerificationToken {
@@ -60,17 +56,17 @@ model VerificationToken {
 }
 
 model Category {
-	id Int @id @default(autoincrement())
-	name String
-	slug String @unique
-	image String
-	content Content[] @relation(references: [id])
-	postedBy Int
-	createdAt DateTime @default(now())
+  id        Int       @id @default(autoincrement())
+  name      String
+  slug      String    @unique
+  image     String
+  postedBy  Int
+  createdAt DateTime  @default(now())
+  content   Content[]
 }
 
 model Content {
-	id Int @id @default(autoincrement())
-	type Json
-	category Category[] @relation(references: [id])
+  id       Int        @id @default(autoincrement())
+  type     Json
+  category Category[]
 }
