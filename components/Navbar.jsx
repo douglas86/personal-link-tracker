@@ -79,7 +79,11 @@ const NavBar = () => {
                         <Button
                             className="justify-content-right"
                             variant="outline-success"
-                            onClick={() => signOut()}
+                            onClick={() =>
+                                signOut({
+                                    callbackUrl: `${window.location.origin}/dashboard`,
+                                })
+                            }
                         >
                             Sign Out
                         </Button>

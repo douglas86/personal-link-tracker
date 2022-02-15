@@ -25,16 +25,16 @@ export default NextAuth({
         }),
     ],
     debug: process.env.NODE_ENV === 'development',
-    // callbacks: {
-    //     async signIn({ user, account, profile, email, credentials }) {
-    //         const isAllowedToSignIn = false;
-    //         if (isAllowedToSignIn) {
-    //             return true;
-    //         } else {
-    //             return false;
-    //         }
-    //     },
-    // },
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            const isAllowedToSignIn = true;
+            if (isAllowedToSignIn) {
+                return true;
+            } else {
+                return false;
+            }
+        },
+    },
     adapter: PrismaAdapter(prisma),
     secret: process.env.SECRET,
 });
