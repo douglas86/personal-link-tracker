@@ -21,7 +21,7 @@ const NavBar = () => {
     const router = useRouter();
 
     // This will call the api for creating or retieving logged in user
-    Get('/api/auth/auth');
+    // Get('/api/auth/auth');
 
     // as soon as current page url changed it sets isShown to false
     useEffect(() => {
@@ -79,7 +79,11 @@ const NavBar = () => {
                         <Button
                             className="justify-content-right"
                             variant="outline-success"
-                            onClick={() => signOut()}
+                            onClick={() =>
+                                signOut({
+                                    callbackUrl: `${window.location.origin}/dashboard`,
+                                })
+                            }
                         >
                             Sign Out
                         </Button>
@@ -87,11 +91,7 @@ const NavBar = () => {
                         <Button
                             className="justify-content-right"
                             variant="outline-primary"
-                            onClick={() =>
-                                signIn('github', {
-                                    callbackUrl: '/dashboard',
-                                })
-                            }
+                            onClick={() => signIn()}
                         >
                             Sign In
                         </Button>
