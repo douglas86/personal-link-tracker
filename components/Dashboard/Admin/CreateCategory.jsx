@@ -6,7 +6,7 @@ const CreateCategory = () => {
     const comp = useContext(ContextAdmin);
     const [inputs, setInputs] = useState({
         name: '',
-        desciption: '',
+        description: '',
         image: '',
     });
 
@@ -60,7 +60,7 @@ const CreateCategory = () => {
                             onChange={(e) =>
                                 setInputs({
                                     ...inputs,
-                                    description: e.target.value,
+                                    name: e.target.value,
                                 })
                             }
                             placeholder="Create a title for your category"
