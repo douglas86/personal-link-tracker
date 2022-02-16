@@ -3,17 +3,12 @@ import { Alert, Button, Container, Form } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
 
 const CreateCategory = () => {
-    const comp = useContext(ContextAdmin);
+    const context = useContext(ContextAdmin);
     const [inputs, setInputs] = useState({
         name: '',
         description: '',
         image: '',
     });
-    const [showAlert, setShowAlert] = useState(false);
-    const [variant, setVariant] = useState();
-    const [message, setMessage] = useState();
-
-    console.log('message', message);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -34,26 +29,40 @@ const CreateCategory = () => {
         setInputs({ ...inputs, image: base64 });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        fetch('/api/AWS/s3', {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify(inputs),
-        })
-            .then(async (res) => {
-                let result = await res.json();
-                setMessage(result.message);
-                setShowAlert(true);
-                setVariant('success');
+        if (inputs.name && inputs.description && inputs.image) {
+            fetch('/api/AWS/s3', {
+                method: 'POST',
+                headers: { 'Content-type': 'application/json' },
+                body: JSON.stringify(inputs),
             })
-            .catch(async (err) => {
-                let error = await err.json();
-                setMessage(error.message);
-                setShowAlert(true);
-                setVariant('success');
-            });
+                .then(async (res) => {
+                    let result = await res.json();
+                    context.setMessage(result.message);
+                    context.setShowAlert(true);
+                    context.setVariant('success');
+                })
+                .catch(async (err) => {
+                    let error = await err.json();
+                    context.setMessage(error.error);
+                    context.setShowAlert(true);
+                    context.setVariant('danger');
+                });
+        } else {
+            context.setMessage('All fields are required');
+            context.setShowAlert(true);
+            context.setVariant('danger');
+        }
     };
+
+    useEffect(() => {
+        if (context.showAlert) {
+            setTimeout(() => {
+                context.setShowAlert(false);
+            }, 10000);
+        }
+    }, [context]);
 
     return (
         <div>
@@ -61,20 +70,18 @@ const CreateCategory = () => {
                 <Button
                     variant="outline-info"
                     size="lg"
-                    onClick={() => comp.setIsComponent('Admin')}
+                    onClick={() => context.setIsComponent('Admin')}
                 >
                     Admin Dashboard
                 </Button>
                 <h3>Create a new Category here!!</h3>
-                {showAlert ? (
+                {context.showAlert ? (
                     <Alert
-                        variant={variant}
-                        onClose={() => setShowAlert(false)}
+                        variant={context.variant}
+                        onClose={() => context.setShowAlert(false)}
                         dismissible
                     >
-                        <Alert.Heading>
-                            Oh snap! You got an error!
-                        </Alert.Heading>
+                        <Alert.Heading>{context.message}</Alert.Heading>
                     </Alert>
                 ) : null}
                 <Form>

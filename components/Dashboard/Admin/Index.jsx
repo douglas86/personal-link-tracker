@@ -5,8 +5,6 @@ import { ContextAdmin } from './Context';
 const Index = () => {
     const comp = useContext(ContextAdmin);
 
-    console.log('comp', comp);
-
     return (
         <div>
             <h1>This is the Admin Page</h1>

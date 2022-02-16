@@ -47,11 +47,15 @@ export default async function handler(req, res) {
             // Create category in db
             CreateCategory({ body }, location);
 
-            res.status(200).json({ message: 'Content has been saved to db' });
+            res.status(200).json({
+                message: 'Content has been saved to db',
+                error: '',
+            });
 
             break;
         default:
             res.status(400).json({
+                message: '',
                 error: 'There was an error saving content to db',
             });
     }
