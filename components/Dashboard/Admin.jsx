@@ -5,11 +5,12 @@ import CreateCategory from './Admin/CreateCategory';
 import Index from './Admin/Index';
 
 const Admin = () => {
-    const comp = useContext(ContextAdmin);
+    const context = useContext(ContextAdmin);
+    const { isRole } = context;
     const router = useRouter();
 
-    const isComponent = () => {
-        switch (comp.isComponent) {
+    const Role = () => {
+        switch (isRole) {
             case 'CreateCategory':
                 return <CreateCategory />;
             default:
@@ -17,7 +18,7 @@ const Admin = () => {
         }
     };
 
-    return <>{isComponent()}</>;
+    return <>{Role()}</>;
 };
 
 export default Admin;

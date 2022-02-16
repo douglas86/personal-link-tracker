@@ -25,38 +25,43 @@ export default async function handler(req, res) {
 
     switch (method) {
         case 'POST':
-            const base64Data = new Buffer.from(
-                body.image.replace(/^data:image\/\w+;base64,/, ''),
-                'base64'
-            );
-
-            const type = body.image.split(';')[0].split('/')[1];
-
-            const params = Params(body.name, type, base64Data);
-
-            let location = ''; // url of s3 bucket object stored
-            let key = ''; // name of s3 bucket object stored
             try {
-                const { Location, Key } = await s3.upload(params).promise();
-                location = Location;
-                key = Key;
+                const base64Data = new Buffer.from(
+                    body.image.replace(/^data:image\/\w+;base64,/, ''),
+                    'base64'
+                );
+
+                const type = body.image.split(';')[0].split('/')[1];
+
+                const params = Params(body.name, type, base64Data);
+
+                let location = ''; // url of s3 bucket object stored
+                let key = ''; // name of s3 bucket object stored
+                try {
+                    const { Location, Key } = await s3
+                        .upload(params)
+                        .promise()
+                        .then((res) => console.log('res', res))
+                        .catch((err) => console.log('err', err));
+                    location = Location;
+                    key = Key;
+                } catch (error) {
+                    console.log(error);
+                }
+
+                // Create category in db
+                CreateCategory({ body }, location);
+
+                res.status(200).json({
+                    success: 'Content has been saved to db',
+                });
             } catch (error) {
-                console.log(error);
+                console.log('this was hit');
+                res.send('Error');
             }
-
-            // Create category in db
-            CreateCategory({ body }, location);
-
-            res.status(200).json({
-                message: 'Content has been saved to db',
-                error: '',
-            });
 
             break;
         default:
-            res.status(400).json({
-                message: '',
-                error: 'There was an error saving content to db',
-            });
+            break;
     }
 }

@@ -6,65 +6,18 @@ import Helpers from './helpers/CreateCategoryHelper';
 const CreateCategory = () => {
     const context = useContext(ContextAdmin);
 
-    const convertToBase64 = (file) => {
-        return new Promise((resolve, reject) => {
-            const fileReader = new FileReader();
-            fileReader.readAsDataURL(file);
-            fileReader.onload = () => {
-                resolve(fileReader.result);
-            };
-            fileReader.onerror = (error) => {
-                reject(error);
-            };
-        });
-    };
+    const { isRole, setIsRole, showAlert, setShowAlert, state, setState } =
+        context;
 
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
-        const base64 = await convertToBase64(file);
-        context.setInputs({ ...context.inputs, image: base64 });
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (
-            context.inputs.name &&
-            context.inputs.description &&
-            context.inputs.image
-        ) {
-            fetch('/api/AWS/s3', {
-                method: 'POST',
-                headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(context.inputs),
-            })
-                .then(async (res) => {
-                    let result = await res.json();
-                    context.setMessage(result.message);
-                    context.setShowAlert(true);
-                    context.setVariant('success');
-                })
-                .catch(async (err) => {
-                    let error = await err.json();
-                    context.setMessage(error.error);
-                    context.setShowAlert(true);
-                    context.setVariant('danger');
-                });
-        } else {
-            context.setMessage('All fields are required');
-            context.setShowAlert(true);
-            context.setVariant('danger');
-        }
-    };
+    const { handleSubmit, handleFileUpload } = Helpers();
 
     useEffect(() => {
-        if (context.showAlert) {
+        if (showAlert) {
             setTimeout(() => {
-                context.setShowAlert(false);
+                setShowAlert(false);
             }, 10000);
         }
-    }, [context]);
-
-    // console.log(Helpers());
+    }, [showAlert, setShowAlert]);
 
     return (
         <div>
@@ -72,7 +25,7 @@ const CreateCategory = () => {
                 <Button
                     variant="outline-info"
                     size="lg"
-                    onClick={() => context.setIsComponent('Admin')}
+                    onClick={() => setIsRole('Admin')}
                 >
                     Admin Dashboard
                 </Button>
@@ -122,10 +75,14 @@ const CreateCategory = () => {
                         variant="outline-warning"
                         type="submit"
                         onClick={(e) => {
-                            handleSubmit(e);
+                            handleSubmit(e),
+                                setState({
+                                    ...state,
+                                    buttonText: 'Submitting',
+                                });
                         }}
                     >
-                        Submit
+                        {state.buttonText}
                     </Button>
                 </Form>
             </Container>

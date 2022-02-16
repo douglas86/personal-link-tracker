@@ -3,7 +3,7 @@ import { useState, createContext } from 'react';
 export const ContextAdmin = createContext();
 
 export const ProviderAdmin = ({ children }) => {
-    const [isComponent, setIsComponent] = useState('Admin');
+    const [isRole, setIsRole] = useState('Admin');
     const [showAlert, setShowAlert] = useState(false);
     const [message, setMessage] = useState();
     const [variant, setVariant] = useState();
@@ -12,11 +12,16 @@ export const ProviderAdmin = ({ children }) => {
         description: '',
         image: '',
     });
+    const [state, setState] = useState({
+        success: '',
+        error: '',
+        buttonText: 'Submit',
+    });
     return (
         <ContextAdmin.Provider
             value={{
-                isComponent,
-                setIsComponent,
+                isRole,
+                setIsRole,
                 showAlert,
                 setShowAlert,
                 message,
@@ -25,6 +30,8 @@ export const ProviderAdmin = ({ children }) => {
                 setVariant,
                 inputs,
                 setInputs,
+                state,
+                setState,
             }}
         >
             {children}
