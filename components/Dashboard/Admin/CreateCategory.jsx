@@ -1,14 +1,10 @@
 import { useState, useContext, useEffect } from 'react';
 import { Alert, Button, Container, Form } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
+import Helpers from './helpers/CreateCategoryHelper';
 
 const CreateCategory = () => {
     const context = useContext(ContextAdmin);
-    const [inputs, setInputs] = useState({
-        name: '',
-        description: '',
-        image: '',
-    });
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -26,16 +22,20 @@ const CreateCategory = () => {
     const handleFileUpload = async (e) => {
         const file = e.target.files[0];
         const base64 = await convertToBase64(file);
-        setInputs({ ...inputs, image: base64 });
+        context.setInputs({ ...context.inputs, image: base64 });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (inputs.name && inputs.description && inputs.image) {
+        if (
+            context.inputs.name &&
+            context.inputs.description &&
+            context.inputs.image
+        ) {
             fetch('/api/AWS/s3', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(inputs),
+                body: JSON.stringify(context.inputs),
             })
                 .then(async (res) => {
                     let result = await res.json();
@@ -64,6 +64,8 @@ const CreateCategory = () => {
         }
     }, [context]);
 
+    // console.log(Helpers());
+
     return (
         <div>
             <Container>
@@ -89,8 +91,8 @@ const CreateCategory = () => {
                         <Form.Control
                             type="text"
                             onChange={(e) =>
-                                setInputs({
-                                    ...inputs,
+                                context.setInputs({
+                                    ...context.inputs,
                                     name: e.target.value,
                                 })
                             }
@@ -102,8 +104,8 @@ const CreateCategory = () => {
                         <Form.Control
                             type="text"
                             onChange={(e) =>
-                                setInputs({
-                                    ...inputs,
+                                context.setInputs({
+                                    ...context.inputs,
                                     description: e.target.value,
                                 })
                             }

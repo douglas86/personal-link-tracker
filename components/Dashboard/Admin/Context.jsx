@@ -7,6 +7,11 @@ export const ProviderAdmin = ({ children }) => {
     const [showAlert, setShowAlert] = useState(false);
     const [message, setMessage] = useState();
     const [variant, setVariant] = useState();
+    const [inputs, setInputs] = useState({
+        name: '',
+        description: '',
+        image: '',
+    });
     return (
         <ContextAdmin.Provider
             value={{
@@ -18,6 +23,8 @@ export const ProviderAdmin = ({ children }) => {
                 setMessage,
                 variant,
                 setVariant,
+                inputs,
+                setInputs,
             }}
         >
             {children}
