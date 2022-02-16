@@ -1,5 +1,8 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     const { method, body } = req;
@@ -50,6 +53,14 @@ export default async function handler(req, res) {
             }
 
             console.log(location, key);
+
+            const createCategory = await prisma.category.create({
+                data: {
+                    name: body.name,
+                    description: body.description,
+                    image: location,
+                },
+            });
 
             return location;
 
