@@ -1,6 +1,7 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 import { PrismaClient } from '@prisma/client';
+import { CreateCategory, Params } from './helpers/s3helpers';
 
 const prisma = new PrismaClient();
 
@@ -31,19 +32,10 @@ export default async function handler(req, res) {
 
             const type = body.image.split(';')[0].split('/')[1];
 
-            const s3name = body.name;
+            const params = Params(body.name, type, base64Data);
 
-            const params = {
-                Bucket: 'hackr-douglas2',
-                Key: `${s3name}.${type}`, // type is not required
-                Body: base64Data,
-                ACL: 'public-read',
-                ContentEncoding: 'base64', // required
-                ContentType: `image/${type}`, // required. Notice the back ticks
-            };
-
-            let location = '';
-            let key = '';
+            let location = ''; // url of s3 bucket object stored
+            let key = ''; // name of s3 bucket object stored
             try {
                 const { Location, Key } = await s3.upload(params).promise();
                 location = Location;
@@ -52,20 +44,15 @@ export default async function handler(req, res) {
                 console.log(error);
             }
 
-            console.log(location, key);
+            // Create category in db
+            CreateCategory({ body }, location);
 
-            const createCategory = await prisma.category.create({
-                data: {
-                    name: body.name,
-                    description: body.description,
-                    image: location,
-                },
-            });
-
-            return location;
+            res.status(200).json({ message: 'Content has been saved to db' });
 
             break;
         default:
-            console.log('nothing was sent');
+            res.status(400).json({
+                error: 'There was an error saving content to db',
+            });
     }
 }

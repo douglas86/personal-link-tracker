@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Alert, Button, Container, Form } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
 
 const CreateCategory = () => {
@@ -9,6 +9,11 @@ const CreateCategory = () => {
         description: '',
         image: '',
     });
+    const [showAlert, setShowAlert] = useState(false);
+    const [variant, setVariant] = useState();
+    const [message, setMessage] = useState();
+
+    console.log('message', message);
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -36,11 +41,19 @@ const CreateCategory = () => {
             headers: { 'Content-type': 'application/json' },
             body: JSON.stringify(inputs),
         })
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err));
+            .then(async (res) => {
+                let result = await res.json();
+                setMessage(result.message);
+                setShowAlert(true);
+                setVariant('success');
+            })
+            .catch(async (err) => {
+                let error = await err.json();
+                setMessage(error.message);
+                setShowAlert(true);
+                setVariant('success');
+            });
     };
-
-    console.log('text', inputs);
 
     return (
         <div>
@@ -53,6 +66,17 @@ const CreateCategory = () => {
                     Admin Dashboard
                 </Button>
                 <h3>Create a new Category here!!</h3>
+                {showAlert ? (
+                    <Alert
+                        variant={variant}
+                        onClose={() => setShowAlert(false)}
+                        dismissible
+                    >
+                        <Alert.Heading>
+                            Oh snap! You got an error!
+                        </Alert.Heading>
+                    </Alert>
+                ) : null}
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
