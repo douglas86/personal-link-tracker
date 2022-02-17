@@ -33,7 +33,7 @@ const CreateCategory = () => {
         handleFileUpload(data.image);
     };
 
-    console.log('errors', errors);
+    console.log('e', errors);
     console.log('state', state);
 
     return (
@@ -61,32 +61,41 @@ const CreateCategory = () => {
                         <Form.Control
                             type="text"
                             {...register('name', {
-                                required: 'This is required',
+                                required: 'This field is required',
                             })}
                             placeholder="Create a title for your category"
                         />
+                        <p style={{ color: 'red', marginTop: '5px' }}>
+                            {errors.name?.message}
+                        </p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Control
                             type="text"
                             {...register('description', {
-                                required: 'This is required',
+                                required: 'This field is required',
                                 minLength: {
-                                    value: 2,
+                                    value: 20,
                                     message:
                                         'You have entered to few characters',
                                 },
                             })}
                             placeholder="Write descriptions here"
                         />
+                        <p style={{ color: 'red', marginTop: '5px' }}>
+                            {errors.description?.message}
+                        </p>
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="formBasicFile">
                         <Form.Control
                             type="file"
                             {...register('image', {
-                                required: 'this field is required',
+                                required: 'This field is required',
                             })}
                         />
+                        <p style={{ color: 'red', marginTop: '5px' }}>
+                            {errors.image?.message}
+                        </p>
                     </Form.Group>
                     <Button type="submit" variant="outline-warning">
                         Submit
@@ -96,79 +105,5 @@ const CreateCategory = () => {
         </div>
     );
 };
-
-{
-    /* <form
-    onSubmit={handleSubmit((data) => {
-        console.log('data', data);
-    })}
->
-    <input
-        {...register('firstName', {
-            required: 'This is required',
-        })}
-        placeholder="First Name"
-    />
-    <p>{errors.firstName?.message}</p>
-    <input
-        {...register('lastName', {
-            required: 'This is required',
-            minLength: { value: 4, message: 'Min length is 4' },
-        })}
-        placeholder="Last Name"
-    />
-    <p>{errors.lastName?.message}</p>
-    <input type="submit" onClick={() => reset()} />
-</form>; */
-}
-
-{
-    /* <Form>
-    <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Control
-            type="text"
-            onChange={(e) =>
-                setInputs({
-                    ...inputs,
-                    name: e.target.value,
-                })
-            }
-            value={inputs.name}
-            placeholder="Create a title for your category"
-        />
-    </Form.Group>
-
-    <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Control
-            type="text"
-            onChange={(e) =>
-                setInputs({
-                    ...inputs,
-                    description: e.target.value,
-                })
-            }
-            placeholder="Create a short description for your category"
-        />
-    </Form.Group>
-    <Form.Group className="mb-3" controlId="formBasicFile">
-        <Form.Control type="file" onChange={(e) => handleFileUpload(e)} />
-    </Form.Group>
-    <Button
-        variant="outline-warning"
-        type="submit"
-        onClick={(e) => {
-            handleSubmit(e);
-            setState({
-                ...state,
-                buttonText: 'Submitting',
-                showAlert: true,
-            }),
-                this.reset();
-        }}
-    >
-        {state.buttonText}
-    </Button>
-</Form>; */
-}
 
 export default CreateCategory;
