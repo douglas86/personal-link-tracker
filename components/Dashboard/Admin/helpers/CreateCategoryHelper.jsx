@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { ContextAdmin } from '../Context';
+import { useForm } from 'react-hook-form';
 
 const Handler = () => {
     const context = useContext(ContextAdmin);
@@ -13,6 +14,8 @@ const Handler = () => {
         setState,
     } = context;
 
+    const { reset } = useForm();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (inputs.name && inputs.description && inputs.image) {
@@ -21,20 +24,17 @@ const Handler = () => {
                 headers: { 'Content-type': 'application/json' },
                 body: JSON.stringify(inputs),
             }).then(async (res) => {
-                try {
-                    let result = await res.json();
-                    setState({ ...state, success: result.success });
-                    // setMessage(result.message);
-                    // setShowAlert(true);
-                    // setVariant('success');
-                } catch (error) {
-                    // let error = err.json();
-                    console.log('err', JSON.stringify(error));
-                    // setState({ ...state, error: err.error });
-                    // context.setMessage(error.error);
-                    // context.setShowAlert(true);
-                    // context.setVariant('danger');
-                }
+                let result = await res.json();
+                console.log('result', result);
+                setState({
+                    ...state,
+                    success: result.success,
+                    showAlert: true,
+                    alertColor: 'success',
+                });
+                // setMessage(result.message);
+                // setShowAlert(true);
+                // setVariant('success');
             });
         } else {
             setMessage('All fields are required');
@@ -43,7 +43,9 @@ const Handler = () => {
         }
     };
 
-    console.log('state', state);
+    const handleSubmission = (data) => {
+        console.log('data', data);
+    };
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -65,7 +67,7 @@ const Handler = () => {
     };
 
     return {
-        handleSubmit,
+        handleSubmission,
         handleFileUpload,
     };
 };

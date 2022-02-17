@@ -4,9 +4,9 @@ export const ContextAdmin = createContext();
 
 export const ProviderAdmin = ({ children }) => {
     const [isRole, setIsRole] = useState('Admin');
-    const [showAlert, setShowAlert] = useState(false);
-    const [message, setMessage] = useState();
-    const [variant, setVariant] = useState();
+    // const [showAlert, setShowAlert] = useState(false);
+    // const [message, setMessage] = useState();
+    // const [variant, setVariant] = useState();
     const [inputs, setInputs] = useState({
         name: '',
         description: '',
@@ -16,18 +16,14 @@ export const ProviderAdmin = ({ children }) => {
         success: '',
         error: '',
         buttonText: 'Submit',
+        showAlert: false,
+        alertColor: '',
     });
     return (
         <ContextAdmin.Provider
             value={{
                 isRole,
                 setIsRole,
-                showAlert,
-                setShowAlert,
-                message,
-                setMessage,
-                variant,
-                setVariant,
                 inputs,
                 setInputs,
                 state,

@@ -23,8 +23,13 @@ export default async function handler(req, res) {
                         CreateCategory({ body }, res.Location);
                     })
                     .catch((err) => console.log('error', err));
+                res.status(200).json({
+                    success: 'You have successfully saved to the db',
+                });
             } catch (error) {
-                console.log('Error', error);
+                res.status(400).json({
+                    error: 'There was an error saving your data',
+                });
             }
             break;
         default:
