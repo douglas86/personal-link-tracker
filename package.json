@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.51.0",
     "@next-auth/prisma-adapter": "^1.0.1",
     "@prisma/client": "^3.9.1",
     "aws-sdk": "^2.1074.0",
