@@ -18,6 +18,7 @@ export const ProviderAdmin = ({ children }) => {
         buttonText: 'Submit',
         showAlert: false,
         alertColor: '',
+        file: '',
     });
     return (
         <ContextAdmin.Provider

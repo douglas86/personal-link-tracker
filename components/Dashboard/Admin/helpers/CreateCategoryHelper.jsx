@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { ContextAdmin } from '../Context';
 import { useForm } from 'react-hook-form';
+import { resolve } from 'bluebird';
 
 const Handler = () => {
     const context = useContext(ContextAdmin);
@@ -60,10 +61,10 @@ const Handler = () => {
         });
     };
 
-    const handleFileUpload = async (e) => {
-        const file = e.target.files[0];
+    const handleFileUpload = async (data) => {
+        const file = data[0];
         const base64 = await convertToBase64(file);
-        setInputs({ ...inputs, image: base64 });
+        setState({ ...state, file: base64 });
     };
 
     return {

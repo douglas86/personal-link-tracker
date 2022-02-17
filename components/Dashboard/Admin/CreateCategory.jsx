@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Alert, Button, Container, Form } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
 import Helpers from './helpers/CreateCategoryHelper';
@@ -12,27 +12,29 @@ const CreateCategory = () => {
 
     const {
         register,
-        handleSubmit,
         formState: { errors },
-        reset,
+        handleSubmit,
     } = useForm();
 
     const { handleSubmission, handleFileUpload } = Helpers();
 
-    useEffect(() => {
-        if (showAlert) {
-            setTimeout(() => {
-                setState({ ...state, showAlert: false, buttonText: 'Submit' });
-            }, 10000);
-        }
-    }, [showAlert, state, setState]);
+    // useEffect(() => {
+    //     if (showAlert) {
+    //         setTimeout(() => {
+    //             setState({ ...state, showAlert: false, buttonText: 'Submit' });
+    //         }, 10000);
+    //     }
+    // }, [showAlert, state, setState]);
 
     const onSubmit = (data) => {
-        handleSubmission(data);
-        reset();
+        // handleSubmission(data);
+        // reset();
+        // console.log('data', data.image);
+        handleFileUpload(data.image);
     };
 
     console.log('errors', errors);
+    console.log('state', state);
 
     return (
         <div>
@@ -70,12 +72,20 @@ const CreateCategory = () => {
                             {...register('description', {
                                 required: 'This is required',
                                 minLength: {
-                                    value: 20,
+                                    value: 2,
                                     message:
                                         'You have entered to few characters',
                                 },
                             })}
                             placeholder="Write descriptions here"
+                        />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="formBasicFile">
+                        <Form.Control
+                            type="file"
+                            {...register('image', {
+                                required: 'this field is required',
+                            })}
                         />
                     </Form.Group>
                     <Button type="submit" variant="outline-warning">
