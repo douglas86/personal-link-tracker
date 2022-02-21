@@ -6,6 +6,28 @@ export default async function handler(req, res) {
     const { method, body } = req;
 
     switch (method) {
+        case 'GET':
+            try {
+                const params = {
+                    Bucket: `hackr-douglas2`,
+                    Key: '875jghfjh.jpeg',
+                };
+
+                s3.getObject(params, (err, data) => {
+                    if (err) {
+                        console.log('err', err);
+                    }
+                    const d = data.Body;
+                    let buff = new Buffer(d);
+                    let base = buff.toString('base64');
+                    res.status(200).json({
+                        data: base,
+                    });
+                });
+            } catch (err) {
+                console.log('error', err);
+            }
+            break;
         case 'POST':
             try {
                 const base64Data = new Buffer.from(
@@ -34,7 +56,10 @@ export default async function handler(req, res) {
             }
             break;
         default:
-            console.log('This point was hit');
+            res.status(400).json({
+                message:
+                    'You have not provided the correct details to be stored',
+            });
             break;
     }
 }
