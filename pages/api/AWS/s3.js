@@ -22,7 +22,7 @@ export default async function handler(req, res) {
     switch (method) {
         case 'GET':
             try {
-                const c = await prisma.category.findMany();
+                const categories = await prisma.category.findMany();
 
                 async function getS3Data() {
                     let d;
@@ -36,7 +36,9 @@ export default async function handler(req, res) {
                         throw e;
                     }
                     let content = [];
+                    let count = 0;
                     for (let currentValue of d.Contents) {
+                        console.log('u', currentValue);
                         if (currentValue.Size > 0) {
                             let goParams = {
                                 Bucket: params.Bucket,
@@ -49,10 +51,14 @@ export default async function handler(req, res) {
                                 throw e;
                             }
                             content.push({
+                                id: categories[count].id,
+                                name: categories[count].name,
+                                description: categories[count].description,
                                 Size: data.ContentLength,
                                 Body: data.Body.toString('base64'),
                             });
                         }
+                        count += 1;
                     }
                     return content;
                 }
