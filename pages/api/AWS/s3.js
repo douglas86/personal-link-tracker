@@ -1,5 +1,6 @@
 import { s3 } from '../../../lib/s3Client';
 import { CreateCategory, Params } from './helpers/s3helpers';
+// import config from '../../../next.config';
 
 export default async function handler(req, res) {
     const { method, body } = req;
@@ -24,11 +25,11 @@ export default async function handler(req, res) {
                     })
                     .catch((err) => console.log('error', err));
                 res.status(200).json({
-                    success: 'You have successfully saved to the db',
+                    message: 'You have successfully saved to the db',
                 });
             } catch (error) {
                 res.status(400).json({
-                    error: 'There was an error saving your data',
+                    message: 'There was an error saving your data',
                 });
             }
             break;
@@ -37,6 +38,14 @@ export default async function handler(req, res) {
             break;
     }
 }
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '50mb',
+        },
+    },
+};
 
 // import AWS from 'aws-sdk';
 // import fs from 'fs';

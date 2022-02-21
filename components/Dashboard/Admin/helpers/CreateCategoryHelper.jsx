@@ -17,35 +17,30 @@ const Handler = () => {
 
     const { reset } = useForm();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (inputs.name && inputs.description && inputs.image) {
+    const handleSubmission = async (data) => {
+        const { name, description } = data;
+        try {
             fetch('/api/AWS/s3', {
                 method: 'POST',
                 headers: { 'Content-type': 'application/json' },
-                body: JSON.stringify(inputs),
+                body: JSON.stringify({
+                    name,
+                    description,
+                    image: state.file,
+                }),
             }).then(async (res) => {
                 let result = await res.json();
                 console.log('result', result);
                 setState({
                     ...state,
-                    success: result.success,
+                    message: result.message,
                     showAlert: true,
                     alertColor: 'success',
                 });
-                // setMessage(result.message);
-                // setShowAlert(true);
-                // setVariant('success');
             });
-        } else {
-            setMessage('All fields are required');
-            setShowAlert(true);
-            setVariant('danger');
+        } catch (err) {
+            console.log('err', err);
         }
-    };
-
-    const handleSubmission = (data) => {
-        console.log('data', data);
     };
 
     const convertToBase64 = (file) => {
@@ -61,9 +56,9 @@ const Handler = () => {
         });
     };
 
-    const handleFileUpload = async (data) => {
-        const file = data[0];
-        const base64 = await convertToBase64(file);
+    const handleFileUpload = async (file) => {
+        const files = file.target.files[0];
+        const base64 = await convertToBase64(files);
         setState({ ...state, file: base64 });
     };
 

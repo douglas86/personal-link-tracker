@@ -13,28 +13,24 @@ const CreateCategory = () => {
     const {
         register,
         formState: { errors },
+        reset,
         handleSubmit,
     } = useForm();
 
     const { handleSubmission, handleFileUpload } = Helpers();
 
-    // useEffect(() => {
-    //     if (showAlert) {
-    //         setTimeout(() => {
-    //             setState({ ...state, showAlert: false, buttonText: 'Submit' });
-    //         }, 10000);
-    //     }
-    // }, [showAlert, state, setState]);
+    useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setState({ ...state, showAlert: false, buttonText: 'Submit' });
+            }, 10000);
+        }
+    }, [showAlert, state, setState]);
 
     const onSubmit = (data) => {
-        // handleSubmission(data);
-        // reset();
-        // console.log('data', data.image);
-        handleFileUpload(data.image);
+        handleSubmission(data);
+        reset();
     };
-
-    console.log('e', errors);
-    console.log('state', state);
 
     return (
         <div>
@@ -75,7 +71,7 @@ const CreateCategory = () => {
                             {...register('description', {
                                 required: 'This field is required',
                                 minLength: {
-                                    value: 20,
+                                    value: 2,
                                     message:
                                         'You have entered to few characters',
                                 },
@@ -92,6 +88,9 @@ const CreateCategory = () => {
                             {...register('image', {
                                 required: 'This field is required',
                             })}
+                            onChange={(e) => {
+                                handleFileUpload(e);
+                            }}
                         />
                         <p style={{ color: 'red', marginTop: '5px' }}>
                             {errors.image?.message}

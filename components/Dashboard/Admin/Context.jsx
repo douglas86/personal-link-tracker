@@ -13,8 +13,7 @@ export const ProviderAdmin = ({ children }) => {
         image: '',
     });
     const [state, setState] = useState({
-        success: '',
-        error: '',
+        message: '',
         buttonText: 'Submit',
         showAlert: false,
         alertColor: '',
