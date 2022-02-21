@@ -43,13 +43,13 @@ const CreateCategory = () => {
                     Admin Dashboard
                 </Button>
                 <h3>Create a new Category here!!</h3>
-                {state.showAlert && state.success ? (
+                {state.showAlert && state.message ? (
                     <Alert
                         variant={context.variant}
                         onClose={() => setState({ ...state, showAlert: false })}
                         dismissible
                     >
-                        <Alert.Heading>{state.success}</Alert.Heading>
+                        <Alert.Heading>{state.message}</Alert.Heading>
                     </Alert>
                 ) : null}
                 <Form onSubmit={handleSubmit(onSubmit)}>

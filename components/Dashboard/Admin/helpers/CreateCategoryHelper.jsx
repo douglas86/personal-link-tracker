@@ -30,7 +30,6 @@ const Handler = () => {
                 }),
             }).then(async (res) => {
                 let result = await res.json();
-                console.log('result', result);
                 setState({
                     ...state,
                     message: result.message,
