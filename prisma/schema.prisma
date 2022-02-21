@@ -56,17 +56,9 @@ model VerificationToken {
 }
 
 model Category {
-  id        Int       @id @default(autoincrement())
-  name      String
-  slug      String    @unique
-  image     String
-  postedBy  Int
-  createdAt DateTime  @default(now())
-  content   Content[]
-}
-
-model Content {
-  id       Int        @id @default(autoincrement())
-  type     Json
-  category Category[]
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  image       String
+  createdAt   DateTime @default(now())
 }

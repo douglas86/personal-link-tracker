@@ -4,13 +4,19 @@ import prisma from '../lib/prisma';
 import Admin from '../components/Dashboard/Admin';
 import Subscriber from '../components/Dashboard/Subscriber';
 
+import { ProviderAdmin } from '../components/Dashboard/Admin/Context';
+
 const Dashboard = ({ user }) => {
     const { data: session } = useSession();
 
     const Role = (role) => {
         switch (role) {
             case 'admin':
-                return <Admin />;
+                return (
+                    <ProviderAdmin>
+                        <Admin />
+                    </ProviderAdmin>
+                );
             default:
                 return <Subscriber />;
         }

@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 
+/migrations
+*.sql
+
 # testing
 /coverage
 
