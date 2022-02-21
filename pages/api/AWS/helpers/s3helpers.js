@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export const Params = (name, type, base64String) => {
     return {
-        Bucket: 'hackr-douglas2',
+        Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
         Key: `${name}.${type}`, // type is not required
         Body: base64String,
         ACL: 'public-read',
@@ -13,12 +13,13 @@ export const Params = (name, type, base64String) => {
     };
 };
 
-export const CreateCategory = async ({ body }, location) => {
+export const CreateCategory = async ({ body }, key, location) => {
     const { name, description } = body;
     return await prisma.category.create({
         data: {
             name,
             description,
+            s3BucketKey: key,
             image: location,
         },
     });
