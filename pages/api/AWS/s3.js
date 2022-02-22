@@ -1,11 +1,74 @@
 import { s3 } from '../../../lib/s3Client';
 import { CreateCategory, Params } from './helpers/s3helpers';
-// import config from '../../../next.config';
+import prisma from '../../../lib/prisma';
+import { FSx } from 'aws-sdk';
+
+const getObject = async (bucket, objectKey) => {
+    try {
+        const params = {
+            Bucket: bucket,
+            Key: objectKey,
+        };
+        const data = await s3.getObject(params).promise();
+        return data.Body.toString('base64');
+    } catch (e) {
+        throw new Error(`could not retrieve file from s3: ${e.message}`);
+    }
+};
 
 export default async function handler(req, res) {
     const { method, body } = req;
 
     switch (method) {
+        case 'GET':
+            try {
+                const categories = await prisma.category.findMany();
+
+                async function getS3Data() {
+                    let d;
+                    const params = {
+                        Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+                    };
+
+                    try {
+                        d = await s3.listObjectsV2(params).promise();
+                    } catch (e) {
+                        throw e;
+                    }
+                    let content = [];
+                    let count = 0;
+                    for (let currentValue of d.Contents) {
+                        console.log('u', currentValue);
+                        if (currentValue.Size > 0) {
+                            let goParams = {
+                                Bucket: params.Bucket,
+                                Key: currentValue.Key,
+                            };
+                            let data;
+                            try {
+                                data = await s3.getObject(goParams).promise();
+                            } catch (e) {
+                                throw e;
+                            }
+                            content.push({
+                                id: categories[count].id,
+                                name: categories[count].name,
+                                description: categories[count].description,
+                                Size: data.ContentLength,
+                                Body: data.Body.toString('base64'),
+                            });
+                        }
+                        count += 1;
+                    }
+                    return content;
+                }
+                res.status(200).json({
+                    data: await getS3Data(),
+                });
+            } catch (err) {
+                console.log('error', err);
+            }
+            break;
         case 'POST':
             try {
                 const base64Data = new Buffer.from(
@@ -21,7 +84,7 @@ export default async function handler(req, res) {
                     .upload(params)
                     .promise()
                     .then((res) => {
-                        CreateCategory({ body }, res.Location);
+                        CreateCategory({ body }, res.Key, res.Location);
                     })
                     .catch((err) => console.log('error', err));
                 res.status(200).json({
@@ -34,7 +97,10 @@ export default async function handler(req, res) {
             }
             break;
         default:
-            console.log('This point was hit');
+            res.status(400).json({
+                message:
+                    'You have not provided the correct details to be stored',
+            });
             break;
     }
 }
@@ -46,71 +112,3 @@ export const config = {
         },
     },
 };
-
-// import AWS from 'aws-sdk';
-// import fs from 'fs';
-// import { PrismaClient } from '@prisma/client';
-// import { CreateCategory, Params } from './helpers/s3helpers';
-
-// const prisma = new PrismaClient();
-
-// export default async function handler(req, res) {
-//     const { method, body } = req;
-
-//     const {
-//         NEXT_PUBLIC_AWS_REGION,
-//         NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-//         NEXT_PUBLIC_AWS_SECRET_KEY,
-//     } = process.env;
-
-//     AWS.config.setPromisesDependency(require('bluebird'));
-//     AWS.config.update({
-//         accessKeyId: NEXT_PUBLIC_AWS_ACCESS_KEY_ID,
-//         secretAccessKey: NEXT_PUBLIC_AWS_SECRET_KEY,
-//         region: NEXT_PUBLIC_AWS_REGION,
-//     });
-
-//     const s3 = new AWS.S3();
-
-//     switch (method) {
-//         case 'POST':
-//             try {
-//                 const base64Data = new Buffer.from(
-//                     body.image.replace(/^data:image\/\w+;base64,/, ''),
-//                     'base64'
-//                 );
-
-//                 const type = body.image.split(';')[0].split('/')[1];
-
-//                 const params = Params(body.name, type, base64Data);
-
-//                 let location = ''; // url of s3 bucket object stored
-//                 let key = ''; // name of s3 bucket object stored
-//                 try {
-//                     const { Location, Key } = await s3
-//                         .upload(params)
-//                         .promise()
-//                         .then((res) => console.log('res', res))
-//                         .catch((err) => console.log('err', err));
-//                     location = Location;
-//                     key = Key;
-//                 } catch (error) {
-//                     console.log(error);
-//                 }
-
-//                 // Create category in db
-//                 CreateCategory({ body }, location);
-
-//                 res.status(200).json({
-//                     success: 'Content has been saved to db',
-//                 });
-//             } catch (error) {
-//                 console.log('this was hit');
-//                 res.send('Error');
-//             }
-
-//             break;
-//         default:
-//             break;
-//     }
-// }
