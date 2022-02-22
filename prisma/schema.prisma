@@ -45,7 +45,7 @@ model User {
   role          String    @default("subscriber")
   accounts      Account[]
   sessions      Session[]
-  links Links[]
+  links         Links[]
 }
 
 model VerificationToken {
@@ -57,30 +57,25 @@ model VerificationToken {
 }
 
 model Category {
-  id          String      @id @default(cuid())
+  id          String   @id @default(cuid())
   name        String
   description String
   s3BucketKey String
   image       String
   createdAt   DateTime @default(now())
-  links Links[]
+  links       Links[]
 }
 
 model Links {
-id String @id @default(cuid())
-userId String
-categoryId String
-title String
-url String
-slug String
-type String @default("Free")
-medium String @default("Video")
-clicks Int @default(0)
-postedBy User @relation(fields:[userId], references:[id])
-category Category @relation(fields:[categoryId], references:[id])
+  id         String   @id @default(cuid())
+  userId     String
+  categoryId String
+  title      String
+  url        String
+  slug       String
+  type       String   @default("Free")
+  medium     String   @default("Video")
+  clicks     Int      @default(0)
+  postedBy   User     @relation(fields: [userId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
 }
-
-
-
-
-
