@@ -1,15 +1,15 @@
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Container, Form, Button, Alert } from "react-bootstrap";
 import { useForm } from "react-hook-form";
-import Resizer from "react-image-file-resizer";
 
 import { ContextAdmin } from "./Context";
+import Handler from "./helpers/CreateCategoryHelper";
 
 const CreateCategory = () => {
-  const [image, setImage] = useState("");
   const context = useContext(ContextAdmin);
-  const { inputs, setInputs, isRole, setIsRole, state, setState } = context;
-  const { showAlert, alertColor } = state;
+  const { setIsRole, state, setState } = context;
+  const { message, showAlert, alertColor } = state;
+  const { handleImage, handleSubmission } = Handler();
 
   const {
     register,
@@ -26,72 +26,37 @@ const CreateCategory = () => {
     }
   }, [showAlert, state, setState]);
 
-  const handleImage = (event) => {
-    let fileInput = false;
-    if (event.target.files[0]) {
-      fileInput = true;
-    }
-    if (fileInput) {
-      try {
-        Resizer.imageFileResizer(
-          event.target.files[0],
-          300,
-          300,
-          "JPEG",
-          100,
-          0,
-          (uri) => {
-            setImage(uri);
-          },
-          "base64",
-          200,
-          200
-        );
-      } catch (err) {
-        setState({
-          ...state,
-          message: result.message,
-          showAlert: true,
-          alertColor: "danger",
-        });
-      }
-    }
-  };
-
   const onSubmit = async (data) => {
-    const { title, description } = data;
-    const handleSubmission = { title, description, image };
-    await fetch("/api/AWS/s3", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(handleSubmission),
-    }).then(async (res) => {
-      let result = await res.json();
-      setState({
-        ...state,
-        message: result.message,
-        showAlert: true,
-        alertColor: "success",
-      });
-    });
+    handleSubmission(data);
     reset();
   };
 
-  const createForm = () => (
+  const handleForm = () => (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <Form.Control
-        {...register("title", { required: "this field is required" })}
+        {...register("title", { required: "This field is required" })}
         type="text"
         placeholder="Title"
       />
+      <p style={{ color: "red", marginTop: "5px" }}>
+        {errors.title ? errors.title.message : null}
+      </p>
       <Form.Control
-        {...register("description", { required: "this field is required" })}
+        {...register("description", { required: "This field is required" })}
         type="text"
         placeholder="description"
       />
-      <Form.Control type="file" onChange={handleImage} />
+      <p style={{ color: "red", marginTop: "5px" }}>
+        {errors.description ? errors.description.message : null}
+      </p>
+      <Form.Control
+        {...register("file", { required: "This field is required" })}
+        type="file"
+        onChange={handleImage}
+      />
+      <p style={{ color: "red", marginTop: "5px" }}>
+        {errors.file ? errors.file.message : null}
+      </p>
       <Button
         style={{ marginTop: "5px" }}
         type="submit"
@@ -113,18 +78,18 @@ const CreateCategory = () => {
         >
           Admin Dashboard
         </Button>
-        {state.showAlert && state.message ? (
+        {showAlert && message ? (
           <Alert
             style={{ marginTop: "5px" }}
             variant={alertColor}
             onClose={() => setState({ ...state, showAlert: false })}
             dismissible
           >
-            <Alert.Heading>{state.message}</Alert.Heading>
+            <Alert.Heading>{message}</Alert.Heading>
           </Alert>
         ) : null}
         <h1 className="h1">Create a category</h1>
-        <div>{createForm()}</div>
+        <div>{handleForm()}</div>
       </Container>
     </>
   );

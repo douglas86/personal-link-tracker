@@ -70,13 +70,13 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        const { title, description, image } = body;
+        const { title, description, file } = body;
         const base64Data = new Buffer.from(
-          image.replace(/^data:image\/\w+;base64,/, ""),
+          file.replace(/^data:image\/\w+;base64,/, ""),
           "base64"
         );
 
-        const type = image.split(";")[0].split("/")[1];
+        const type = file.split(";")[0].split("/")[1];
 
         const params = Params(title, type, base64Data);
         await s3
