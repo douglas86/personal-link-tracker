@@ -5,6 +5,8 @@ const Home = () => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR("/api/AWS/s3", fetcher);
 
+  console.log("data", data);
+
   return (
     <div>
       <h1 className={styles.title}>Browse Tutorial/Courses</h1>
@@ -21,7 +23,7 @@ const Home = () => {
                     />
                   </div>
                   <div className={styles.title}>
-                    <h5>{v.title}</h5>
+                    <h5>{v.title.split(".")[0]}</h5>
                   </div>
                 </div>
               </button>
