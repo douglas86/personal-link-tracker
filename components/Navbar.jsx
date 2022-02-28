@@ -47,13 +47,20 @@ const NavBar = () => {
               {isShownHome && <h4>Home Page</h4>}
             </>
           ) : null}
-          <Nav className="me-auto">
+          <Nav className="ml-auto">
             {session !== undefined &&
             session !== null &&
             router.pathname !== "/dashboard" ? (
               <>
                 <Link href="/dashboard" passHref>
                   <Nav.Link>Dashboard</Nav.Link>
+                </Link>
+              </>
+            ) : null}
+            {router.pathname !== "/user/link/create" ? (
+              <>
+                <Link href="/user/link/create" passHref>
+                  <Nav.Link>Submit a Link</Nav.Link>
                 </Link>
               </>
             ) : null}
