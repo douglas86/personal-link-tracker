@@ -5,8 +5,6 @@ const Home = () => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR("/api/AWS/s3", fetcher);
 
-  console.log("data", data);
-
   return (
     <div>
       <h1 className={styles.title}>Browse Tutorial/Courses</h1>
