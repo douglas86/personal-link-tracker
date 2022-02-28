@@ -13,18 +13,20 @@ const Home = () => {
       <div className={styles.flex_container}>
         {data !== undefined
           ? Object.entries(data.contents).map(([k, v]) => (
-              <div key={k} className={styles.contents}>
-                <div className={styles.flex_image}>
-                  <img
-                    className={styles.image}
-                    src={`data:image/jpeg;base64,${v.image}`}
-                    alt={v.title}
-                  />
+              <button className={styles.button}>
+                <div key={k} className={styles.contents}>
+                  <div className={styles.flex_image}>
+                    <img
+                      className={styles.image}
+                      src={`data:image/jpeg;base64,${v.image}`}
+                      alt={v.title}
+                    />
+                  </div>
+                  <div className={styles.title}>
+                    <h5>{v.title}</h5>
+                  </div>
                 </div>
-                <div className={styles.title}>
-                  <h5>{v.title}</h5>
-                </div>
-              </div>
+              </button>
             ))
           : null}
       </div>
