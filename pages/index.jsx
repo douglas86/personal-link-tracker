@@ -9,12 +9,12 @@ const Home = () => {
 
   return (
     <div>
-      <h1 className={styles.title}>Different types of categories</h1>
+      <h1 className={styles.title}>Browse Tutorial/Courses</h1>
       <div className={styles.flex_container}>
         {data !== undefined
           ? Object.entries(data.contents).map(([k, v]) => (
-              <button className={styles.button}>
-                <div key={k} className={styles.contents}>
+              <button key={k} className={styles.button}>
+                <div className={styles.contents}>
                   <div className={styles.flex_image}>
                     <img
                       className={styles.image}
