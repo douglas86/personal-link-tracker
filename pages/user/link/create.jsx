@@ -1,59 +1,68 @@
+import prisma from "../../../lib/prisma";
 import { Container } from "react-bootstrap";
-import { useForm } from "react-hook-form";
-import { Form, Button } from "react-bootstrap";
-import { useSession } from "next-auth/react";
+import { useState } from "react";
 
-const Create = () => {
-  const {
-    register,
-    formState: { errors },
-    reset,
-    handleSubmit,
-  } = useForm();
+const Create = (props) => {
+  const response = props ? JSON.parse(props.data) : undefined;
+  const [state, setState] = useState({});
 
-  const { data: session } = useSession();
-
-  const onSubmit = async (data) => {
-    console.log("data", data);
+  const showCategories = () => {
+    return (
+      <>
+        {response
+          ? response.map((item) => (
+              <li className="list-unstyled" key={item.id}>
+                <input
+                  type="checkbox"
+                  name={item.title}
+                  onChange={(e) => {
+                    e.target.checked
+                      ? setState({
+                          ...state,
+                          [item.title]: e.target.checked,
+                        })
+                      : delete state[item.title];
+                  }}
+                  className="mr-2"
+                />
+                <label className="form-check-label">{item.title}</label>
+              </li>
+            ))
+          : null}
+      </>
+    );
   };
 
-  const handleLinkForm = () => (
-    <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Control
-        {...register("title", { required: "This field is required" })}
-        type="text"
-        placeholder="Title"
-      />
-      <p style={{ color: "red", marginTop: "5px" }}>
-        {errors.title ? errors.title.message : null}
-      </p>
-      <Form.Control
-        {...register("url", { required: "This field is required" })}
-        type="text"
-        placeholder="URL"
-      />
-      <p style={{ color: "red", marginTop: "5px" }}>
-        {errors.url ? errors.url.message : null}
-      </p>
-      <Button
-        style={{ marginTop: "5px" }}
-        type="submit"
-        variant="outline-warning"
-        disabled={!session ? true : false}
-      >
-        {session ? "Post" : "Login to Post"}
-      </Button>
-    </Form>
+  const showTypes = () => (
+    <>
+      <div className="form-check ml-3">
+        <label className="form-check-label">Free</label>
+      </div>
+    </>
   );
 
   return (
     <div>
       <Container>
-        <h1>Submit Link/URL</h1>
-        <div>{handleLinkForm()}</div>
+        <h1>Create page</h1>
+        <label className="text-muted ml-4">Categories</label>
+        <ul style={{ maxHeight: "100px", overflowY: "scroll", width: "200px" }}>
+          {showCategories()}
+        </ul>
       </Container>
     </div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const result = await prisma.category.findMany();
+  const data = JSON.stringify(result);
+  console.log("data", result);
+  return {
+    props: {
+      data,
+    },
+  };
 };
 
 export default Create;
