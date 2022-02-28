@@ -5,6 +5,8 @@ import { useState } from "react";
 const Create = (props) => {
   const response = props ? JSON.parse(props.data) : undefined;
   const [state, setState] = useState({});
+  const [type, setType] = useState("");
+  const [medium, setMedium] = useState("");
 
   const showCategories = () => {
     return (
@@ -36,7 +38,56 @@ const Create = (props) => {
   const showTypes = () => (
     <>
       <div className="form-check ml-3">
-        <label className="form-check-label">Free</label>
+        <label className="form-check-label">
+          <input
+            type="radio"
+            onChange={() => setType("free")}
+            value="free"
+            className="form-check-input"
+            name="type"
+          />{" "}
+          Free
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            onChange={() => setType("paid")}
+            value="paid"
+            className="form-check-input"
+            name="type"
+          />{" "}
+          Paid
+        </label>
+      </div>
+    </>
+  );
+  const showMedium = () => (
+    <>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            onChange={() => setMedium("Video")}
+            value="video"
+            className="form-check-input"
+            name="medium"
+          />{" "}
+          Video
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            onChange={() => setMedium("Book")}
+            value="book"
+            className="form-check-input"
+            name="medium"
+          />{" "}
+          Book
+        </label>
       </div>
     </>
   );
@@ -49,6 +100,14 @@ const Create = (props) => {
         <ul style={{ maxHeight: "100px", overflowY: "scroll", width: "200px" }}>
           {showCategories()}
         </ul>
+        <div className="form-group">
+          <label className="text-muted ml-4">Type</label>
+          {showTypes()}
+        </div>
+        <div className="form-group">
+          <label className="text-muted ml-4">Medium</label>
+          {showMedium()}
+        </div>
       </Container>
     </div>
   );
