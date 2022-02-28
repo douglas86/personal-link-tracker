@@ -1,0 +1,33 @@
+.title {
+  text-align: center;
+}
+
+.flex_container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+.contents {
+  display: flex;
+  flex-flow: row wrap;
+  border: 1px solid;
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 5px 10px 18px #888888;
+  margin: 10px;
+}
+
+.flex_image {
+  width: 30%;
+  height: auto;
+}
+
+.image {
+  width: 100%;
+  height: auto;
+}
+
+.flex_title {
+  margin: 10px;
+}
