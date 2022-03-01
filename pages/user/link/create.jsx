@@ -106,6 +106,7 @@ const Create = (props) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    console.log("state", state);
     return (
       <>
         <h1>This is the submit</h1>
