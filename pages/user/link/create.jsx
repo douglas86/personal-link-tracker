@@ -231,7 +231,10 @@ const Create = (props) => {
               listStyle: "none",
               paddingLeft: 0,
               width: screenSize.dynamicWidth < 800 ? "50%" : "200px",
-              margin: screenSize.dynamicWidth < 800 ? "1% 25%" : "0%",
+              margin:
+                screenSize.dynamicWidth < 800 && screenSize.dynamicWidth > 0
+                  ? "1% 25%"
+                  : "0%",
             }}
           >
             {showCategories()}
