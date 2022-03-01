@@ -31,13 +31,11 @@ const Create = (props) => {
     showAlert,
   } = state;
 
-  console.log("state", state);
-
   useEffect(() => {
     if (showAlert) {
       setTimeout(() => {
         setState({ ...state, showAlert: false, buttonText: "Submit" });
-      }, 10000);
+      }, 3000);
     }
   }, [showAlert, state, setState]);
 
@@ -139,6 +137,7 @@ const Create = (props) => {
       type,
       medium,
     };
+
     try {
       await fetch("/api/link", {
         method: "POST",
