@@ -13,11 +13,11 @@ export const ProviderAdmin = ({ children }) => {
     image: "",
   });
   const [state, setState] = useState({
+    file: "",
     message: "",
     buttonText: "Submit",
     showAlert: false,
     alertColor: "",
-    file: "",
   });
   return (
     <ContextAdmin.Provider

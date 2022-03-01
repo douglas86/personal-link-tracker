@@ -1,69 +1,71 @@
 import { useContext } from "react";
 import { ContextAdmin } from "../Context";
-import { useForm } from "react-hook-form";
-import { resolve } from "bluebird";
+import Resizer from "react-image-file-resizer";
 
 const Handler = () => {
   const context = useContext(ContextAdmin);
-  const {
-    setMessage,
-    setShowAlert,
-    setVariant,
-    inputs,
-    setInputs,
-    state,
-    setState,
-  } = context;
 
-  const { reset } = useForm();
+  const { state, setState } = context;
+  const { file } = state;
 
   const handleSubmission = async (data) => {
-    const { name, description } = data;
-    try {
-      fetch("/api/AWS/s3", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          name,
-          description,
-          image: state.file,
-        }),
-      }).then(async (res) => {
-        let result = await res.json();
-        setState({
-          ...state,
-          message: result.message,
-          showAlert: true,
-          alertColor: "success",
-        });
+    const { title, description } = data;
+    const handleSubmission = { title, description, file };
+    await fetch("/api/AWS/s3", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(handleSubmission),
+    }).then(async (res) => {
+      let result = await res.json();
+      setState({
+        ...state,
+        message: result.message,
+        showAlert: true,
+        alertColor: "success",
       });
-    } catch (err) {
-      console.log("err", err);
-    }
-  };
-
-  const convertToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const fileReader = new FileReader();
-      fileReader.readAsDataURL(file);
-      fileReader.onload = () => {
-        resolve(fileReader.result);
-      };
-      fileReader.onerror = (error) => {
-        reject(error);
-      };
     });
   };
 
-  const handleFileUpload = async (file) => {
-    const files = file.target.files[0];
-    const base64 = await convertToBase64(files);
-    setState({ ...state, file: base64 });
+  const handleImage = async (image) => {
+    let fileInput = false;
+    if (event.target.files[0]) {
+      fileInput = true;
+    }
+    if (fileInput) {
+      try {
+        Resizer.imageFileResizer(
+          event.target.files[0],
+          300,
+          300,
+          "JPEG",
+          100,
+          0,
+          (uri) => {
+            setState({
+              ...state,
+              file: uri,
+            });
+          },
+          "base64",
+          200,
+          200
+        );
+      } catch (err) {
+        setState({
+          ...state,
+          message: err.message,
+          showAlert: true,
+          alertColor: "danger",
+        });
+      }
+    }
   };
 
   return {
+    handleImage,
     handleSubmission,
-    handleFileUpload,
   };
 };
 
