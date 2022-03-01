@@ -201,17 +201,37 @@ const Create = (props) => {
     </form>
   );
 
+  const [screenSize, setScreenSize] = useState({
+    dynamicWidth: 0,
+  });
+
+  const setDimension = () => {
+    setScreenSize({
+      dynamicWidth: window.innerWidth,
+    });
+  };
+
+  useEffect(function mount() {
+    window.addEventListener("resize", setDimension);
+    return function unMount() {
+      window.removeEventListener("resize", setDimension);
+    };
+  });
+
   return (
-    <Container>
+    <Container className={styles.container}>
       <div className={styles.flex_container}>
         <div className={styles.flex_left}>
-          <h1>Create page</h1>
+          <h1>Submit Link/URL</h1>
           <label className="text-muted ml-4">Categories</label>
           <ul
             style={{
               maxHeight: "100px",
               overflowY: "scroll",
-              width: "200px",
+              listStyle: "none",
+              paddingLeft: 0,
+              width: screenSize.dynamicWidth < 800 ? "50%" : "200px",
+              margin: screenSize.dynamicWidth < 800 ? "1% 25%" : "0%",
             }}
           >
             {showCategories()}

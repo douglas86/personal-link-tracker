@@ -8,7 +8,7 @@
 }
 
 .flex_right {
-  width: 70%;
+  width: 50%;
   margin-top: 100px;
 }
 
@@ -19,5 +19,12 @@
 @media screen and (max-width: 800px) {
   .flex_container {
     display: block;
+    text-align: center;
+  }
+  .flex_left {
+    width: 100%;
+  }
+  .flex_right {
+    width: 100%;
   }
 }
