@@ -7,11 +7,25 @@ import styles from "../../../public/styles/create.module.css";
 const Create = (props) => {
   const response = props ? JSON.parse(props.data) : undefined;
   const { data: session } = useSession();
-  const [state, setState] = useState({});
-  const [type, setType] = useState("");
-  const [medium, setMedium] = useState("");
+  const [state, setState] = useState({
+    type: "",
+    medium: "",
+    categories: [],
+  });
 
-  console.log("response", response);
+  const { type, medium, categories } = state;
+
+  const handleToggle = (c) => () => {
+    const clickedCategory = categories.indexOf(c);
+    const all = [...categories];
+    if (clickedCategory === -1) {
+      all.push(c);
+    } else {
+      all.splice(clickedCategory, 1);
+    }
+    console.log("all >> categories", all);
+    setState({ ...state, categories: all });
+  };
 
   const showCategories = () => {
     return (
@@ -22,15 +36,8 @@ const Create = (props) => {
                 <input
                   type="checkbox"
                   name={item.title}
-                  onChange={(e) => {
-                    e.target.checked
-                      ? setState({
-                          ...state,
-                          [item.title]: e.target.checked,
-                        })
-                      : delete state[item.title];
-                  }}
                   className="mr-2"
+                  onChange={handleToggle(item.id)}
                 />{" "}
                 <label className="form-check-label">{item.title}</label>
               </li>
@@ -46,7 +53,7 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setType("free")}
+            onChange={() => setState({ ...state, type: "free" })}
             value="free"
             className="form-check-input"
             name="type"
@@ -58,7 +65,7 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setType("paid")}
+            onChange={() => setState({ ...state, type: "paid" })}
             value="paid"
             className="form-check-input"
             name="type"
@@ -74,7 +81,7 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setMedium("Video")}
+            onChange={() => setState({ ...state, medium: "video" })}
             value="video"
             className="form-check-input"
             name="medium"
@@ -86,7 +93,7 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setMedium("Book")}
+            onChange={() => setState({ ...state, medium: "book" })}
             value="book"
             className="form-check-input"
             name="medium"
