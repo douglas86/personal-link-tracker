@@ -19,8 +19,6 @@ const Create = (props) => {
     showAlert: false,
   });
 
-  console.log("state", state);
-
   const {
     postedBy,
     title,
@@ -32,6 +30,8 @@ const Create = (props) => {
     alertColor,
     showAlert,
   } = state;
+
+  console.log("state", state);
 
   useEffect(() => {
     if (showAlert) {
@@ -148,20 +148,28 @@ const Create = (props) => {
         body: JSON.stringify(data),
       }).then(async (res) => {
         const result = await res.json();
-        setState({
-          ...state,
-          alertColor: "success",
-          showAlert: true,
-          message: result.message,
-        });
+        if (res.status === 200) {
+          setState({
+            ...state,
+            alertColor: "success",
+            showAlert: true,
+            message: result.message,
+          });
+        } else {
+          setState({
+            ...state,
+            alertColor: "danger",
+            showAlert: true,
+            message: result.message,
+          });
+        }
       });
     } catch (err) {
-      const result = err.json();
       setState({
         ...state,
         alertColor: "danger",
         showAlert: true,
-        message: result.message,
+        message: err.message,
       });
     }
   };
@@ -193,8 +201,6 @@ const Create = (props) => {
       </button>
     </form>
   );
-
-  console.log("stateMessage", state.success);
 
   return (
     <Container>
