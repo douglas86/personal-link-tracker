@@ -4,7 +4,8 @@ export const HomeContext = createContext();
 
 export const HomeProvider = ({ children }) => {
   const [state, setState] = useState({
-    cardTitle: 'Home',
+    component: 'Home',
+    categoryTitle: '',
   });
   return (
     <HomeContext.Provider value={{ state, setState }}>

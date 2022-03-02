@@ -7,12 +7,12 @@ import Card from '../components/HomePage/Card';
 
 const Home = () => {
   const context = useContext(HomeContext);
-  const { cardTitle } = context.state;
+  const { component } = context.state;
 
-  console.log('cardTitle', cardTitle);
+  console.log('component', component);
 
   const isComponent = () => {
-    switch (cardTitle) {
+    switch (component) {
       case 'Card':
         return <Card />;
       default:

@@ -1,5 +1,6 @@
-import { useContext } from 'react';
 import useSWR from 'swr';
+import { useContext } from 'react';
+
 import { HomeContext } from '../../Context/HomeContext';
 import styles from '../../public/styles/index.module.css';
 
@@ -15,7 +16,16 @@ const Index = () => {
       <div className={styles.flex_container}>
         {data !== undefined
           ? Object.entries(data.contents).map(([k, v]) => (
-              <button key={k} className={styles.button}>
+              <button
+                key={k}
+                className={styles.button}
+                onClick={() =>
+                  context.setState({
+                    component: 'Card',
+                    categoryTitle: v.title.split('.')[0],
+                  })
+                }
+              >
                 <div className={styles.contents}>
                   <div className={styles.flex_image}>
                     <img
