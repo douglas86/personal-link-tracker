@@ -1,21 +1,21 @@
-import prisma from "../../../lib/prisma";
-import { Container, Alert } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import { getSession, useSession } from "next-auth/react";
-import styles from "../../../public/styles/create.module.css";
+import prisma from '../../../lib/prisma';
+import { Container, Alert } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { getSession, useSession } from 'next-auth/react';
+import styles from '../../../public/styles/create.module.css';
 
 const Create = (props) => {
   const response = props ? JSON.parse(props.data) : undefined;
   const { data: session } = useSession();
   const [state, setState] = useState({
     postedBy: props ? JSON.parse(props.user).id : undefined,
-    title: "",
-    url: "",
-    type: "",
-    medium: "",
+    title: '',
+    url: '',
+    type: '',
+    medium: '',
     categories: [],
-    message: "",
-    alertColor: "",
+    message: '',
+    alertColor: '',
     showAlert: false,
   });
 
@@ -34,7 +34,7 @@ const Create = (props) => {
   useEffect(() => {
     if (showAlert) {
       setTimeout(() => {
-        setState({ ...state, showAlert: false, buttonText: "Submit" });
+        setState({ ...state, showAlert: false, buttonText: 'Submit' });
       }, 3000);
     }
   }, [showAlert, state, setState]);
@@ -60,8 +60,8 @@ const Create = (props) => {
                   type="checkbox"
                   name={item.title}
                   className="mr-2"
-                  onChange={handleToggle(item.id)}
-                />{" "}
+                  onChange={handleToggle(item.title)}
+                />{' '}
                 <label className="form-check-label">{item.title}</label>
               </li>
             ))
@@ -76,11 +76,11 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setState({ ...state, type: "free" })}
+            onChange={() => setState({ ...state, type: 'free' })}
             value="free"
             className="form-check-input"
             name="type"
-          />{" "}
+          />{' '}
           Free
         </label>
       </div>
@@ -88,11 +88,11 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setState({ ...state, type: "paid" })}
+            onChange={() => setState({ ...state, type: 'paid' })}
             value="paid"
             className="form-check-input"
             name="type"
-          />{" "}
+          />{' '}
           Paid
         </label>
       </div>
@@ -104,11 +104,11 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setState({ ...state, medium: "video" })}
+            onChange={() => setState({ ...state, medium: 'video' })}
             value="video"
             className="form-check-input"
             name="medium"
-          />{" "}
+          />{' '}
           Video
         </label>
       </div>
@@ -116,11 +116,11 @@ const Create = (props) => {
         <label className="form-check-label">
           <input
             type="radio"
-            onChange={() => setState({ ...state, medium: "book" })}
+            onChange={() => setState({ ...state, medium: 'book' })}
             value="book"
             className="form-check-input"
             name="medium"
-          />{" "}
+          />{' '}
           Book
         </label>
       </div>
@@ -139,10 +139,10 @@ const Create = (props) => {
     };
 
     try {
-      await fetch("/api/link", {
-        method: "POST",
+      await fetch('/api/link', {
+        method: 'POST',
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(data),
       }).then(async (res) => {
@@ -150,14 +150,14 @@ const Create = (props) => {
         if (res.status === 200) {
           setState({
             ...state,
-            alertColor: "success",
+            alertColor: 'success',
             showAlert: true,
             message: result.message,
           });
         } else {
           setState({
             ...state,
-            alertColor: "danger",
+            alertColor: 'danger',
             showAlert: true,
             message: result.message,
           });
@@ -166,7 +166,7 @@ const Create = (props) => {
     } catch (err) {
       setState({
         ...state,
-        alertColor: "danger",
+        alertColor: 'danger',
         showAlert: true,
         message: err.message,
       });
@@ -196,7 +196,7 @@ const Create = (props) => {
         className={`btn btn-outline-warning ${styles.button}`}
         type="submit"
       >
-        {session ? "Post" : "Login to post"}
+        {session ? 'Post' : 'Login to post'}
       </button>
     </form>
   );
@@ -212,9 +212,9 @@ const Create = (props) => {
   };
 
   useEffect(function mount() {
-    window.addEventListener("resize", setDimension);
+    window.addEventListener('resize', setDimension);
     return function unMount() {
-      window.removeEventListener("resize", setDimension);
+      window.removeEventListener('resize', setDimension);
     };
   });
 
@@ -226,15 +226,15 @@ const Create = (props) => {
           <label className="text-muted ml-4">Categories</label>
           <ul
             style={{
-              maxHeight: "100px",
-              overflowY: "scroll",
-              listStyle: "none",
+              maxHeight: '100px',
+              overflowY: 'scroll',
+              listStyle: 'none',
               paddingLeft: 0,
-              width: screenSize.dynamicWidth < 800 ? "50%" : "200px",
+              width: screenSize.dynamicWidth < 800 ? '50%' : '200px',
               margin:
                 screenSize.dynamicWidth < 800 && screenSize.dynamicWidth > 0
-                  ? "1% 25%"
-                  : "0%",
+                  ? '1% 25%'
+                  : '0%',
             }}
           >
             {showCategories()}
@@ -251,7 +251,7 @@ const Create = (props) => {
         <div className={styles.flex_right}>
           {showAlert && message ? (
             <Alert
-              style={{ marginTop: "5px" }}
+              style={{ marginTop: '5px' }}
               variant={alertColor}
               onClose={() => setState({ ...state, showAlert: false })}
               dismissible
