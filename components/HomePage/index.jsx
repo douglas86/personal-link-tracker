@@ -10,6 +10,8 @@ const Index = () => {
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR('/api/AWS/s3', fetcher);
 
+  console.log('data1', data);
+
   return (
     <div>
       <h1 className={styles.title}>Browse Tutorial/Courses</h1>
@@ -23,6 +25,7 @@ const Index = () => {
                   context.setState({
                     component: 'Card',
                     categoryTitle: v.title.split('.')[0],
+                    image: v.image,
                   })
                 }
               >

@@ -6,6 +6,7 @@ export const HomeProvider = ({ children }) => {
   const [state, setState] = useState({
     component: 'Home',
     categoryTitle: '',
+    image: '',
   });
   return (
     <HomeContext.Provider value={{ state, setState }}>

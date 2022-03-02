@@ -1,15 +1,12 @@
 import { useContext } from 'react';
 
 import { HomeContext } from '../Context/HomeContext';
-
 import Index from '../components/HomePage';
 import Card from '../components/HomePage/Card';
 
 const Home = () => {
   const context = useContext(HomeContext);
   const { component } = context.state;
-
-  console.log('component', component);
 
   const isComponent = () => {
     switch (component) {
