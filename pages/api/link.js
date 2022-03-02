@@ -7,7 +7,16 @@ export default async (req, res) => {
 
   switch (method) {
     case 'GET':
-      console.log('You have hit a PARAMS endpoint');
+      try {
+        let result = await prisma.links.findMany();
+        res.status(200).json({
+          data: result,
+        });
+      } catch (err) {
+        res.status(400).json({
+          message: err.message,
+        });
+      }
       break;
     case 'POST':
       const { title, url, categories, type, medium } = body;
