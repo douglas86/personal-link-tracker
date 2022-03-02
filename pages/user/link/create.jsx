@@ -19,8 +19,6 @@ const Create = (props) => {
     showAlert: false,
   });
 
-  const [flag, setFlag] = useState(false);
-
   const {
     postedBy,
     title,
@@ -42,8 +40,8 @@ const Create = (props) => {
   }, [showAlert, state, setState]);
 
   const handleToggle = (c) => () => {
-    const clickedCategory = categories.indexOf(c);
     const all = [...categories];
+    const clickedCategory = categories.indexOf(c);
     if (clickedCategory === -1) {
       all.push(c);
     } else {
@@ -63,7 +61,6 @@ const Create = (props) => {
                   name={item.title}
                   className="mr-2"
                   onChange={handleToggle(item.title)}
-                  checked={() => setFlag(true)}
                 />{' '}
                 <label className="form-check-label">{item.title}</label>
               </li>
@@ -140,8 +137,6 @@ const Create = (props) => {
       type,
       medium,
     };
-
-    console.log('all >> categories', categories);
 
     try {
       await fetch('/api/link', {
