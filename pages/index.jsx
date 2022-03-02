@@ -1,35 +1,26 @@
-import useSWR from "swr";
-import styles from "../public/styles/index.module.css";
+import { useContext } from 'react';
+
+import { HomeContext } from '../Context/HomeContext';
+
+import Index from '../components/HomePage';
+import Card from '../components/HomePage/Card';
 
 const Home = () => {
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data } = useSWR("/api/AWS/s3", fetcher);
+  const context = useContext(HomeContext);
+  const { cardTitle } = context.state;
 
-  return (
-    <div>
-      <h1 className={styles.title}>Browse Tutorial/Courses</h1>
-      <div className={styles.flex_container}>
-        {data !== undefined
-          ? Object.entries(data.contents).map(([k, v]) => (
-              <button key={k} className={styles.button}>
-                <div className={styles.contents}>
-                  <div className={styles.flex_image}>
-                    <img
-                      className={styles.image}
-                      src={`data:image/jpeg;base64,${v.image}`}
-                      alt={v.title}
-                    />
-                  </div>
-                  <div className={styles.title}>
-                    <h5>{v.title.split(".")[0]}</h5>
-                  </div>
-                </div>
-              </button>
-            ))
-          : null}
-      </div>
-    </div>
-  );
+  console.log('cardTitle', cardTitle);
+
+  const isComponent = () => {
+    switch (cardTitle) {
+      case 'Card':
+        return <Card />;
+      default:
+        return <Index />;
+    }
+  };
+
+  return <>{isComponent()}</>;
 };
 
 export default Home;
