@@ -65,13 +65,13 @@ model Category {
 }
 
 model Links {
-  id         String   @id @default(cuid())
-  categoryId String[]
-  title      String
-  url        String
-  type       String   @default("Free")
-  medium     String   @default("Video")
-  clicks     Int      @default(0)
-  postedBy   User     @relation(fields: [userId], references: [id])
-  userId     String
+  id            String   @id @default(cuid())
+  categoryNames String[]
+  title         String
+  url           String
+  type          String   @default("Free")
+  medium        String   @default("Video")
+  clicks        Int      @default(0)
+  postedBy      User     @relation(fields: [userId], references: [id])
+  userId        String
 }

@@ -20,7 +20,7 @@ export default async (req, res) => {
                     postedBy: { connect: { email: session?.user?.email } },
                     title,
                     url,
-                    categoryId: categories,
+                    categoryNames: categories,
                     type,
                     medium,
                   },
