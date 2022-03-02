@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import useSWR from 'swr';
 
-import { HomeContext } from '../../Context/HomeContext';
+import { HomeContext } from '../PageContext/HomeContext';
 
 const Card = () => {
   const context = useContext(HomeContext);

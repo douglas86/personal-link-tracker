@@ -1,16 +1,14 @@
 import useSWR from 'swr';
 import { useContext } from 'react';
 
-import { HomeContext } from '../../Context/HomeContext';
-import styles from '../../public/styles/index.module.css';
+import { HomeContext } from '../PageContext/HomeContext';
+import styles from '../../../public/styles/index.module.css';
 
 const Index = () => {
   const context = useContext(HomeContext);
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR('/api/AWS/s3', fetcher);
-
-  console.log('data1', data);
 
   return (
     <div>

@@ -1,23 +1,12 @@
-import { useContext } from 'react';
-
-import { HomeContext } from '../Context/HomeContext';
-import Index from '../components/HomePage';
-import Card from '../components/HomePage/Card';
+import Index from '../components/pages/HomePage/Index';
+import { HomeProvider } from '../components/pages/PageContext/HomeContext';
 
 const Home = () => {
-  const context = useContext(HomeContext);
-  const { component } = context.state;
-
-  const isComponent = () => {
-    switch (component) {
-      case 'Card':
-        return <Card />;
-      default:
-        return <Index />;
-    }
-  };
-
-  return <>{isComponent()}</>;
+  return (
+    <HomeProvider>
+      <Index />
+    </HomeProvider>
+  );
 };
 
 export default Home;
