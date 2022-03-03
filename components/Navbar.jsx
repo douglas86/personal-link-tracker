@@ -33,6 +33,13 @@ const NavBar = () => {
     <>
       <Navbar bg="light" variant="light">
         <Container>
+          {router.pathname === '/' ? (
+            <Link href="/" passHref>
+              <a onClick={() => router.reload(window.location.pathname)}>
+                <Image src={Home} alt="home page" width={30} height={30} />
+              </a>
+            </Link>
+          ) : null}
           {router.pathname !== '/' ? (
             <>
               <Link href="/" passHref>

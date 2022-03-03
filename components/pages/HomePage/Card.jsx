@@ -45,9 +45,6 @@ const Card = () => {
       .catch((err) => console.log('err', err));
   }, [categoryTitle]);
 
-  console.log('categoryData', categoryData);
-  console.log('arr', arr);
-
   return (
     <div>
       <Container>
