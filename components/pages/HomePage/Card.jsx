@@ -1,13 +1,16 @@
 import { useContext, useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 import useSWR from 'swr';
 
 import { HomeContext } from '../PageContext/HomeContext';
+import styles from './styles/Card.module.css';
 
 const Card = () => {
   const context = useContext(HomeContext);
   const [d, setD] = useState({});
-  const { categoryTitle, image } = context.state;
+  const { state, categoryData } = context;
+  const { categoryTitle, image } = state;
+  const { description } = categoryData;
   let arr = [];
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -25,6 +28,8 @@ const Card = () => {
       })
     : null;
 
+  // Posts categoryTitle to category api route
+  // api route then sends back data from db of categoryTitle
   useEffect(() => {
     fetch('/api/category', {
       method: 'POST',
@@ -40,12 +45,40 @@ const Card = () => {
       .catch((err) => console.log('err', err));
   }, [categoryTitle]);
 
+  console.log('categoryData', categoryData);
+  console.log('arr', arr);
+
   return (
     <div>
       <Container>
-        <h1 className="display-4 font-weight-bold">
-          {categoryTitle} - URL/Links
-        </h1>
+        <div className={styles.flex_container}>
+          <div className={styles.flex_left}>
+            <h1 className="display-4 font-weight-bold">
+              {categoryTitle} - URL/Links
+            </h1>
+            <Alert variant="secondary">{description}</Alert>
+            {arr.map((item) => (
+              <Alert variant="info">
+                <h3>{item.title}</h3>
+                <p className={styles.url}>{item.url}</p>
+                <div className={styles.flex_container}>
+                  <p className={styles.p}>{item.medium}</p>
+                  <ul className={styles.ul}>
+                    {item.categoryNames.map((i) => (
+                      <li className={styles.li}>{i}</li>
+                    ))}
+                  </ul>
+                </div>
+              </Alert>
+            ))}
+            <button>load more button</button>
+          </div>
+          <div className={styles.flex_right}>
+            <img src={`data:image/jpeg;base64,${image}`} alt="title" />
+            <h4>Most popular in {categoryTitle}</h4>
+            <p>show popular links</p>
+          </div>
+        </div>
       </Container>
     </div>
   );
