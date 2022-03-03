@@ -30,6 +30,7 @@ export default async (req, res) => {
                     title,
                     url,
                     categoryNames: categories,
+                    userName: session?.user?.name,
                     type,
                     medium,
                   },

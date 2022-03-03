@@ -60,7 +60,7 @@ const Card = () => {
             {arr.map((item, index) => (
               <Alert key={index} variant="info">
                 <p style={{ float: 'right' }}>
-                  {moment(item.createdAt).fromNow()}
+                  {moment(item.createdAt).fromNow()} by {item.userName}
                 </p>
                 <h3>{item.title}</h3>
                 <p className={styles.url}>{item.url}</p>

@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { Navbar, Nav, Container, Button } from "react-bootstrap";
-import { AiFillDashboard } from "react-icons/ai";
+import { useEffect, useState } from 'react';
+import { Navbar, Nav, Container, Button } from 'react-bootstrap';
+import { AiFillDashboard } from 'react-icons/ai';
 
-import { useRouter } from "next/router";
-import Link from "next/link";
-import { useSession, signIn, signOut } from "next-auth/react";
-import Image from "next/image";
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+import { useSession, signIn, signOut } from 'next-auth/react';
+import Image from 'next/image';
 
-import { Get } from "./api";
+import { Get } from './api';
 
 // Images
-import Home from "../public/Images/home.jpeg";
+import Home from '../public/Images/home.jpeg';
 
 const NavBar = () => {
   // this shows and hides popup for mouse hover on home image
@@ -33,7 +33,7 @@ const NavBar = () => {
     <>
       <Navbar bg="light" variant="light">
         <Container>
-          {router.pathname !== "/" ? (
+          {router.pathname !== '/' ? (
             <>
               <Link href="/" passHref>
                 <a
@@ -50,14 +50,14 @@ const NavBar = () => {
           <Nav className="ml-auto">
             {session !== undefined &&
             session !== null &&
-            router.pathname !== "/dashboard" ? (
+            router.pathname !== '/dashboard' ? (
               <>
                 <Link href="/dashboard" passHref>
                   <Nav.Link>Dashboard</Nav.Link>
                 </Link>
               </>
             ) : null}
-            {router.pathname !== "/user/link/create" ? (
+            {router.pathname !== '/user/link/create' ? (
               <>
                 <Link href="/user/link/create" passHref>
                   <Nav.Link>Submit a Link</Nav.Link>
