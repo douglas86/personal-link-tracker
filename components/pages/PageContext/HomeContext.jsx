@@ -8,8 +8,11 @@ export const HomeProvider = ({ children }) => {
     categoryTitle: '',
     image: '',
   });
+  const [categoryData, setCategoryData] = useState({});
   return (
-    <HomeContext.Provider value={{ state, setState }}>
+    <HomeContext.Provider
+      value={{ state, setState, categoryData, setCategoryData }}
+    >
       {children}
     </HomeContext.Provider>
   );

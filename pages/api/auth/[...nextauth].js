@@ -1,11 +1,11 @@
-import NextAuth from "next-auth/next";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
+import NextAuth from 'next-auth/next';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
 // import { PrismaClient } from '@prisma/client';
-import prisma from "../../../lib/prisma";
+import prisma from '../../../lib/prisma';
 
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
-import EmailProvider from "next-auth/providers/email";
+import GithubProvider from 'next-auth/providers/github';
+import GoogleProvider from 'next-auth/providers/google';
+import EmailProvider from 'next-auth/providers/email';
 
 // const prisma = new PrismaClient();
 
@@ -24,7 +24,7 @@ export default NextAuth({
       clientSecret: process.env.NEXTAUTH_GITHUB_SECRET,
     }),
   ],
-  debug: process.env.NODE_ENV === "development",
+  debug: process.env.NODE_ENV === 'development',
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
       const isAllowedToSignIn = true;
