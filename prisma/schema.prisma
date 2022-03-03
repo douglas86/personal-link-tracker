@@ -67,6 +67,7 @@ model Category {
 model Links {
   id            String   @id @default(cuid())
   categoryNames String[]
+  userName      String
   title         String
   url           String
   type          String   @default("Free")
@@ -74,4 +75,5 @@ model Links {
   clicks        Int      @default(0)
   postedBy      User     @relation(fields: [userId], references: [id])
   userId        String
+  createdAt     DateTime @default(now())
 }
