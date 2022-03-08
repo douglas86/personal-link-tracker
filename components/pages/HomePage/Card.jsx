@@ -12,7 +12,9 @@ const Card = () => {
   const { categoryTitle, image } = state;
   const { description } = categoryData;
   let arr = [];
+  const [count, setCount] = useState(2);
 
+  // fetches data from backend
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR('/api/link', fetcher);
 
@@ -27,6 +29,15 @@ const Card = () => {
         });
       })
     : null;
+
+  // adds one to setCount whenever the scoll bar hits the bottom
+  window.onscroll = function () {
+    if (window.innerHeight + window.pageYOffset >= document.body.scrollHeight) {
+      if (count <= arr.length) {
+        setCount(count + 1);
+      }
+    }
+  };
 
   // Posts categoryTitle to category api route
   // api route then sends back data from db of categoryTitle
@@ -45,8 +56,17 @@ const Card = () => {
       .catch((err) => console.log('err', err));
   }, [categoryTitle]);
 
+  // function to handle slicing of array
+  // based on count
+  const handleSlice = () =>
+    arr.slice(0, count).map((item, index) => (
+      <div key={index}>
+        <p>{item.title}</p>
+      </div>
+    ));
+
   return (
-    <div>
+    <div style={{ height: '100vh' }}>
       <Container>
         <div className={styles.flex_container}>
           <div className={styles.flex_left}>
@@ -54,26 +74,19 @@ const Card = () => {
               {categoryTitle} - URL/Links
             </h1>
             <Alert variant="secondary">{description}</Alert>
-            {arr.map((item, index) => (
+            {arr.slice(0, count).map((item, index) => (
               <Alert key={index} variant="info">
                 <p style={{ float: 'right' }}>
                   {moment(item.createdAt).fromNow()} by {item.userName}
                 </p>
                 <h3>{item.title}</h3>
                 <p className={styles.url}>{item.url}</p>
+                <p style={{ float: 'right' }}>{item.clicks} clicks</p>
                 <div className={styles.flex_container}>
                   <p className={styles.p}>{item.medium}</p>
-                  <ul className={styles.ul}>
-                    {item.categoryNames.map((element, ind) => (
-                      <li key={ind} className={styles.li}>
-                        {ind}
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </Alert>
             ))}
-            <button>load more button</button>
           </div>
           <div className={styles.flex_right}>
             <img src={`data:image/jpeg;base64,${image}`} alt="title" />

@@ -5,6 +5,7 @@
 .flex_left {
   width: 70%;
   margin: 1%;
+  margin-bottom: 100px;
 }
 
 .flex_right {

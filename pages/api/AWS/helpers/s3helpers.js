@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -7,8 +7,8 @@ export const Params = (name, type, base64String) => {
     Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
     Key: `${name}.${type}`, // type is not required
     Body: base64String,
-    ACL: "public-read",
-    ContentEncoding: "base64", // required
+    ACL: 'public-read',
+    ContentEncoding: 'base64', // required
     ContentType: `image/${type}`, // required. Notice the back ticks
   };
 };
