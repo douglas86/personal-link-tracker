@@ -1,8 +1,8 @@
-import { useRouter } from "next/router";
-import { useContext, useEffect } from "react";
-import { ContextAdmin } from "./Admin/Context";
-import CreateCategory from "./Admin/CreateCategory";
-import Index from "./Admin/Index";
+import { useRouter } from 'next/router';
+import { useContext, useEffect } from 'react';
+import { ContextAdmin } from './Admin/Context';
+import CreateCategory from './Admin/CreateCategory';
+import Index from './Admin/Index';
 
 const Admin = () => {
   const context = useContext(ContextAdmin);
@@ -11,7 +11,7 @@ const Admin = () => {
 
   const Role = () => {
     switch (isRole) {
-      case "CreateCategory":
+      case 'CreateCategory':
         return <CreateCategory />;
       default:
         return <Index />;

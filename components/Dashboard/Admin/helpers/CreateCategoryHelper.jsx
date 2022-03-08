@@ -1,6 +1,6 @@
-import { useContext } from "react";
-import { ContextAdmin } from "../Context";
-import Resizer from "react-image-file-resizer";
+import { useContext } from 'react';
+import { ContextAdmin } from '../Context';
+import Resizer from 'react-image-file-resizer';
 
 const Handler = () => {
   const context = useContext(ContextAdmin);
@@ -11,10 +11,10 @@ const Handler = () => {
   const handleSubmission = async (data) => {
     const { title, description } = data;
     const handleSubmission = { title, description, file };
-    await fetch("/api/AWS/s3", {
-      method: "POST",
+    await fetch('/api/AWS/s3', {
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(handleSubmission),
     }).then(async (res) => {
@@ -23,7 +23,7 @@ const Handler = () => {
         ...state,
         message: result.message,
         showAlert: true,
-        alertColor: "success",
+        alertColor: 'success',
       });
     });
   };
@@ -39,7 +39,7 @@ const Handler = () => {
           event.target.files[0],
           300,
           300,
-          "JPEG",
+          'JPEG',
           100,
           0,
           (uri) => {
@@ -48,7 +48,7 @@ const Handler = () => {
               file: uri,
             });
           },
-          "base64",
+          'base64',
           200,
           200
         );
@@ -57,7 +57,7 @@ const Handler = () => {
           ...state,
           message: err.message,
           showAlert: true,
-          alertColor: "danger",
+          alertColor: 'danger',
         });
       }
     }

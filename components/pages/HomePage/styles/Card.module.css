@@ -1,0 +1,32 @@
+.flex_container {
+  display: flex;
+}
+
+.flex_left {
+  width: 70%;
+  margin: 1%;
+  margin-bottom: 100px;
+}
+
+.flex_right {
+  width: 30%;
+  margin: 1%;
+}
+
+.url {
+  color: red;
+}
+
+.p {
+  margin-right: 1%;
+}
+
+.ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.li {
+  display: inline;
+  margin-right: 1%;
+}

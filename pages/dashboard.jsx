@@ -1,17 +1,17 @@
-import { getSession, useSession } from "next-auth/react";
-import prisma from "../lib/prisma";
+import { getSession, useSession } from 'next-auth/react';
+import prisma from '../lib/prisma';
 
-import Admin from "../components/Dashboard/Admin";
-import Subscriber from "../components/Dashboard/Subscriber";
+import Admin from '../components/Dashboard/Admin';
+import Subscriber from '../components/Dashboard/Subscriber';
 
-import { ProviderAdmin } from "../components/Dashboard/Admin/Context";
+import { ProviderAdmin } from '../components/Dashboard/Admin/Context';
 
 const Dashboard = ({ user }) => {
   const { data: session } = useSession();
 
   const Role = (role) => {
     switch (role) {
-      case "admin":
+      case 'admin':
         return (
           <ProviderAdmin>
             <Admin />
