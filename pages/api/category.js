@@ -7,7 +7,7 @@ export default async (req, res) => {
     case 'POST':
       try {
         let result = await prisma.category.findFirst({
-          where: { title: body },
+          where: { title: body.split('/')[1] },
         });
         res.status(200).json({
           data: { result },

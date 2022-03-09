@@ -10,7 +10,7 @@ export default async function handler(req, res) {
     resources.Contents.map(async (item) => {
       let goParams = {
         Bucket: params.Bucket,
-        Key: item.Key,
+        Key: `${item.Key}`,
       };
       await s3
         .getObject(goParams)
@@ -28,7 +28,6 @@ export default async function handler(req, res) {
 
   switch (method) {
     case 'GET':
-      console.log('this');
       try {
         const params = {
           Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
@@ -38,6 +37,7 @@ export default async function handler(req, res) {
           .promise()
           .then(async (r) => {
             let result = await getObject(r, params);
+            console.log('r', r);
             return result;
           });
       } catch (err) {

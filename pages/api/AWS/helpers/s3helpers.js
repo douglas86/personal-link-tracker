@@ -18,7 +18,7 @@ export const CreateCategory = async (title, description, key, location) => {
     data: {
       title,
       description,
-      s3BucketKey: key,
+      s3BucketKey: `category/${key}`,
       image: location,
     },
   });

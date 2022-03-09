@@ -15,7 +15,7 @@ const Card = () => {
   const [count, setCount] = useState(2);
 
   // fetches data from backend
-  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const fetcher = (url) => fetch(url).then(async (res) => await res.json());
   const { data } = useSWR('/api/link', fetcher);
 
   // Filters all data from s3 bucket
@@ -71,7 +71,7 @@ const Card = () => {
         <div className={styles.flex_container}>
           <div className={styles.flex_left}>
             <h1 className="display-4 font-weight-bold">
-              {categoryTitle} - URL/Links
+              {categoryTitle.split('/')[1]} - URL/Links
             </h1>
             <Alert variant="secondary">{description}</Alert>
             {arr.slice(0, count).map((item, index) => (
@@ -90,7 +90,7 @@ const Card = () => {
           </div>
           <div className={styles.flex_right}>
             <img src={`data:image/jpeg;base64,${image}`} alt="title" />
-            <h4>Most popular in {categoryTitle}</h4>
+            <h4>Most popular in {categoryTitle.split('/')[1]}</h4>
             <p>show popular links</p>
           </div>
         </div>

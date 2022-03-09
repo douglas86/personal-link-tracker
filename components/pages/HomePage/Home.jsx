@@ -36,7 +36,7 @@ const Index = () => {
                     />
                   </div>
                   <div className={styles.title}>
-                    <h5>{v.title.split('.')[0]}</h5>
+                    <h5>{v.title.split('.')[0].split('/')[1]}</h5>
                   </div>
                 </div>
               </button>
