@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useContext, useEffect } from 'react';
 import { ContextAdmin } from './Admin/Context';
 import CreateCategory from './Admin/CreateCategory';
+import AllCategories from './Admin/AllCategories';
 import Index from './Admin/Index';
 
 const Admin = () => {
@@ -11,6 +12,8 @@ const Admin = () => {
 
   const Role = () => {
     switch (isRole) {
+      case 'All Categories':
+        return <AllCategories />;
       case 'CreateCategory':
         return <CreateCategory />;
       default:

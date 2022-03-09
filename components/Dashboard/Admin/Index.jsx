@@ -1,6 +1,7 @@
 import { useContext } from 'react';
-import { Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { ContextAdmin } from './Context';
+import styles from './styles/Index.module.css';
 
 const Index = () => {
   const context = useContext(ContextAdmin);
@@ -8,13 +9,24 @@ const Index = () => {
 
   return (
     <div>
-      <h1>This is the Admin Page</h1>
-      <Button
-        variant="outline-primary"
-        onClick={() => setIsRole('CreateCategory')}
-      >
-        Create Category
-      </Button>
+      <Container>
+        <h1>This is the Admin Page</h1>
+        <Button
+          className={styles.button}
+          variant="outline-primary"
+          onClick={() => setIsRole('CreateCategory')}
+        >
+          Create Category
+        </Button>
+        <br />
+        <Button
+          className={styles.button}
+          variant="outline-primary"
+          onClick={() => setIsRole('All Categories')}
+        >
+          All Categories
+        </Button>
+      </Container>
     </div>
   );
 };
