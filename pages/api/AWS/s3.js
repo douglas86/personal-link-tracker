@@ -37,7 +37,6 @@ export default async function handler(req, res) {
           .promise()
           .then(async (r) => {
             let result = await getObject(r, params);
-            console.log('r', r);
             return result;
           });
       } catch (err) {

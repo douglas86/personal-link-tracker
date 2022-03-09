@@ -20,9 +20,6 @@ const NavBar = () => {
   const { data: session } = useSession();
   const router = useRouter();
 
-  // This will call the api for creating or retieving logged in user
-  // Get('/api/auth/auth');
-
   // as soon as current page url changed it sets isShown to false
   useEffect(() => {
     setIsShownHome(false);
