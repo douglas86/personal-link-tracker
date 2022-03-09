@@ -5,7 +5,7 @@ const prisma = new PrismaClient();
 export const Params = (name, type, base64String) => {
   return {
     Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
-    Key: `${name}.${type}`, // type is not required
+    Key: `category/${name}.${type}`, // type is not required
     Body: base64String,
     ACL: 'public-read',
     ContentEncoding: 'base64', // required
