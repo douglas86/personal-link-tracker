@@ -1,12 +1,5 @@
-import Index from '../components/pages/HomePage/Index';
-import { HomeProvider } from '../components/pages/PageContext/HomeContext';
-
 const Home = () => {
-  return (
-    <HomeProvider>
-      <Index />
-    </HomeProvider>
-  );
+  return <h1>This is the home page</h1>;
 };
 
 export default Home;
