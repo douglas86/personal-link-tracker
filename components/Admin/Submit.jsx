@@ -6,13 +6,17 @@ import { Posting } from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { state, content, imageUploadButtonName } = context;
+  const { state, content } = context;
   const { name, image } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { name, content, image };
-    Posting('/api/category', data);
+    if (name !== '' && content !== '' && image !== '') {
+      Posting('/api/category', data);
+    } else {
+      alert('You have not finished filling out the form');
+    }
   };
 
   const handleChange = (name) => (e) => {
