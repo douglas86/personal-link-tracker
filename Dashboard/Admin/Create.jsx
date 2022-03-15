@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { Container } from 'react-bootstrap';
 import 'react-quill/dist/quill.bubble.css';
 
+import Header from '../../components/Admin/header.jsx';
+
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Create = () => {
@@ -116,7 +118,10 @@ const Create = () => {
 
   return (
     <>
-      <Container>{handleForm()}</Container>
+      <Container>
+        <Header />
+        {handleForm()}
+      </Container>
     </>
   );
 };
