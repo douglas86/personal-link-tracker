@@ -41,7 +41,7 @@ const Submit = () => {
           0,
           (uri) => {
             context.setState({
-              ...context.setState,
+              ...context.state,
               image: uri,
               success: '',
               error: '',
