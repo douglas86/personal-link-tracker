@@ -2,6 +2,7 @@ import Resizer from 'react-image-file-resizer';
 import { useContext, useEffect } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
+import { Posting } from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
@@ -11,16 +12,7 @@ const Submit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = { name, content, image };
-    fetch('/api/category', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    }).then(async (res) => {
-      let result = await res.json();
-      console.log('result', result);
-    });
+    Posting('/api/category', data);
   };
 
   const handleChange = (name) => (e) => {

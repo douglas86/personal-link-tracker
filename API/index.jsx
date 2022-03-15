@@ -5,3 +5,16 @@ export const Fetcher = (endpoint) => {
   const { data } = useSWR(endpoint, fetcher);
   return data;
 };
+
+export const Posting = (endpoint, data) => {
+  fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  }).then(async (res) => {
+    let result = await res.json();
+    console.log('result', result);
+  });
+};
