@@ -7,8 +7,6 @@ import Link from 'next/link';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Image from 'next/image';
 
-import { Get } from './api';
-
 // Images
 import Home from '../public/static/Images/home.jpeg';
 

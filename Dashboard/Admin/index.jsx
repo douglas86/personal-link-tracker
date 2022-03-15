@@ -1,5 +1,7 @@
+import styles from './styles/index.module.css';
+
 const Admin = () => {
-    return <h1>This is the admin page</h1>;
+    return <h1 className={styles.h1}>Admin Dashboard</h1>;
 };
 
 export default Admin;

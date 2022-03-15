@@ -1,0 +1,12 @@
+.h1 {
+    text-align: center;
+    margin: 5%;
+    font-family: 'Noto Serif', serif;
+    color: #5fedd1;
+    font-size: 80;
+    -webkit-text-stroke: 1px black;
+}
+
+.button {
+    margin: 10px;
+}
