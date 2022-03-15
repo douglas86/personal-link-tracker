@@ -1,13 +1,26 @@
 import Resizer from 'react-image-file-resizer';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 
 const Submit = () => {
   const context = useContext(AdminContext);
+  const { state, content, imageUploadButtonName } = context;
+  const { name, image } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const data = { name, content, image };
+    fetch('/api/category', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    }).then(async (res) => {
+      let result = await res.json();
+      console.log('result', result);
+    });
   };
 
   const handleChange = (name) => (e) => {

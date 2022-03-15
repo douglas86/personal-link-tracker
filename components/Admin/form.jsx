@@ -51,6 +51,7 @@ const Form = () => {
           <button
             style={{ margin: '0.5%' }}
             className="btn btn-outline-warning"
+            onClick={handleSubmit}
           >
             {buttonText}
           </button>
