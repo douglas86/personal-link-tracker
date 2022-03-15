@@ -3,6 +3,9 @@
 # vscode
 .vscode
 
+# neovim or vim
+*.vim
+
 # dependencies
 /node_modules
 /.pnp
