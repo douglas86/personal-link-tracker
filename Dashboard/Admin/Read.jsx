@@ -1,6 +1,6 @@
 import Header from '../../components/Admin/header';
 
-const All = () => {
+const Read = () => {
   return (
     <>
       <Header />
@@ -9,4 +9,4 @@ const All = () => {
   );
 };
 
-export default All;
+export default Read;

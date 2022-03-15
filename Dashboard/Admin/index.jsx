@@ -4,7 +4,7 @@ import styles from './styles/index.module.css';
 import Header from '../../components/Admin/header';
 
 import Create from './Create';
-import All from './All';
+import Read from './Read';
 
 const Admin = () => {
   return (
@@ -18,7 +18,7 @@ const Admin = () => {
           <Create />
         </Tab>
         <Tab eventKey="all" title="All Categories">
-          <All />
+          <Read />
         </Tab>
       </Tabs>
     </>
