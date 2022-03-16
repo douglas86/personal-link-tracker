@@ -1,7 +1,4 @@
-import { Container, Tabs, Tab } from 'react-bootstrap';
-import styles from './styles/index.module.css';
-
-import Header from '../../components/Admin/header';
+import { Tabs, Tab } from 'react-bootstrap';
 
 import Create from './Create';
 import Read from './Read';
@@ -10,7 +7,7 @@ const Admin = () => {
   return (
     <>
       <Tabs
-        defaultActiveKey="create"
+        defaultActiveKey="all"
         id="uncontrolled-tab-example"
         className="mb-3"
       >

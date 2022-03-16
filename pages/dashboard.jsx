@@ -9,7 +9,6 @@ import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
 
 const Dashboard = ({ data }) => {
-  console.log('data', data);
   const Role = (role) => {
     switch (role) {
       case 'admin':

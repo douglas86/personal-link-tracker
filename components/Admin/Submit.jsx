@@ -15,6 +15,7 @@ const Submit = () => {
     const body = { name, content, image };
     if (name !== '' && content !== '' && image !== '') {
       Posting('/api/category', body);
+      context.setState({ ...state, buttonText: 'Creating' });
     } else {
       alert('You have not finished filling out the form');
     }

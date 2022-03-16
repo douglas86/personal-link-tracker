@@ -22,9 +22,13 @@ const Apis = () => {
       body: JSON.stringify(body),
     }).then(async (res) => {
       let result = await res.json();
+      context.setContent('');
+      context.setImageUploadButtonName('Upload image');
       context.setState({
         ...state,
+        name: '',
         message: result.message,
+        image: '',
         alertColor: result.status !== 200 ? 'danger' : 'success',
         statusCode: result.status,
         showAlert: true,
