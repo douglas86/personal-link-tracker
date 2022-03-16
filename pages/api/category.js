@@ -54,35 +54,37 @@ export default async (req, res) => {
     case 'GET':
       try {
         let result = await prisma.category.findMany();
-        result.map(async (item) => {
-          const params = {
-            Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
-            Key: item.s3BucketKey,
-          };
-          await s3
-            .getObject(params)
-            .promise()
-            .then(async (r) => {
-              contents.push({
-                id: item.id,
-                title: item.title,
-                image: r.Body.toString('base64'),
+        if (result.length > contents.length) {
+          result.map(async (item) => {
+            const params = {
+              Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+              Key: item.s3BucketKey,
+            };
+            await s3
+              .getObject(params)
+              .promise()
+              .then(async (r) => {
+                contents.push({
+                  id: item.id,
+                  title: item.title,
+                  image: r.Body.toString('base64'),
+                });
+              })
+              .then(() => {
+                res.json({
+                  data: contents,
+                  status: 200,
+                  message: 'All data retrieved successfully',
+                });
+              })
+              .catch(() => {
+                res.json({
+                  status: 400,
+                  message: 'Something went wrong',
+                });
               });
-            })
-            .then(() => {
-              res.json({
-                data: contents,
-                status: 200,
-                message: 'All data retrieved successfully',
-              });
-            })
-            .catch(() => {
-              res.json({
-                status: 400,
-                message: 'Something went wrong',
-              });
-            });
-        });
+          });
+        }
       } catch (err) {
         res.json({
           status: 200,
