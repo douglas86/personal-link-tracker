@@ -1,10 +1,34 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 
+const contents = [];
+
 export default async (req, res) => {
   const { method, body } = req;
 
+  const getObject = async (resources, params) => {
+    resources.Contents.map(async (item) => {
+      let goParams = {
+        Bucket: params.Bucket,
+        Key: `${item.Key}`,
+      };
+      await s3
+        .getObject(goParams)
+        .promise()
+        .then((r) => {
+          contents.push({ item: item.Key, image: r.Body.toString('base64') });
+          if (resources.Contents.length === contents.length) {
+            res.json({
+              status: 200,
+              contents,
+            });
+          }
+        });
+    });
+  };
+
   switch (method) {
+    // create
     case 'POST':
       const { name, content, image } = body;
       const base64Data = new Buffer.from(
@@ -47,32 +71,25 @@ export default async (req, res) => {
           });
         });
       break;
+    // read;
+    case 'GET':
+      try {
+        const params = {
+          Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+        };
+        await s3
+          .listObjectsV2(params)
+          .promise()
+          .then(async (res) => {
+            let result = await getObject(res, params);
+            return result;
+          });
+      } catch (err) {
+        console.log('err', err);
+      }
+      break;
     default:
       console.log('You hit the wrong endpoint');
       break;
   }
 };
-
-// export default async (req, res) => {
-//   const { method, body } = req;
-//
-//   switch (method) {
-//     case 'POST':
-//       try {
-//         let result = await prisma.category.findFirst({
-//           where: { title: body.split('/')[1] },
-//         });
-//         res.status(200).json({
-//           data: { result },
-//         });
-//       } catch (err) {
-//         console.log('errCatch', err);
-//       }
-//       break;
-//     default:
-//       res.status(400).json({
-//         message: 'You have used the incorrect method',
-//       });
-//       break;
-//   }
-// };

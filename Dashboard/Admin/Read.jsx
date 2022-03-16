@@ -1,6 +1,10 @@
 import Header from '../../components/Admin/header';
+import Apis from '../../API';
 
 const Read = () => {
+  const { Fetcher } = Apis();
+  const fetching = Fetcher('/api/category');
+  console.log('fetching', fetching);
   return (
     <>
       <Header />
