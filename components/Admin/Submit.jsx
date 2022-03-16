@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Apis from '../../API';
+import { mutate } from 'swr';
 
 const Submit = () => {
   const context = useContext(AdminContext);

@@ -1,5 +1,5 @@
-import { useContext } from 'react';
-import useSWR from 'swr';
+import { useContext, useState, useEffect } from 'react';
+import useSWR, { mutate } from 'swr';
 
 import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
 
@@ -34,7 +34,7 @@ const Apis = () => {
   // read;
   const Fetcher = (endpoint) => {
     const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data } = useSWR(endpoint, fetcher);
+    const { data } = useSWR(endpoint, fetcher, { revalidateOnFocus: false });
     return data;
   };
 

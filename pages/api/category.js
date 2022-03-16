@@ -1,7 +1,7 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 
-const contents = [];
+let contents = [];
 
 export default async (req, res) => {
   const { method, body } = req;
@@ -53,38 +53,31 @@ export default async (req, res) => {
     // read;
     case 'GET':
       try {
-        let result = await prisma.category.findMany();
-        if (result.length > contents.length) {
-          result.map(async (item) => {
-            const params = {
-              Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
-              Key: item.s3BucketKey,
-            };
-            await s3
-              .getObject(params)
-              .promise()
-              .then(async (r) => {
-                contents.push({
-                  id: item.id,
-                  title: item.title,
-                  image: r.Body.toString('base64'),
+        await prisma.category.findMany().then(async (r) => {
+          if (r.length / 2 >= contents.length) {
+            r.map(async (item) => {
+              const params = {
+                Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+                Key: item.s3BucketKey,
+              };
+              await s3
+                .getObject(params)
+                .promise()
+                .then((res) => {
+                  contents.push({
+                    id: item.id,
+                    title: item.title,
+                    image: res.Body.toString('base64'),
+                  });
                 });
-              })
-              .then(() => {
-                res.json({
-                  data: contents,
-                  status: 200,
-                  message: 'All data retrieved successfully',
-                });
-              })
-              .catch(() => {
-                res.json({
-                  status: 400,
-                  message: 'Something went wrong',
-                });
-              });
+            });
+          }
+          res.json({
+            data: contents,
+            status: 200,
+            message: 'All data retrieved successfully',
           });
-        }
+        });
       } catch (err) {
         res.json({
           status: 200,
@@ -103,8 +96,8 @@ export default async (req, res) => {
         .delete({
           where: { id: body.id },
         })
-        .then(async () => {
-          await s3.deleteObject(goParams, (err) => {
+        .then(() => {
+          s3.deleteObject(goParams, (err) => {
             if (err) {
               console.log('err', err);
             } else {
@@ -115,6 +108,7 @@ export default async (req, res) => {
             }
           });
         });
+      break;
     default:
       res.json({
         status: 404,

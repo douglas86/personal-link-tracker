@@ -10,6 +10,8 @@ const Read = () => {
   const fetching = Fetcher('/api/category');
   const { handleConfirm } = Submit();
 
+  console.log('fetching', fetching);
+
   return (
     <>
       <Header />
