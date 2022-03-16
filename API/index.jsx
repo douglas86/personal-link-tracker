@@ -1,11 +1,11 @@
-import { useState, useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import useSWR from 'swr';
+
 import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
 
 const Apis = () => {
-  const [data, setDate] = useState();
   const context = useContext(AdminContext);
-  console.log('context', context);
+  const { state } = context;
 
   const Fetcher = (endpoint) => {
     const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -22,9 +22,14 @@ const Apis = () => {
       body: JSON.stringify(body),
     }).then(async (res) => {
       let result = await res.json();
-      setDate(result);
+      context.setState({
+        ...state,
+        message: result.message,
+        alertColor: result.status !== 200 ? 'danger' : 'success',
+        statusCode: result.status,
+        showAlert: true,
+      });
     });
-    return data;
   };
 
   return { Fetcher, Posting };

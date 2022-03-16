@@ -1,6 +1,7 @@
 import { Container } from 'react-bootstrap';
 
 import Header from '../../components/Admin/header.jsx';
+import ShowAlert from '../../components/Admin/alert';
 import Form from '../../components/Admin/form';
 
 const Create = () => {
@@ -8,6 +9,7 @@ const Create = () => {
     <>
       <Container>
         <Header />
+        <ShowAlert />
         <Form />
       </Container>
     </>

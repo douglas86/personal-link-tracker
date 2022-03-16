@@ -1,8 +1,7 @@
 import Resizer from 'react-image-file-resizer';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-// import { Posting } from '../../API';
 import Apis from '../../API';
 
 const Submit = () => {
@@ -11,23 +10,15 @@ const Submit = () => {
   const { name, image } = state;
   const { Posting } = Apis();
 
-  const [show, setShow] = useState(true);
-  const [message, setMessage] = useState('');
-  const [va, setVa] = useState({});
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = { name, content, image };
     if (name !== '' && content !== '' && image !== '') {
-      // Posting('/api/category', body);
-      let r = Posting('/api/category', body);
-      console.log('r', r);
+      Posting('/api/category', body);
     } else {
       alert('You have not finished filling out the form');
     }
   };
-
-  console.log('va', va);
 
   const handleChange = (name) => (e) => {
     context.setState({

@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext, useState, useEffect } from 'react';
 
 export const AdminContext = createContext();
 
@@ -10,11 +10,21 @@ export const AdminProvider = ({ children }) => {
     image: '',
     alertColor: '',
     statusCode: 0,
+    showAlert: false,
   });
+  const { showAlert } = state;
 
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
+
+  useEffect(() => {
+    if (showAlert) {
+      setTimeout(() => {
+        setState({ ...state, showAlert: false });
+      }, 10000);
+    }
+  }, [showAlert]);
 
   return (
     <AdminContext.Provider
