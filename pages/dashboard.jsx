@@ -1,36 +1,32 @@
-import { getSession, useSession } from 'next-auth/react';
+import { getSession } from 'next-auth/react';
+
 import prisma from '../lib/prisma';
 
-import Admin from '../components/Dashboard/Admin';
-import Subscriber from '../components/Dashboard/Subscriber';
+import Admin from '../Dashboard/Admin';
+import Subscriber from '../Dashboard/Subscriber';
 
-import { ProviderAdmin } from '../components/Dashboard/Admin/Context';
+import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
+import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
 
-const Dashboard = ({ user }) => {
-  const { data: session } = useSession();
-
+const Dashboard = ({ data }) => {
   const Role = (role) => {
     switch (role) {
       case 'admin':
         return (
-          <ProviderAdmin>
+          <AdminProvider>
             <Admin />
-          </ProviderAdmin>
+          </AdminProvider>
         );
       default:
-        return <Subscriber />;
+        return (
+          <SubscriberProvider>
+            <Subscriber />
+          </SubscriberProvider>
+        );
     }
   };
 
-  return (
-    <>
-      {user && session ? (
-        Role(JSON.parse(user).role)
-      ) : (
-        <h1>You are not logged in</h1>
-      )}
-    </>
-  );
+  return <>{Role(JSON.parse(data).role)}</>;
 };
 
 export const getServerSideProps = async (ctx) => {
@@ -42,7 +38,8 @@ export const getServerSideProps = async (ctx) => {
         },
       })
     : null;
-  return { props: { user: JSON.stringify(user) } };
+  const data = JSON.stringify(user);
+  return { props: { data } };
 };
 
 export default Dashboard;
