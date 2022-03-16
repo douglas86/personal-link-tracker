@@ -5,7 +5,6 @@ import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
 
 const Apis = () => {
   const context = useContext(AdminContext);
-  const { state } = context;
 
   const Fetcher = (endpoint) => {
     const fetcher = (url) => fetch(url).then((res) => res.json());
