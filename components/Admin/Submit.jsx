@@ -8,7 +8,7 @@ const Submit = () => {
   const context = useContext(AdminContext);
   const { state, content } = context;
   const { name, image } = state;
-  const { Posting } = Apis();
+  const { Posting, Deleting } = Apis();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,6 +32,17 @@ const Submit = () => {
   const handleContent = (e) => {
     context.setContent(e);
     context.setState({ ...context.state, message: '' });
+  };
+
+  const handleConfirm = (body) => {
+    let answer = window.confirm('Are you sure you want to delete');
+    if (answer) {
+      handleDelete(body);
+    }
+  };
+
+  const handleDelete = async (body) => {
+    Deleting('/api/category', body);
   };
 
   const handleImage = (event) => {
@@ -66,7 +77,13 @@ const Submit = () => {
     }
   };
 
-  return { handleSubmit, handleChange, handleContent, handleImage };
+  return {
+    handleConfirm,
+    handleSubmit,
+    handleChange,
+    handleContent,
+    handleImage,
+  };
 };
 
 export default Submit;

@@ -7,12 +7,7 @@ const Apis = () => {
   const context = useContext(AdminContext);
   const { state } = context;
 
-  const Fetcher = (endpoint) => {
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data } = useSWR(endpoint, fetcher);
-    return data;
-  };
-
+  // create;
   const Posting = (endpoint, body) => {
     fetch(endpoint, {
       method: 'POST',
@@ -36,7 +31,30 @@ const Apis = () => {
     });
   };
 
-  return { Fetcher, Posting };
+  // read;
+  const Fetcher = (endpoint) => {
+    const fetcher = (url) => fetch(url).then((res) => res.json());
+    const { data } = useSWR(endpoint, fetcher);
+    return data;
+  };
+
+  // update
+
+  // delete
+  const Deleting = (endpoint, body) => {
+    fetch(endpoint, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+      .then(async (res) => {
+        let result = await res.json();
+        return result;
+      })
+      .catch((err) => console.log('err', err));
+  };
+
+  return { Posting, Fetcher, Deleting };
 };
 
 export default Apis;
