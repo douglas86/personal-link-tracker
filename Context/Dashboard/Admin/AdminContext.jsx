@@ -5,10 +5,11 @@ export const AdminContext = createContext();
 export const AdminProvider = ({ children }) => {
   const [state, setState] = useState({
     name: '',
-    error: '',
-    success: '',
+    message: '',
     buttonText: 'Create',
     image: '',
+    alertColor: '',
+    statusCode: 0,
   });
 
   const [content, setContent] = useState('');

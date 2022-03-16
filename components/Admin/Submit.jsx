@@ -1,36 +1,45 @@
 import Resizer from 'react-image-file-resizer';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-import { Posting } from '../../API';
+// import { Posting } from '../../API';
+import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
   const { state, content } = context;
   const { name, image } = state;
+  const { Posting } = Apis();
+
+  const [show, setShow] = useState(true);
+  const [message, setMessage] = useState('');
+  const [va, setVa] = useState({});
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const data = { name, content, image };
+    const body = { name, content, image };
     if (name !== '' && content !== '' && image !== '') {
-      Posting('/api/category', data);
+      // Posting('/api/category', body);
+      let r = Posting('/api/category', body);
+      console.log('r', r);
     } else {
       alert('You have not finished filling out the form');
     }
   };
 
+  console.log('va', va);
+
   const handleChange = (name) => (e) => {
     context.setState({
       ...context.state,
       [name]: e.target.value,
-      error: '',
-      success: '',
+      message: '',
     });
   };
 
   const handleContent = (e) => {
     context.setContent(e);
-    context.setState({ ...context.state, success: '', error: '' });
+    context.setState({ ...context.state, message: '' });
   };
 
   const handleImage = (event) => {
@@ -52,8 +61,7 @@ const Submit = () => {
             context.setState({
               ...context.state,
               image: uri,
-              success: '',
-              error: '',
+              message: '',
             });
           },
           'base64',
