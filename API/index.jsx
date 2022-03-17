@@ -49,6 +49,13 @@ const Apis = () => {
     })
       .then(async (res) => {
         let result = await res.json();
+        context.setState({
+          ...state,
+          message: result.message,
+          alertColor: result.status !== 200 ? 'danger' : 'success',
+          statusCode: result.status,
+          showAlert: true,
+        });
         return result;
       })
       .catch((err) => console.log('err', err));

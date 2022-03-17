@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import { Container } from 'react-bootstrap';
 
 import Header from '../../components/Admin/header';
+import ShowAlert from '../../components/Admin/alert';
 import Apis from '../../API';
 import Submit from '../../components/Admin/Submit';
 import styles from './styles/Read.module.css';
@@ -15,6 +17,9 @@ const Read = () => {
   return (
     <>
       <Header />
+      <Container>
+        <ShowAlert />
+      </Container>
       <div className={styles.flex_container}>
         {fetching !== undefined
           ? Object.entries(fetching.data).map(([k, v]) => (
