@@ -54,9 +54,10 @@ export default async (req, res) => {
     // read;
     case 'GET':
       try {
+        contents.length = 0;
         await prisma.category.findMany().then(async (r) => {
-          if (r.length / 2 >= contents.length) {
-            r.map(async (item) => {
+          if (r.length >= contents.length) {
+            let promises = r.map(async (item) => {
               const params = {
                 Bucket: keys.aws.s3Bucket,
                 Key: item.s3BucketKey,
@@ -64,20 +65,22 @@ export default async (req, res) => {
               await s3
                 .getObject(params)
                 .promise()
-                .then((res) => {
+                .then((re) => {
                   contents.push({
                     id: item.id,
                     title: item.title,
-                    image: res.Body.toString('base64'),
+                    image: re.Body.toString('base64'),
                   });
                 });
             });
+            Promise.all(promises).then(() => {
+              res.json({
+                data: contents,
+                status: 200,
+                message: 'All data retrieved successfully',
+              });
+            });
           }
-          res.json({
-            data: contents,
-            status: 200,
-            message: 'All data retrieved successfully',
-          });
         });
       } catch (err) {
         res.json({

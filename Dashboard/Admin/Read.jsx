@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Container } from 'react-bootstrap';
+import useSWR from 'swr';
 
 import Header from '../../components/Admin/header';
 import ShowAlert from '../../components/Admin/alert';

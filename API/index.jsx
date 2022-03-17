@@ -1,11 +1,13 @@
-import { useContext, useState, useEffect } from 'react';
-import useSWR, { mutate } from 'swr';
+import { useContext } from 'react';
+import useSWR from 'swr';
+import { useRouter } from 'next/router';
 
 import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
 
 const Apis = () => {
   const context = useContext(AdminContext);
   const { state } = context;
+  const router = useRouter();
 
   // create;
   const Posting = (endpoint, body) => {
@@ -34,7 +36,9 @@ const Apis = () => {
   // read;
   const Fetcher = (endpoint) => {
     const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data } = useSWR(endpoint, fetcher, { revalidateOnFocus: false });
+    const { data } = useSWR(endpoint, fetcher, {
+      revalidateOnFocus: false,
+    });
     return data;
   };
 
@@ -56,6 +60,7 @@ const Apis = () => {
           statusCode: result.status,
           showAlert: true,
         });
+        router.reload(window.location.pathname);
         return result;
       })
       .catch((err) => console.log('err', err));
