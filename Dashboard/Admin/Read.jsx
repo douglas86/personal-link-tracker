@@ -29,7 +29,7 @@ const Read = () => {
                   />
                 </div>
                 <div className={styles.title}>
-                  <h5>{v.title.split('.')[0].split('/')[1]}</h5>
+                  <h5>{v.title}</h5>
                   <button
                     className={`btn btn-outline-success ${styles.button}`}
                   >

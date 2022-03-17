@@ -1,5 +1,6 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
+import { keys } from '../../lib/keys';
 
 let contents = [];
 
@@ -16,7 +17,7 @@ export default async (req, res) => {
       );
       const type = image.split(';')[0].split('/')[1];
       const params = {
-        Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+        Bucket: keys.aws.s3Bucket,
         Key: `category/${name}.${type}`,
         Body: base64Data,
         ACL: 'public-read',
@@ -57,7 +58,7 @@ export default async (req, res) => {
           if (r.length / 2 >= contents.length) {
             r.map(async (item) => {
               const params = {
-                Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+                Bucket: keys.aws.s3Bucket,
                 Key: item.s3BucketKey,
               };
               await s3
@@ -88,7 +89,7 @@ export default async (req, res) => {
     // delete
     case 'DELETE':
       const goParams = {
-        Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+        Bucket: keys.aws.s3Bucket,
         Key: `category/${body.title}.jpeg`,
       };
 

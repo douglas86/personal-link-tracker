@@ -1,4 +1,5 @@
 import { s3 } from '../../../lib/s3Client';
+import { keys } from '../../../lib/keys';
 import { CreateCategory, Params } from './helpers/s3helpers';
 
 let contents = [];
@@ -30,7 +31,7 @@ export default async function handler(req, res) {
     case 'GET':
       try {
         const params = {
-          Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+          Bucket: keys.aws.s3Bucket,
         };
         await s3
           .listObjectsV2(params)

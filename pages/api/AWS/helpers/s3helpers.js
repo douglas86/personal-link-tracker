@@ -1,10 +1,11 @@
 import { PrismaClient } from '@prisma/client';
+import { keys } from '../../../../lib/keys';
 
 const prisma = new PrismaClient();
 
 export const Params = (name, type, base64String) => {
   return {
-    Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+    Bucket: keys.aws.s3Bucket,
     Key: `category/${name}.${type}`, // type is not required
     Body: base64String,
     ACL: 'public-read',
