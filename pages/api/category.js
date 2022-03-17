@@ -1,10 +1,14 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
+import { keys } from '../../lib/keys';
+
+let contents = [];
 
 export default async (req, res) => {
   const { method, body } = req;
 
   switch (method) {
+    // create
     case 'POST':
       const { name, content, image } = body;
       const base64Data = new Buffer.from(
@@ -13,7 +17,7 @@ export default async (req, res) => {
       );
       const type = image.split(';')[0].split('/')[1];
       const params = {
-        Bucket: process.env.NEXT_PUBLIC_S3BUCKET_NAME,
+        Bucket: keys.aws.s3Bucket,
         Key: `category/${name}.${type}`,
         Body: base64Data,
         ACL: 'public-read',
@@ -47,32 +51,73 @@ export default async (req, res) => {
           });
         });
       break;
+    // read;
+    case 'GET':
+      try {
+        contents.length = 0;
+        await prisma.category.findMany().then(async (r) => {
+          if (r.length >= contents.length) {
+            let promises = r.map(async (item) => {
+              const params = {
+                Bucket: keys.aws.s3Bucket,
+                Key: item.s3BucketKey,
+              };
+              await s3
+                .getObject(params)
+                .promise()
+                .then((re) => {
+                  contents.push({
+                    id: item.id,
+                    title: item.title,
+                    image: re.Body.toString('base64'),
+                  });
+                });
+            });
+            Promise.all(promises).then(() => {
+              res.json({
+                data: contents,
+                status: 200,
+                message: 'All data retrieved successfully',
+              });
+            });
+          }
+        });
+      } catch (err) {
+        res.json({
+          status: 200,
+          message: err.message,
+        });
+      }
+      break;
+    // delete
+    case 'DELETE':
+      const goParams = {
+        Bucket: keys.aws.s3Bucket,
+        Key: `category/${body.title}.jpeg`,
+      };
+
+      await prisma.category
+        .delete({
+          where: { id: body.id },
+        })
+        .then(() => {
+          s3.deleteObject(goParams, (err) => {
+            if (err) {
+              console.log('err', err);
+            } else {
+              res.json({
+                status: 200,
+                message: 'All objects have successfully been deleted',
+              });
+            }
+          });
+        });
+      break;
     default:
-      console.log('You hit the wrong endpoint');
+      res.json({
+        status: 404,
+        message: 'Something went wrong',
+      });
       break;
   }
 };
-
-// export default async (req, res) => {
-//   const { method, body } = req;
-//
-//   switch (method) {
-//     case 'POST':
-//       try {
-//         let result = await prisma.category.findFirst({
-//           where: { title: body.split('/')[1] },
-//         });
-//         res.status(200).json({
-//           data: { result },
-//         });
-//       } catch (err) {
-//         console.log('errCatch', err);
-//       }
-//       break;
-//     default:
-//       res.status(400).json({
-//         message: 'You have used the incorrect method',
-//       });
-//       break;
-//   }
-// };
