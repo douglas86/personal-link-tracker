@@ -69,6 +69,7 @@ export default async (req, res) => {
                   contents.push({
                     id: item.id,
                     title: item.title,
+                    description: item.description,
                     image: re.Body.toString('base64'),
                   });
                 });
