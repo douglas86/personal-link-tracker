@@ -11,6 +11,7 @@ export const AdminProvider = ({ children }) => {
     alertColor: '',
     statusCode: 0,
     showAlert: false,
+    isUpdateState: false,
   });
 
   const { showAlert } = state;
@@ -18,13 +19,6 @@ export const AdminProvider = ({ children }) => {
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
-  const [updateFlag, setUpdateFlag] = useState(false);
-  const [update, setUpdate] = useState({
-    id: '',
-    title: '',
-    description: '',
-    image: '',
-  });
 
   useEffect(() => {
     if (showAlert) {
@@ -43,10 +37,6 @@ export const AdminProvider = ({ children }) => {
         setContent,
         imageUploadButtonName,
         setImageUploadButtonName,
-        updateFlag,
-        setUpdateFlag,
-        update,
-        setUpdate,
       }}
     >
       {children}

@@ -80,17 +80,8 @@ const Submit = () => {
   const handleUpdate = (data) => {
     const { id, title, description, image } = data;
 
-    context.setUpdateFlag(true);
-
-    context.setUpdate({
-      id,
-      title,
-      description,
-      image,
-    });
+    console.log('id', id);
   };
-
-  console.log('context', context);
 
   return {
     handleConfirm,
