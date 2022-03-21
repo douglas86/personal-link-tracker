@@ -12,11 +12,13 @@ export const AdminProvider = ({ children }) => {
     statusCode: 0,
     showAlert: false,
   });
+
   const { showAlert } = state;
 
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
+  const [updateFlag, setUpdateFlag] = useState(false);
   const [update, setUpdate] = useState({
     id: '',
     title: '',
@@ -41,6 +43,8 @@ export const AdminProvider = ({ children }) => {
         setContent,
         imageUploadButtonName,
         setImageUploadButtonName,
+        updateFlag,
+        setUpdateFlag,
         update,
         setUpdate,
       }}

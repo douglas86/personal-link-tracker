@@ -80,6 +80,8 @@ const Submit = () => {
   const handleUpdate = (data) => {
     const { id, title, description, image } = data;
 
+    context.setUpdateFlag(true);
+
     context.setUpdate({
       id,
       title,
