@@ -77,12 +77,17 @@ const Submit = () => {
     }
   };
 
+  const handleUpdate = () => {
+    console.log('context', context);
+  };
+
   return {
     handleConfirm,
     handleSubmit,
     handleChange,
     handleContent,
     handleImage,
+    handleUpdate,
   };
 };
 

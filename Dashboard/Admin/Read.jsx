@@ -1,6 +1,6 @@
+import { useContext } from 'react';
 import Image from 'next/image';
 import { Container } from 'react-bootstrap';
-import useSWR from 'swr';
 
 import Header from '../../components/Admin/header';
 import ShowAlert from '../../components/Admin/alert';
@@ -11,7 +11,7 @@ import styles from './styles/Read.module.css';
 const Read = () => {
   const { Fetcher } = Apis();
   const fetching = Fetcher('/api/category');
-  const { handleConfirm } = Submit();
+  const { handleConfirm, handleUpdate } = Submit();
 
   console.log('fetching', fetching);
 
@@ -37,6 +37,7 @@ const Read = () => {
                 <div className={styles.title}>
                   <h5>{v.title}</h5>
                   <button
+                    onClick={() => handleUpdate()}
                     className={`btn btn-outline-success ${styles.button}`}
                   >
                     Update
