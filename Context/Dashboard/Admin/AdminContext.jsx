@@ -17,6 +17,12 @@ export const AdminProvider = ({ children }) => {
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
+  const [update, setUpdate] = useState({
+    id: '',
+    title: '',
+    description: '',
+    image: '',
+  });
 
   useEffect(() => {
     if (showAlert) {
@@ -35,6 +41,8 @@ export const AdminProvider = ({ children }) => {
         setContent,
         imageUploadButtonName,
         setImageUploadButtonName,
+        update,
+        setUpdate,
       }}
     >
       {children}

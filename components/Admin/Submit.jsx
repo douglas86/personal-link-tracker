@@ -77,9 +77,18 @@ const Submit = () => {
     }
   };
 
-  const handleUpdate = () => {
-    console.log('context', context);
+  const handleUpdate = (data) => {
+    const { id, title, description, image } = data;
+
+    context.setUpdate({
+      id,
+      title,
+      description,
+      image,
+    });
   };
+
+  console.log('context', context);
 
   return {
     handleConfirm,

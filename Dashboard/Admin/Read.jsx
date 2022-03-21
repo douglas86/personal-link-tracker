@@ -37,7 +37,7 @@ const Read = () => {
                 <div className={styles.title}>
                   <h5>{v.title}</h5>
                   <button
-                    onClick={() => handleUpdate()}
+                    onClick={() => handleUpdate(v)}
                     className={`btn btn-outline-success ${styles.button}`}
                   >
                     Update
