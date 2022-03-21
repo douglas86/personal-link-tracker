@@ -7,18 +7,28 @@ import Submit from '../../components/Admin/Submit';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Form = () => {
-  const { handleSubmit, handleChange, handleContent, handleImage } = Submit();
+  const {
+    handleSubmit,
+    handleChange,
+    handleContent,
+    handleImage,
+    handleC,
+    handleCo,
+  } = Submit();
   const context = useContext(AdminContext);
   const { state, content, imageUploadButtonName } = context;
-  const { name, buttonText } = state;
+  const { title, buttonText, description, isUpdateState } = state;
+
+  console.log('description', description.length);
+
   return (
     <>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label className="text-muted">Name</label>
           <input
-            onChange={handleChange('name')}
-            value={name}
+            onChange={handleChange('title')}
+            value={title}
             type="text"
             className="form-control"
             required
@@ -26,9 +36,9 @@ const Form = () => {
           <div className="form-group">
             <label className="text-muted">Content</label>
             <ReactQuill
-              value={content}
               onChange={handleContent}
-              placeholder="Write something ..."
+              value={description}
+              placeholder="Write something"
               theme="bubble"
               className="pb-5 mb-3"
               style={{ border: '1px solid #666' }}

@@ -4,7 +4,9 @@ export const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const [state, setState] = useState({
-    name: '',
+    id: '',
+    title: '',
+    description: '',
     message: '',
     buttonText: 'Create',
     image: '',

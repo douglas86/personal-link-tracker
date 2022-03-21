@@ -7,8 +7,7 @@ import Apis from '../../API';
 const Submit = () => {
   const context = useContext(AdminContext);
   const { state, content } = context;
-  const { name, image } = state;
-  const { Posting, Deleting } = Apis();
+  const { name, image, description } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +30,6 @@ const Submit = () => {
 
   const handleContent = (e) => {
     context.setContent(e);
-    context.setState({ ...context.state, message: '' });
   };
 
   const handleConfirm = (body) => {
@@ -80,8 +78,18 @@ const Submit = () => {
   const handleUpdate = (data) => {
     const { id, title, description, image } = data;
 
-    console.log('id', id);
+    context.setState({
+      ...state,
+      id,
+      title,
+      description,
+      buttonText: 'Update',
+      image,
+      isUpdateState: true,
+    });
   };
+
+  console.log('state', context);
 
   return {
     handleConfirm,
