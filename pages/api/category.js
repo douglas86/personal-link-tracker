@@ -90,6 +90,9 @@ export default async (req, res) => {
         });
       }
       break;
+    case 'PUT':
+      console.log('body', body);
+      break;
     // delete
     case 'DELETE':
       const goParams = {

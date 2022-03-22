@@ -20,6 +20,7 @@ export const AdminProvider = ({ children }) => {
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
+  const [isTab, setIsTab] = useState('all');
 
   useEffect(() => {
     if (showAlert) {
@@ -38,6 +39,8 @@ export const AdminProvider = ({ children }) => {
         setContent,
         imageUploadButtonName,
         setImageUploadButtonName,
+        isTab,
+        setIsTab,
       }}
     >
       {children}

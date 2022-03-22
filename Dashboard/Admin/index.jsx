@@ -9,12 +9,11 @@ import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 
 const Admin = () => {
   const context = useContext(AdminContext);
-  const { state } = context;
+  const { state, isTab, setIsTab } = context;
   const { isUpdateState } = state;
-  const [key, setKey] = useState('all');
 
   useEffect(() => {
-    if (key === 'create') {
+    if (isTab === 'create') {
       context.setContent('');
       context.setState({
         id: '',
@@ -24,14 +23,14 @@ const Admin = () => {
         buttonText: 'Create',
       });
     }
-  }, [key]);
+  }, [isTab]);
 
   return (
     <>
       <Tabs
         id="uncontrolled-tab-example"
-        activeKey={key}
-        onSelect={(k) => setKey(k)}
+        activeKey={isTab}
+        onSelect={(k) => setIsTab(k)}
         className="mb-3"
       >
         <Tab eventKey="create" title="Create Category">
