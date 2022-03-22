@@ -4,7 +4,7 @@ import styles from './header.module.css';
 const Header = () => {
   return (
     <Container>
-      <h1 className={styles.h1}>Admin Dashboard</h1>
+      <h1 className={styles.h1}>Dashboard</h1>
     </Container>
   );
 };

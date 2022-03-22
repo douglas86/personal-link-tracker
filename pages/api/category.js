@@ -10,7 +10,7 @@ export default async (req, res) => {
   switch (method) {
     // create
     case 'POST':
-      const { name, content, image } = body;
+      const { title, content, image } = body;
       const base64Data = new Buffer.from(
         image.replace(/^data:image\/\w+;base64,/, ''),
         'base64'
@@ -18,7 +18,7 @@ export default async (req, res) => {
       const type = image.split(';')[0].split('/')[1];
       const params = {
         Bucket: keys.aws.s3Bucket,
-        Key: `category/${name}.${type}`,
+        Key: `category/${title}.${type}`,
         Body: base64Data,
         ACL: 'public-read',
         ContentEncoding: 'base64',
@@ -31,7 +31,7 @@ export default async (req, res) => {
           const { Key, Location } = resources;
           await prisma.category.create({
             data: {
-              title: name,
+              title: title,
               description: content,
               s3BucketKey: `${Key}`,
               image: Location,

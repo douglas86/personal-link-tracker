@@ -23,13 +23,14 @@ const Apis = () => {
       context.setImageUploadButtonName('Upload image');
       context.setState({
         ...state,
-        name: '',
+        title: '',
         message: result.message,
         image: '',
         alertColor: result.status !== 200 ? 'danger' : 'success',
         statusCode: result.status,
         showAlert: true,
       });
+      router.reload(window.location.pathname);
     });
   };
 

@@ -1,20 +1,27 @@
 import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
+import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { state, content } = context;
-  const { name, image, description } = state;
+  const { Posting } = Apis();
+  const { state, content, isTab } = context;
+  const { title, image } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const body = { name, content, image };
-    if (name !== '' && content !== '' && image !== '') {
-      Posting('/api/category', body);
-      context.setState({ ...state, buttonText: 'Creating' });
+    const body = { title, content, image };
+    console.log('body', body);
+    if (isTab === 'create') {
+      if (title !== '' && content !== '' && image !== '') {
+        Posting('/api/category', body);
+        context.setState({ ...state, buttonText: 'Creating' });
+      } else {
+        alert('You have not finished filling out the form');
+      }
     } else {
-      alert('You have not finished filling out the form');
+      console.log('update');
     }
   };
 
