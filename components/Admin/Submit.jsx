@@ -5,14 +5,14 @@ import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { Posting } = Apis();
+  const { Posting, Putting } = Apis();
   const { state, content, isTab } = context;
-  const { title, image } = state;
+  const { title, image, id } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const body = { title, content, image };
-    console.log('body', body);
+    const body = { title, content, image, id };
+    console.log('handleBody', body);
     if (isTab === 'create') {
       if (title !== '' && content !== '' && image !== '') {
         Posting('/api/category', body);
@@ -21,7 +21,8 @@ const Submit = () => {
         alert('You have not finished filling out the form');
       }
     } else {
-      console.log('update');
+      Putting('/api/category', body);
+      context.setState({ ...state, buttonText: 'Updating' });
     }
   };
 
@@ -93,6 +94,8 @@ const Submit = () => {
       image,
       isUpdateState: true,
     });
+
+    context.setIsTab('update');
   };
 
   return {

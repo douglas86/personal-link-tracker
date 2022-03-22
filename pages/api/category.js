@@ -91,7 +91,56 @@ export default async (req, res) => {
       }
       break;
     case 'PUT':
-      console.log('body', body);
+      await prisma.category
+        .update({
+          where: { id: body.id },
+          data: { title: body.title, description: body.content },
+        })
+        .then(async (resourse) => {
+          let result = await resourse;
+          const { s3BucketKey } = result;
+          const goParams = {
+            Bucket: keys.aws.s3Bucket,
+            Key: `category/${body.title}.jpeg`,
+          };
+          console.log('image', body.image);
+
+          const base64Data = new Buffer.from(
+            body.image.replace(/^data:image\/\w+;base64,/, ''),
+            'base64'
+          );
+          const params = {
+            Bucket: keys.aws.s3Bucket,
+            Key: `category/${body.title}.jpeg`,
+            Body: base64Data,
+            ACL: 'public-read',
+            ContentEncoding: 'base64',
+            ContentType: `image/jpeg`,
+          };
+          s3.deleteObject(goParams, async (err) => {
+            if (err) {
+              console.log('err', err);
+            } else {
+              await s3
+                .upload(params)
+                .promise()
+                .then(async (re) => {
+                  const { Key, Location } = re;
+                  await prisma.category
+                    .update({
+                      where: { id: body.id },
+                      data: { s3BucketKey: Key, image: Location },
+                    })
+                    .then(() => {
+                      res.json({
+                        status: 200,
+                        message: 'Data successfully updated',
+                      });
+                    });
+                });
+            }
+          });
+        });
       break;
     // delete
     case 'DELETE':
