@@ -8,6 +8,7 @@ import Header from '../../components/Admin/header.jsx';
 
 const Update = () => {
   const context = useContext(AdminContext);
+  console.log('context', context);
 
   return (
     <div>
@@ -19,7 +20,11 @@ const Update = () => {
           </div>
           <div className={styles.flex_img}>
             <img
-              src={`data:image/jpeg;base64,${context.state.image}`}
+              src={
+                context.state.image.indexOf('data') !== -1
+                  ? `${context.state.image}`
+                  : `data:image/jpeg;base64,${context.state.image}`
+              }
               alt="title"
             />
           </div>
