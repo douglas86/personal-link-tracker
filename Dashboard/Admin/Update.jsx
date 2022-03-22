@@ -8,8 +8,6 @@ import styles from './styles/Update.module.css';
 const Update = () => {
   const context = useContext(AdminContext);
 
-  console.log('context', context);
-
   return (
     <div>
       <Container>

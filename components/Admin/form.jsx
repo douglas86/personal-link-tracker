@@ -20,6 +20,7 @@ const Form = () => {
           <input
             onChange={handleChange('title')}
             value={title}
+            placeholder="Category title goes here ..."
             type="text"
             className="form-control"
             required
