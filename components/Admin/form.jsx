@@ -1,6 +1,5 @@
 import dynamic from 'next/dynamic';
 import { useContext } from 'react';
-import 'react-quill/dist/quill.bubble.css';
 
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Submit from '../../components/Admin/Submit';
@@ -11,7 +10,7 @@ const Form = () => {
   const { handleSubmit, handleChange, handleContent, handleImage } = Submit();
   const context = useContext(AdminContext);
   const { state, content, imageUploadButtonName } = context;
-  const { title, buttonText, description, isUpdateState } = state;
+  const { title, buttonText } = state;
 
   return (
     <>

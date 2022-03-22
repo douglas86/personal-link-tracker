@@ -1,4 +1,5 @@
 import { getSession } from 'next-auth/react';
+import 'react-quill/dist/quill.bubble.css';
 
 import prisma from '../lib/prisma';
 
