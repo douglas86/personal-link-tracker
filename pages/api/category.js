@@ -96,14 +96,11 @@ export default async (req, res) => {
           where: { id: body.id },
           data: { title: body.title, description: body.content },
         })
-        .then(async (resourse) => {
-          let result = await resourse;
-          const { s3BucketKey } = result;
+        .then(async () => {
           const goParams = {
             Bucket: keys.aws.s3Bucket,
             Key: `category/${body.title}.jpeg`,
           };
-          console.log('image', body.image);
 
           const base64Data = new Buffer.from(
             body.image.replace(/^data:image\/\w+;base64,/, ''),
