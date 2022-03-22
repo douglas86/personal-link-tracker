@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { useContext } from 'react';
+import 'react-quill/dist/quill.bubble.css';
 
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Submit from '../../components/Admin/Submit';
@@ -7,19 +8,10 @@ import Submit from '../../components/Admin/Submit';
 const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Form = () => {
-  const {
-    handleSubmit,
-    handleChange,
-    handleContent,
-    handleImage,
-    handleC,
-    handleCo,
-  } = Submit();
+  const { handleSubmit, handleChange, handleContent, handleImage } = Submit();
   const context = useContext(AdminContext);
   const { state, content, imageUploadButtonName } = context;
   const { title, buttonText, description, isUpdateState } = state;
-
-  console.log('description', description.length);
 
   return (
     <>
@@ -37,8 +29,8 @@ const Form = () => {
             <label className="text-muted">Content</label>
             <ReactQuill
               onChange={handleContent}
-              value={description}
-              placeholder="Write something"
+              value={content}
+              placeholder="Write something ..."
               theme="bubble"
               className="pb-5 mb-3"
               style={{ border: '1px solid #666' }}

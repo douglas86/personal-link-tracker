@@ -6,7 +6,6 @@ export const AdminProvider = ({ children }) => {
   const [state, setState] = useState({
     id: '',
     title: '',
-    description: '',
     message: '',
     buttonText: 'Create',
     image: '',

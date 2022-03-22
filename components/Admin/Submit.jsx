@@ -1,8 +1,6 @@
 import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
-import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
@@ -78,18 +76,17 @@ const Submit = () => {
   const handleUpdate = (data) => {
     const { id, title, description, image } = data;
 
+    context.setContent(description);
+
     context.setState({
       ...state,
       id,
       title,
-      description,
       buttonText: 'Update',
       image,
       isUpdateState: true,
     });
   };
-
-  console.log('state', context);
 
   return {
     handleConfirm,
