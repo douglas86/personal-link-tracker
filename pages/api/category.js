@@ -1,6 +1,7 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
+import { Post } from '../../Helper/api/categoryHelper';
 
 let contents = [];
 
@@ -10,34 +11,8 @@ export default async (req, res) => {
   switch (method) {
     // create
     case 'POST':
-      const { title, content, image } = body;
-      const base64Data = new Buffer.from(
-        image.replace(/^data:image\/\w+;base64,/, ''),
-        'base64'
-      );
-      const type = image.split(';')[0].split('/')[1];
-      const params = {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${title}.${type}`,
-        Body: base64Data,
-        ACL: 'public-read',
-        ContentEncoding: 'base64',
-        ContentType: `image/${type}`,
-      };
-      await s3
-        .upload(params)
-        .promise()
-        .then(async (resources) => {
-          const { Key, Location } = resources;
-          await prisma.category.create({
-            data: {
-              title: title,
-              description: content,
-              s3BucketKey: `${Key}`,
-              image: Location,
-            },
-          });
-        })
+      console.log('bodyPost', body);
+      Post(body)
         .then(() => {
           res.json({
             status: 200,
