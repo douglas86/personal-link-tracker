@@ -5,7 +5,7 @@ import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { Posting, Putting } = Apis();
+  const { Posting, Putting, Deleting } = Apis();
   const { state, content, isTab } = context;
   const { title, image, id } = state;
 

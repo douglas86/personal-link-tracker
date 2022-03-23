@@ -1,7 +1,4 @@
-import prisma from '../../lib/prisma';
-import { s3 } from '../../lib/s3Client';
-import { keys } from '../../lib/keys';
-import { Get, Post, Put } from '../../Helper/api/categoryHelper';
+import { Get, Post, Put, Delete } from '../../Helper/api/categoryHelper';
 
 export default async (req, res) => {
   const { method, body } = req;
@@ -47,27 +44,14 @@ export default async (req, res) => {
       break;
     // delete
     case 'DELETE':
-      const goParams = {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${body.title}.jpeg`,
-      };
-
-      await prisma.category
-        .delete({
-          where: { id: body.id },
-        })
-        .then(() => {
-          s3.deleteObject(goParams, (err) => {
-            if (err) {
-              console.log('err', err);
-            } else {
-              res.json({
-                status: 200,
-                message: 'All objects have successfully been deleted',
-              });
-            }
-          });
+      try {
+        Delete(body, res);
+      } catch (err) {
+        res.json({
+          status: 400,
+          message: 'Something went wrong',
         });
+      }
       break;
     default:
       res.json({

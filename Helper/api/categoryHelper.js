@@ -128,3 +128,28 @@ export const Put = async (body, res) => {
       });
     });
 };
+
+// delete
+export const Delete = async (body, res) => {
+  const goParams = {
+    Bucket: keys.aws.s3Bucket,
+    Key: `category/${body.title}.jpeg`,
+  };
+
+  await prisma.category
+    .delete({
+      where: { id: body.id },
+    })
+    .then(() => {
+      s3.deleteObject(goParams, (err) => {
+        if (err) {
+          console.log('err', err);
+        } else {
+          res.json({
+            status: 200,
+            message: 'All objects have successfully been deleted',
+          });
+        }
+      });
+    });
+};
