@@ -1,6 +1,6 @@
 .flex_container {
   display: flex;
-  padding: 3%;
+  padding: 1%;
 }
 
 .flex_left {
@@ -9,4 +9,9 @@
 
 .flex_right {
   width: 20%;
+  margin-left: 1%;
+}
+
+.popular_links {
+  margin-top: 10%;
 }

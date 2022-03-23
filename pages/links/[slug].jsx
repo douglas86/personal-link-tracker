@@ -1,3 +1,5 @@
+import renderHTML from 'react-render-html';
+
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
@@ -12,10 +14,24 @@ const Links = (props) => {
     <Container>
       <div className={styles.flex_container}>
         <div className={styles.flex_left}>
-          <h1>This is the left</h1>
+          <h1 className="display-4 font-weight-bold">
+            {prop.title} - URL/Links
+          </h1>
+          <div className="lead alert alert-secondary pt-4">
+            {renderHTML(prop.description || '')}
+          </div>
         </div>
         <div className={styles.flex_right}>
-          <h1>This is the right</h1>
+          <img
+            src={`data:image/jpeg;base64,${prop.image}`}
+            alt="image"
+            width={400}
+            height={200}
+          />
+          <div className={styles.popular_links}>
+            <h2 className="lead">Most popular in {prop.title}</h2>
+            <p>show popular links</p>
+          </div>
         </div>
       </div>
     </Container>
