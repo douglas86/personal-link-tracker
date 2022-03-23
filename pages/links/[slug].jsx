@@ -2,13 +2,23 @@ import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
 
+import styles from '../../public/static/styles/[slug].module.css';
+import { Container } from 'react-bootstrap';
+
 const Links = (props) => {
   const prop = JSON.parse(props.data);
   console.log('prop', prop);
   return (
-    <div>
-      <h1>This is links</h1>
-    </div>
+    <Container>
+      <div className={styles.flex_container}>
+        <div className={styles.flex_left}>
+          <h1>This is the left</h1>
+        </div>
+        <div className={styles.flex_right}>
+          <h1>This is the right</h1>
+        </div>
+      </div>
+    </Container>
   );
 };
 
