@@ -13,6 +13,20 @@ const type = (image) => {
   return image.split(';')[0].split('/')[1];
 };
 
+const bucketKeyParams = (s3Key) => {
+  return {
+    Bucket: keys.aws.s3Bucket,
+    Key: s3Key,
+  };
+};
+
+const goParams = (title) => {
+  return {
+    Bucket: keys.aws.s3Bucket,
+    Key: `category/${title}.jpeg`,
+  };
+};
+
 // create;
 export const Post = async (body) => {
   const { title, content, image } = body;
@@ -50,18 +64,15 @@ export const Get = async (res) => {
   await prisma.category.findMany().then(async (r) => {
     if (r.length >= contents.length) {
       let promises = r.map(async (item) => {
-        const params = {
-          Bucket: keys.aws.s3Bucket,
-          Key: item.s3BucketKey,
-        };
+        const { s3BucketKey, id, title, description } = item;
         await s3
-          .getObject(params)
+          .getObject(bucketKeyParams(s3BucketKey))
           .promise()
           .then((re) => {
             contents.push({
-              id: item.id,
-              title: item.title,
-              description: item.description,
+              id,
+              title,
+              description,
               image: re.Body.toString('base64'),
             });
           });
@@ -86,24 +97,15 @@ export const Put = async (body, res) => {
       data: { title: body.title, description: body.content },
     })
     .then(async () => {
-      const goParams = {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${body.title}.jpeg`,
-      };
-
-      const base64Data = new Buffer.from(
-        body.image.replace(/^data:image\/\w+;base64,/, ''),
-        'base64'
-      );
       const params = {
         Bucket: keys.aws.s3Bucket,
         Key: `category/${body.title}.jpeg`,
-        Body: base64Data,
+        Body: base64Data(body.image),
         ACL: 'public-read',
         ContentEncoding: 'base64',
         ContentType: `image/jpeg`,
       };
-      s3.deleteObject(goParams, async (err) => {
+      s3.deleteObject(goParams(body.title), async (err) => {
         if (err) {
           console.log('err', err);
         } else {
@@ -131,17 +133,12 @@ export const Put = async (body, res) => {
 
 // delete
 export const Delete = async (body, res) => {
-  const goParams = {
-    Bucket: keys.aws.s3Bucket,
-    Key: `category/${body.title}.jpeg`,
-  };
-
   await prisma.category
     .delete({
       where: { id: body.id },
     })
     .then(() => {
-      s3.deleteObject(goParams, (err) => {
+      s3.deleteObject(goParams(body.title), (err) => {
         if (err) {
           console.log('err', err);
         } else {
