@@ -1,9 +1,7 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
-import { Get, Post } from '../../Helper/api/categoryHelper';
-
-// let contents = [];
+import { Get, Post, Put } from '../../Helper/api/categoryHelper';
 
 export default async (req, res) => {
   const { method, body } = req;
@@ -36,54 +34,16 @@ export default async (req, res) => {
         });
       }
       break;
+    // update;
     case 'PUT':
-      await prisma.category
-        .update({
-          where: { id: body.id },
-          data: { title: body.title, description: body.content },
-        })
-        .then(async () => {
-          const goParams = {
-            Bucket: keys.aws.s3Bucket,
-            Key: `category/${body.title}.jpeg`,
-          };
-
-          const base64Data = new Buffer.from(
-            body.image.replace(/^data:image\/\w+;base64,/, ''),
-            'base64'
-          );
-          const params = {
-            Bucket: keys.aws.s3Bucket,
-            Key: `category/${body.title}.jpeg`,
-            Body: base64Data,
-            ACL: 'public-read',
-            ContentEncoding: 'base64',
-            ContentType: `image/jpeg`,
-          };
-          s3.deleteObject(goParams, async (err) => {
-            if (err) {
-              console.log('err', err);
-            } else {
-              await s3
-                .upload(params)
-                .promise()
-                .then(async (re) => {
-                  const { Key, Location } = re;
-                  await prisma.category
-                    .update({
-                      where: { id: body.id },
-                      data: { s3BucketKey: Key, image: Location },
-                    })
-                    .then(() => {
-                      res.json({
-                        status: 200,
-                        message: 'Data successfully updated',
-                      });
-                    });
-                });
-            }
-          });
+      try {
+        Put(body, res);
+      } catch (err) {
+        res.json({
+          status: 400,
+          message: 'Something went wrong',
         });
+      }
       break;
     // delete
     case 'DELETE':
