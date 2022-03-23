@@ -1,9 +1,9 @@
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
-import { Post } from '../../Helper/api/categoryHelper';
+import { Get, Post } from '../../Helper/api/categoryHelper';
 
-let contents = [];
+// let contents = [];
 
 export default async (req, res) => {
   const { method, body } = req;
@@ -11,7 +11,6 @@ export default async (req, res) => {
   switch (method) {
     // create
     case 'POST':
-      console.log('bodyPost', body);
       Post(body)
         .then(() => {
           res.json({
@@ -29,38 +28,10 @@ export default async (req, res) => {
     // read;
     case 'GET':
       try {
-        contents.length = 0;
-        await prisma.category.findMany().then(async (r) => {
-          if (r.length >= contents.length) {
-            let promises = r.map(async (item) => {
-              const params = {
-                Bucket: keys.aws.s3Bucket,
-                Key: item.s3BucketKey,
-              };
-              await s3
-                .getObject(params)
-                .promise()
-                .then((re) => {
-                  contents.push({
-                    id: item.id,
-                    title: item.title,
-                    description: item.description,
-                    image: re.Body.toString('base64'),
-                  });
-                });
-            });
-            Promise.all(promises).then(() => {
-              res.json({
-                data: contents,
-                status: 200,
-                message: 'All data retrieved successfully',
-              });
-            });
-          }
-        });
+        Get(res);
       } catch (err) {
         res.json({
-          status: 200,
+          status: 400,
           message: err.message,
         });
       }
