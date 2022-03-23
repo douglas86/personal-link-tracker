@@ -1,8 +1,4 @@
-import prisma from '../../lib/prisma';
-import { s3 } from '../../lib/s3Client';
-import { keys } from '../../lib/keys';
-
-let contents = [];
+import { Get, Post, Put, Delete } from '../../Helper/api/categoryHelper';
 
 export default async (req, res) => {
   const { method, body } = req;
@@ -10,34 +6,7 @@ export default async (req, res) => {
   switch (method) {
     // create
     case 'POST':
-      const { name, content, image } = body;
-      const base64Data = new Buffer.from(
-        image.replace(/^data:image\/\w+;base64,/, ''),
-        'base64'
-      );
-      const type = image.split(';')[0].split('/')[1];
-      const params = {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${name}.${type}`,
-        Body: base64Data,
-        ACL: 'public-read',
-        ContentEncoding: 'base64',
-        ContentType: `image/${type}`,
-      };
-      await s3
-        .upload(params)
-        .promise()
-        .then(async (resources) => {
-          const { Key, Location } = resources;
-          await prisma.category.create({
-            data: {
-              title: name,
-              description: content,
-              s3BucketKey: `${Key}`,
-              image: Location,
-            },
-          });
-        })
+      Post(body)
         .then(() => {
           res.json({
             status: 200,
@@ -54,64 +23,35 @@ export default async (req, res) => {
     // read;
     case 'GET':
       try {
-        contents.length = 0;
-        await prisma.category.findMany().then(async (r) => {
-          if (r.length >= contents.length) {
-            let promises = r.map(async (item) => {
-              const params = {
-                Bucket: keys.aws.s3Bucket,
-                Key: item.s3BucketKey,
-              };
-              await s3
-                .getObject(params)
-                .promise()
-                .then((re) => {
-                  contents.push({
-                    id: item.id,
-                    title: item.title,
-                    image: re.Body.toString('base64'),
-                  });
-                });
-            });
-            Promise.all(promises).then(() => {
-              res.json({
-                data: contents,
-                status: 200,
-                message: 'All data retrieved successfully',
-              });
-            });
-          }
-        });
+        Get(res);
       } catch (err) {
         res.json({
-          status: 200,
+          status: 400,
           message: err.message,
+        });
+      }
+      break;
+    // update;
+    case 'PUT':
+      try {
+        Put(body, res);
+      } catch (err) {
+        res.json({
+          status: 400,
+          message: 'Something went wrong',
         });
       }
       break;
     // delete
     case 'DELETE':
-      const goParams = {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${body.title}.jpeg`,
-      };
-
-      await prisma.category
-        .delete({
-          where: { id: body.id },
-        })
-        .then(() => {
-          s3.deleteObject(goParams, (err) => {
-            if (err) {
-              console.log('err', err);
-            } else {
-              res.json({
-                status: 200,
-                message: 'All objects have successfully been deleted',
-              });
-            }
-          });
+      try {
+        Delete(body, res);
+      } catch (err) {
+        res.json({
+          status: 400,
+          message: 'Something went wrong',
         });
+      }
       break;
     default:
       res.json({

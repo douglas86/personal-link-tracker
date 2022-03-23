@@ -1,23 +1,28 @@
 import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
-import 'react-quill/dist/quill.bubble.css';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Apis from '../../API';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { state, content } = context;
-  const { name, image } = state;
-  const { Posting, Deleting } = Apis();
+  const { Posting, Putting, Deleting } = Apis();
+  const { state, content, isTab } = context;
+  const { title, image, id } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const body = { name, content, image };
-    if (name !== '' && content !== '' && image !== '') {
-      Posting('/api/category', body);
-      context.setState({ ...state, buttonText: 'Creating' });
+    const body = { title, content, image, id };
+    console.log('handleBody', body);
+    if (isTab === 'create') {
+      if (title !== '' && content !== '' && image !== '') {
+        Posting('/api/category', body);
+        context.setState({ ...state, buttonText: 'Creating' });
+      } else {
+        alert('You have not finished filling out the form');
+      }
     } else {
-      alert('You have not finished filling out the form');
+      Putting('/api/category', body);
+      context.setState({ ...state, buttonText: 'Updating' });
     }
   };
 
@@ -31,7 +36,6 @@ const Submit = () => {
 
   const handleContent = (e) => {
     context.setContent(e);
-    context.setState({ ...context.state, message: '' });
   };
 
   const handleConfirm = (body) => {
@@ -77,12 +81,30 @@ const Submit = () => {
     }
   };
 
+  const handleUpdate = (data) => {
+    const { id, title, description, image } = data;
+
+    context.setContent(description);
+
+    context.setState({
+      ...state,
+      id,
+      title,
+      buttonText: 'Update',
+      image,
+      isUpdateState: true,
+    });
+
+    context.setIsTab('update');
+  };
+
   return {
     handleConfirm,
     handleSubmit,
     handleChange,
     handleContent,
     handleImage,
+    handleUpdate,
   };
 };
 

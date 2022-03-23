@@ -4,19 +4,23 @@ export const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
   const [state, setState] = useState({
-    name: '',
+    id: '',
+    title: '',
     message: '',
     buttonText: 'Create',
     image: '',
     alertColor: '',
     statusCode: 0,
     showAlert: false,
+    isUpdateState: false,
   });
+
   const { showAlert } = state;
 
   const [content, setContent] = useState('');
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState('Upload image');
+  const [isTab, setIsTab] = useState('all');
 
   useEffect(() => {
     if (showAlert) {
@@ -35,6 +39,8 @@ export const AdminProvider = ({ children }) => {
         setContent,
         imageUploadButtonName,
         setImageUploadButtonName,
+        isTab,
+        setIsTab,
       }}
     >
       {children}

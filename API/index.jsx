@@ -23,13 +23,14 @@ const Apis = () => {
       context.setImageUploadButtonName('Upload image');
       context.setState({
         ...state,
-        name: '',
+        title: '',
         message: result.message,
         image: '',
         alertColor: result.status !== 200 ? 'danger' : 'success',
         statusCode: result.status,
         showAlert: true,
       });
+      router.reload(window.location.pathname);
     });
   };
 
@@ -43,6 +44,24 @@ const Apis = () => {
   };
 
   // update
+  const Putting = (endpoint, body) => {
+    fetch(endpoint, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(async (res) => {
+      let result = await res.json();
+      context.setState({
+        ...state,
+        message: result.message,
+        alertColor: result.status !== 200 ? 'danger' : 'success',
+        statusCode: result.status,
+        showAlert: true,
+      });
+      router.reload(window.location.pathname);
+      return result;
+    });
+  };
 
   // delete
   const Deleting = (endpoint, body) => {
@@ -66,7 +85,7 @@ const Apis = () => {
       .catch((err) => console.log('err', err));
   };
 
-  return { Posting, Fetcher, Deleting };
+  return { Posting, Fetcher, Putting, Deleting };
 };
 
 export default Apis;
