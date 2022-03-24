@@ -27,6 +27,33 @@ const create = (props) => {
     };
   });
 
+  const showMedium = () => (
+    <>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value="video"
+            className="form-check-input"
+            name="medium"
+          />{' '}
+          Video
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value="book"
+            className="form-check-input"
+            name="medium"
+          />{' '}
+          Book
+        </label>
+      </div>
+    </>
+  );
+
   return (
     <Container>
       <div className={styles.flex_container}>
@@ -51,6 +78,10 @@ const create = (props) => {
           <div className="form-group">
             <label className="text-muted ml-4">Types</label>
             {showTypes()}
+          </div>
+          <div className="form-group">
+            <label className="text-muted ml-4">Medium</label>
+            {showMedium()}
           </div>
         </div>
         <div className={styles.flex_right}>
