@@ -1,5 +1,4 @@
 const createHelpers = (categories) => {
-  console.log('categories', categories);
   const showCategories = () => {
     return (
       <>

@@ -27,6 +27,33 @@ const create = (props) => {
     };
   });
 
+  const showTypes = () => (
+    <>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value="free"
+            className="form-check-input"
+            name="type"
+          />{' '}
+          Free
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value="paid"
+            className="form-check-input"
+            name="type"
+          />{' '}
+          Paid
+        </label>
+      </div>
+    </>
+  );
+
   return (
     <Container>
       <div className={styles.flex_container}>
@@ -48,6 +75,10 @@ const create = (props) => {
           >
             {showCategories()}
           </ul>
+          <div className="form-group">
+            <label className="text-muted ml-4">Types</label>
+            {showTypes()}
+          </div>
         </div>
         <div className={styles.flex_right}>
           <h1>Right side</h1>
