@@ -2,11 +2,13 @@ import { useState, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 
 import prisma from '../../../lib/prisma';
+import createHelpers from '../../../Helper/pages/user/link/createHelpers';
 import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
   const categories = JSON.parse(props.result);
-  console.log('categories', categories);
+  const { showCategories } = createHelpers(categories);
+  // console.log('categories', categories);
 
   const [screenSize, setScreenSize] = useState({
     dynamicWidth: 0,
@@ -25,20 +27,6 @@ const create = (props) => {
     };
   });
 
-  const showCategories = () => {
-    return (
-      <>
-        {categories
-          ? categories.map((item) => (
-              <li className="list-unstyled" key={item.id}>
-                <input type="checkbox" name={item.title} className="mr-2" />{' '}
-                <label className="form-check-label">{item.title}</label>
-              </li>
-            ))
-          : null}
-      </>
-    );
-  };
   return (
     <Container>
       <div className={styles.flex_container}>
