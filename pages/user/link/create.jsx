@@ -1,9 +1,28 @@
-const create = () => {
+import prisma from '../../../lib/prisma';
+import styles from '../../../public/static/styles/create.module.css';
+
+const create = (props) => {
+  const result = JSON.parse(props.result);
+  console.log('result', result);
   return (
-    <div>
-      <h1>This is the create section</h1>
+    <div className={styles.flex_container}>
+      <div className={styles.flex_left}>
+        <h1>Submit Link/URL</h1>
+      </div>
+      <div className={styles.flex_right}>
+        <h1>Right side</h1>
+      </div>
     </div>
   );
+};
+
+export const getServerSideProps = async () => {
+  const Categories = await prisma.category.findMany();
+  const result = JSON.stringify(Categories);
+
+  return {
+    props: { result },
+  };
 };
 
 export default create;
