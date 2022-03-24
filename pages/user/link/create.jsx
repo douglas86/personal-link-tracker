@@ -7,7 +7,7 @@ import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
   const categories = JSON.parse(props.result);
-  const { showCategories } = createHelpers(categories);
+  const { showCategories, showTypes } = createHelpers(categories);
   // console.log('categories', categories);
 
   const [screenSize, setScreenSize] = useState({
@@ -26,33 +26,6 @@ const create = (props) => {
       window.removeEventListener('resize', setDimension);
     };
   });
-
-  const showTypes = () => (
-    <>
-      <div className="form-check ml-3">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            value="free"
-            className="form-check-input"
-            name="type"
-          />{' '}
-          Free
-        </label>
-      </div>
-      <div className="form-check ml-3">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            value="paid"
-            className="form-check-input"
-            name="type"
-          />{' '}
-          Paid
-        </label>
-      </div>
-    </>
-  );
 
   return (
     <Container>
