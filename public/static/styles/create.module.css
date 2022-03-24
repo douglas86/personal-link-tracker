@@ -1,5 +1,6 @@
 .flex_container {
   display: flex;
+  padding: 3%;
 }
 
 .flex_left {
@@ -8,6 +9,7 @@
 
 .flex_right {
   width: 75%;
+  margin: 5%;
 }
 
 .button {

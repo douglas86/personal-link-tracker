@@ -1,18 +1,71 @@
+import { useState, useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+
 import prisma from '../../../lib/prisma';
 import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
-  const result = JSON.parse(props.result);
-  console.log('result', result);
+  const categories = JSON.parse(props.result);
+  console.log('categories', categories);
+
+  const [screenSize, setScreenSize] = useState({
+    dynamicWidth: 0,
+  });
+
+  const setDimension = () => {
+    setScreenSize({
+      dynamicWidth: window.innerWidth,
+    });
+  };
+
+  useEffect(function mount() {
+    window.addEventListener('resize', setDimension);
+    return function unMount() {
+      window.removeEventListener('resize', setDimension);
+    };
+  });
+
+  const showCategories = () => {
+    return (
+      <>
+        {categories
+          ? categories.map((item) => (
+              <li className="list-unstyled" key={item.id}>
+                <input type="checkbox" name={item.title} className="mr-2" />{' '}
+                <label className="form-check-label">{item.title}</label>
+              </li>
+            ))
+          : null}
+      </>
+    );
+  };
   return (
-    <div className={styles.flex_container}>
-      <div className={styles.flex_left}>
-        <h1>Submit Link/URL</h1>
+    <Container>
+      <div className={styles.flex_container}>
+        <div className={styles.flex_left}>
+          <h1>Submit Link/URL</h1>
+          <label className="text-muted ml-4">Categories</label>
+          <ul
+            style={{
+              maxHeight: '100px',
+              overflowY: 'scroll',
+              listStyle: 'none',
+              paddingLeft: 0,
+              width: screenSize.dynamicWidth < 800 ? '50%' : '200px',
+              margin:
+                screenSize.dynamicWidth < 800 && screenSize.dynamicWidth > 0
+                  ? '1% 25%'
+                  : '0%',
+            }}
+          >
+            {showCategories()}
+          </ul>
+        </div>
+        <div className={styles.flex_right}>
+          <h1>Right side</h1>
+        </div>
       </div>
-      <div className={styles.flex_right}>
-        <h1>Right side</h1>
-      </div>
-    </div>
+    </Container>
   );
 };
 
