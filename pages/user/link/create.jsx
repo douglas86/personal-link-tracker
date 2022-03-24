@@ -7,8 +7,10 @@ import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
   const categories = JSON.parse(props.result);
-  const { showCategories, showTypes } = createHelpers(categories);
+  const { state, showCategories, showTypes, showMedium } =
+    createHelpers(categories);
   // console.log('categories', categories);
+  console.log('state', state);
 
   const [screenSize, setScreenSize] = useState({
     dynamicWidth: 0,
@@ -26,33 +28,6 @@ const create = (props) => {
       window.removeEventListener('resize', setDimension);
     };
   });
-
-  const showMedium = () => (
-    <>
-      <div className="form-check ml-3">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            value="video"
-            className="form-check-input"
-            name="medium"
-          />{' '}
-          Video
-        </label>
-      </div>
-      <div className="form-check ml-3">
-        <label className="form-check-label">
-          <input
-            type="radio"
-            value="book"
-            className="form-check-input"
-            name="medium"
-          />{' '}
-          Book
-        </label>
-      </div>
-    </>
-  );
 
   return (
     <Container>
