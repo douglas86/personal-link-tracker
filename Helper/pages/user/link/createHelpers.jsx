@@ -1,11 +1,18 @@
 import { useState } from 'react';
+import { useSession } from 'next-auth/react';
+
+import styles from '../../../../public/static/styles/create.module.css';
 
 const createHelpers = (categories) => {
   const [state, setState] = useState({
     category: [],
     type: '',
     medium: '',
+    formTitle: '',
+    formURL: '',
   });
+
+  const { data: session } = useSession();
 
   const { category } = state;
 
@@ -98,11 +105,45 @@ const createHelpers = (categories) => {
     </>
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('state', state);
+  };
+
+  const showForm = () => (
+    <form onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label className="text-muted">Title</label>
+        <input
+          type="text"
+          onChange={(e) => setState({ ...state, formTitle: e.target.value })}
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label className="text-muted">URL</label>
+        <input
+          type="text"
+          onChange={(e) => setState({ ...state, formURL: e.target.value })}
+          className="form-control"
+        />
+      </div>
+      <button
+        disabled={!session}
+        className={`btn btn-outline-warning ${styles.button}`}
+        type="submit"
+      >
+        {session ? 'Post' : 'Login to post'}
+      </button>
+    </form>
+  );
+
   return {
     state,
     showCategories,
     showTypes,
     showMedium,
+    showForm,
   };
 };
 

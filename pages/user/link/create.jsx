@@ -7,10 +7,9 @@ import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
   const categories = JSON.parse(props.result);
-  const { state, showCategories, showTypes, showMedium } =
+  const { state, showCategories, showTypes, showMedium, showForm } =
     createHelpers(categories);
   // console.log('categories', categories);
-  console.log('state', state);
 
   const [screenSize, setScreenSize] = useState({
     dynamicWidth: 0,
@@ -59,9 +58,7 @@ const create = (props) => {
             {showMedium()}
           </div>
         </div>
-        <div className={styles.flex_right}>
-          <h1>Right side</h1>
-        </div>
+        <div className={styles.flex_right}>{showForm()}</div>
       </div>
     </Container>
   );
