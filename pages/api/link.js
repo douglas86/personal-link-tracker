@@ -19,39 +19,23 @@ export default async (req, res) => {
       }
       break;
     case 'POST':
-      const { title, url, categories, type, medium } = body;
+      const { category, type, medium, formTitle, formURL } = body;
       try {
-        let result =
-          title && url && categories && type && medium
-            ? await prisma.links
-                .create({
-                  data: {
-                    postedBy: { connect: { email: session?.user?.email } },
-                    title,
-                    url,
-                    categoryNames: categories,
-                    userName: session?.user?.name,
-                    type,
-                    medium,
-                  },
-                })
-                .then(() => {
-                  res.status(200).json({
-                    message: 'You have successfully saved to db',
-                  });
-                })
-                .catch(() => {
-                  res.status(400).json({
-                    message: 'There was an error saving your data',
-                  });
-                })
-            : res.status(400).json({
-                message: 'The form that you have filled out is incomplete',
-              });
+        await prisma.links
+          .create({
+            data: {
+              postedBy: { connect: { email: session?.user?.email } },
+              userName: session?.user?.name,
+              categoryNames: category,
+              type,
+              medium,
+              title: formTitle,
+              url: formURL,
+            },
+          })
+          .then(() => console.log('Data has been saved!!'));
       } catch (err) {
-        res.status(400).json({
-          message: err.message,
-        });
+        console.log('err', err);
       }
       break;
     default:

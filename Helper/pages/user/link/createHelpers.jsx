@@ -6,15 +6,16 @@ import styles from '../../../../public/static/styles/create.module.css';
 const createHelpers = (categories) => {
   const [state, setState] = useState({
     category: [],
+    checkbox: true,
     type: '',
     medium: '',
     formTitle: '',
     formURL: '',
   });
 
-  const { data: session } = useSession();
+  const { category, checkbox, type, medium, formTitle, formURL } = state;
 
-  const { category } = state;
+  const { data: session } = useSession();
 
   const handleToggle = (c) => () => {
     const all = [...category];
@@ -37,6 +38,7 @@ const createHelpers = (categories) => {
                   type="checkbox"
                   name={item.title}
                   className="mr-2"
+                  checked={category.includes(`${item.title}`)}
                   onChange={handleToggle(item.title)}
                 />{' '}
                 <label className="form-check-label">{item.title}</label>
@@ -53,8 +55,9 @@ const createHelpers = (categories) => {
         <label className="form-check-label">
           <input
             type="radio"
-            value="free"
+            value={type}
             className="form-check-input"
+            checked={type === 'Free'}
             onChange={() => setState({ ...state, type: 'Free' })}
             name="type"
           />{' '}
@@ -65,8 +68,9 @@ const createHelpers = (categories) => {
         <label className="form-check-label">
           <input
             type="radio"
-            value="paid"
+            value={type}
             className="form-check-input"
+            checked={type === 'Paid'}
             onChange={() => setState({ ...state, type: 'Paid' })}
             name="type"
           />{' '}
@@ -82,8 +86,8 @@ const createHelpers = (categories) => {
         <label className="form-check-label">
           <input
             type="radio"
-            value="video"
             className="form-check-input"
+            checked={medium === 'Video'}
             onChange={() => setState({ ...state, medium: 'Video' })}
             name="medium"
           />{' '}
@@ -94,8 +98,8 @@ const createHelpers = (categories) => {
         <label className="form-check-label">
           <input
             type="radio"
-            value="book"
             className="form-check-input"
+            checked={medium === 'Book'}
             onChange={() => setState({ ...state, medium: 'Book' })}
             name="medium"
           />{' '}
@@ -107,7 +111,20 @@ const createHelpers = (categories) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('state', state);
+    fetch('/api/link', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(state),
+    });
+
+    setState({
+      ...state,
+      category: [],
+      type: '',
+      medium: '',
+      formTitle: '',
+      formURL: '',
+    });
   };
 
   const showForm = () => (
@@ -117,6 +134,7 @@ const createHelpers = (categories) => {
         <input
           type="text"
           onChange={(e) => setState({ ...state, formTitle: e.target.value })}
+          value={formTitle}
           className="form-control"
         />
       </div>
@@ -125,6 +143,7 @@ const createHelpers = (categories) => {
         <input
           type="text"
           onChange={(e) => setState({ ...state, formURL: e.target.value })}
+          value={formURL}
           className="form-control"
         />
       </div>
