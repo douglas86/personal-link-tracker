@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Alert } from 'react-bootstrap';
 
 import prisma from '../../../lib/prisma';
 import createHelpers from '../../../Helper/pages/user/link/createHelpers';
@@ -7,9 +7,9 @@ import styles from '../../../public/static/styles/create.module.css';
 
 const create = (props) => {
   const categories = JSON.parse(props.result);
-  const { state, showCategories, showTypes, showMedium, showForm } =
+  const { state, setState, showCategories, showTypes, showMedium, showForm } =
     createHelpers(categories);
-  // console.log('categories', categories);
+  const { message, showAlert, alertColor } = state;
 
   const [screenSize, setScreenSize] = useState({
     dynamicWidth: 0,
@@ -27,6 +27,16 @@ const create = (props) => {
       window.removeEventListener('resize', setDimension);
     };
   });
+
+  useEffect(() => {
+    if (showAlert) {
+      setTimeout(() => {
+        setState({ ...state, showAlert: false });
+      }, 10000);
+    }
+  }, [showAlert]);
+
+  console.log('state', state);
 
   return (
     <Container>
@@ -58,7 +68,14 @@ const create = (props) => {
             {showMedium()}
           </div>
         </div>
-        <div className={styles.flex_right}>{showForm()}</div>
+        <div className={styles.flex_right}>
+          {showAlert ? (
+            <Alert variant={alertColor}>
+              <Alert.Heading>{message}</Alert.Heading>
+            </Alert>
+          ) : null}
+          {showForm()}
+        </div>
       </div>
     </Container>
   );

@@ -33,7 +33,12 @@ export default async (req, res) => {
               url: formURL,
             },
           })
-          .then(() => console.log('Data has been saved!!'));
+          .then(() => {
+            res.json({
+              status: 200,
+              message: 'Data has been successfully saved to db',
+            });
+          });
       } catch (err) {
         console.log('err', err);
       }

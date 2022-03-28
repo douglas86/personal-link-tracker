@@ -6,14 +6,17 @@ import styles from '../../../../public/static/styles/create.module.css';
 const createHelpers = (categories) => {
   const [state, setState] = useState({
     category: [],
-    checkbox: true,
     type: '',
     medium: '',
     formTitle: '',
     formURL: '',
+    message: '',
+    statusCode: '',
+    alertColor: '',
+    showAlert: false,
   });
 
-  const { category, checkbox, type, medium, formTitle, formURL } = state;
+  const { category, type, medium, formTitle, formURL } = state;
 
   const { data: session } = useSession();
 
@@ -115,15 +118,20 @@ const createHelpers = (categories) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(state),
-    });
-
-    setState({
-      ...state,
-      category: [],
-      type: '',
-      medium: '',
-      formTitle: '',
-      formURL: '',
+    }).then(async (res) => {
+      let result = await res.json();
+      setState({
+        ...state,
+        category: [],
+        type: '',
+        medium: '',
+        formTitle: '',
+        formURL: '',
+        message: result.message,
+        statusCode: result.status,
+        alertColor: 'success',
+        showAlert: true,
+      });
     });
   };
 
@@ -159,6 +167,7 @@ const createHelpers = (categories) => {
 
   return {
     state,
+    setState,
     showCategories,
     showTypes,
     showMedium,
