@@ -1,15 +1,22 @@
 import renderHTML from 'react-render-html';
+import useSWR from 'swr';
+import { Container, Alert } from 'react-bootstrap';
 
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
 
 import styles from '../../public/static/styles/[slug].module.css';
-import { Container } from 'react-bootstrap';
 
 const Links = (props) => {
   const prop = JSON.parse(props.data);
   console.log('prop', prop);
+
+  const fetcher = (url) => fetch(url).then((res) => res.json());
+  const { data } = useSWR('/api/link', fetcher);
+
+  console.log('data', data);
+
   return (
     <Container>
       <div className={styles.flex_container}>
@@ -20,6 +27,48 @@ const Links = (props) => {
           <div className="lead alert alert-secondary pt-4">
             {renderHTML(prop.description || '')}
           </div>
+          {data
+            ? Object.entries(data.data).map(([key, value]) => (
+                <div key={key}>
+                  <Alert variant="primary">
+                    <Alert.Heading>{value.title}</Alert.Heading>
+                    <p>{value.url}</p>
+                    <div className={styles.alert_bottom_flex}>
+                      <>
+                        {value.medium === 'Book' ? (
+                          <p className={styles.alert_p}>Book</p>
+                        ) : (
+                          <p>Book/</p>
+                        )}
+                        {value.medium === 'Video' ? (
+                          <p className={styles.alert_p}>Video</p>
+                        ) : (
+                          <p>/Video</p>
+                        )}
+                        {value.type === 'Free' ? (
+                          <p
+                            style={{ marginLeft: '10px' }}
+                            className={styles.alert_p}
+                          >
+                            Free
+                          </p>
+                        ) : (
+                          <p style={{ marginLeft: '10px' }}>Free/</p>
+                        )}
+                        {value.type === 'Paid' ? (
+                          <p className={styles.alert_p}>Paid</p>
+                        ) : (
+                          <p>/Paid</p>
+                        )}
+                        <p style={{ marginLeft: '10%' }}>
+                          Created by {value.userName}
+                        </p>
+                      </>
+                    </div>
+                  </Alert>
+                </div>
+              ))
+            : null}
         </div>
         <div className={styles.flex_right}>
           <img

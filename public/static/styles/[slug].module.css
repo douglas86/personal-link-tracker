@@ -15,3 +15,21 @@
 .popular_links {
   margin-top: 10%;
 }
+
+.alert_bottom_flex {
+  display: flex;
+}
+
+.alert_bottom_left {
+  display: flex;
+}
+
+.alert_p {
+  color: red;
+}
+
+@media only screen and (max-width: 400px) {
+  .flex_container {
+    display: inline-block;
+  }
+}
