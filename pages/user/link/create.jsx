@@ -9,7 +9,16 @@ const create = (props) => {
   const categories = JSON.parse(props.result);
   const { state, setState, showCategories, showTypes, showMedium, showForm } =
     createHelpers(categories);
-  const { message, showAlert, alertColor } = state;
+  const {
+    category,
+    formTitle,
+    formURL,
+    type,
+    medium,
+    message,
+    showAlert,
+    alertColor,
+  } = state;
 
   const [screenSize, setScreenSize] = useState({
     dynamicWidth: 0,

@@ -114,25 +114,40 @@ const createHelpers = (categories) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch('/api/link', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(state),
-    }).then(async (res) => {
-      let result = await res.json();
+    if (
+      category.length === 0 ||
+      medium === '' ||
+      type === '' ||
+      formTitle === '' ||
+      formURL === ''
+    ) {
       setState({
         ...state,
-        category: [],
-        type: '',
-        medium: '',
-        formTitle: '',
-        formURL: '',
-        message: result.message,
-        statusCode: result.status,
-        alertColor: 'success',
+        message: 'Data on form not filled out correctly',
+        alertColor: 'danger',
         showAlert: true,
       });
-    });
+    } else {
+      fetch('/api/link', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      }).then(async (res) => {
+        let result = await res.json();
+        setState({
+          ...state,
+          category: [],
+          type: '',
+          medium: '',
+          formTitle: '',
+          formURL: '',
+          message: result.message,
+          statusCode: result.status,
+          alertColor: 'success',
+          showAlert: true,
+        });
+      });
+    }
   };
 
   const showForm = () => (
