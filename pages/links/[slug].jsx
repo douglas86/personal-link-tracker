@@ -10,12 +10,12 @@ import styles from '../../public/static/styles/[slug].module.css';
 
 const Links = (props) => {
   const prop = JSON.parse(props.data);
-  console.log('prop', prop);
+  const links = JSON.parse(props.links);
+
+  console.log('links', links);
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
   const { data } = useSWR('/api/link', fetcher);
-
-  console.log('data', data);
 
   return (
     <Container>
@@ -94,6 +94,18 @@ export const getServerSideProps = async ({ query }) => {
       title: slug,
     },
   });
+
+  const Links = await prisma.links.findMany({
+    where: {
+      categoryNames: {
+        has: slug,
+      },
+    },
+    take: 3,
+  });
+
+  console.log('Links', Links);
+
   const { title, description, s3BucketKey } = Prisma;
 
   const params = {
@@ -115,7 +127,7 @@ export const getServerSideProps = async ({ query }) => {
   };
 
   return {
-    props: { data: JSON.stringify(data) },
+    props: { data: JSON.stringify(data), links: JSON.stringify(Links) },
   };
 };
 
