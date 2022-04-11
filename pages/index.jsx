@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+
 import useSWR from 'swr';
 
 import styles from '../public/static/styles/index.module.css';
@@ -14,23 +16,25 @@ const Home = () => {
       <h1 className={styles.title}>Browse Tutorial/Courses</h1>
       <div className={styles.flex_container}>
         {data !== undefined
-          ? Object.entries(data.data).map(([k, v]) => (
-              <button key={k} className={styles.button}>
-                <div className={styles.contents}>
-                  <div className={styles.flex_image}>
-                    <Image
-                      className={styles.image}
-                      src={`data:image/jpeg;base64,${v.image}`}
-                      alt={v.title}
-                      width={400}
-                      height={200}
-                    />
+          ? Object.entries(data.data).map(([key, value]) => (
+              <Link key={key} href={`/links/${value.title}`} passHref>
+                <a className={styles.button}>
+                  <div className={styles.contents}>
+                    <div className={styles.flex_image}>
+                      <Image
+                        className={styles.image}
+                        src={`data:image/jpeg;base64,${value.image}`}
+                        alt={value.title}
+                        width={400}
+                        height={200}
+                      />
+                    </div>
+                    <div className={styles.title}>
+                      <h5>{value.title}</h5>
+                    </div>
                   </div>
-                  <div className={styles.title}>
-                    <h5>{v.title}</h5>
-                  </div>
-                </div>
-              </button>
+                </a>
+              </Link>
             ))
           : null}
       </div>

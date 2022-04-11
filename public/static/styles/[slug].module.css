@@ -1,0 +1,35 @@
+.flex_container {
+  display: flex;
+  padding: 1%;
+}
+
+.flex_left {
+  width: 75%;
+}
+
+.flex_right {
+  width: 20%;
+  margin-left: 1%;
+}
+
+.popular_links {
+  margin-top: 10%;
+}
+
+.alert_bottom_flex {
+  display: flex;
+}
+
+.alert_bottom_left {
+  display: flex;
+}
+
+.alert_p {
+  color: red;
+}
+
+@media only screen and (max-width: 400px) {
+  .flex_container {
+    display: inline-block;
+  }
+}

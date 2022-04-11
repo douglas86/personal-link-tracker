@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import 'react-quill/dist/quill.bubble.css';
 
 import prisma from '../lib/prisma';
@@ -10,6 +10,8 @@ import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
 
 const Dashboard = ({ data }) => {
+  const { session } = useSession();
+
   const Role = (role) => {
     switch (role) {
       case 'admin':
@@ -27,7 +29,11 @@ const Dashboard = ({ data }) => {
     }
   };
 
-  return <>{Role(JSON.parse(data).role)}</>;
+  return (
+    <>
+      {session ? Role(JSON.parse(data).role) : <h1>You are not signed in</h1>}
+    </>
+  );
 };
 
 export const getServerSideProps = async (ctx) => {
