@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import Link from 'next/link';
-import { Container, Alert } from 'react-bootstrap';
+import { Container, Alert, Button } from 'react-bootstrap';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroller';
 
@@ -62,6 +62,8 @@ const Subscriber = () => {
               )}
             </>
           </div>
+          <Button variant="danger">Delete</Button>{' '}
+          <Button variant="primary">Update</Button>
         </Alert>
       </div>
     ));
