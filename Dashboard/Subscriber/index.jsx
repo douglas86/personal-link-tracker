@@ -30,6 +30,15 @@ const Subscriber = () => {
     setSkip(toSkip);
   };
 
+  const handleDelete = async (id) => {
+    let answer = window.confirm('Are you sure you want to delete');
+    if (answer) {
+      await axios
+        .delete('/api/link', { id })
+        .then((res) => console.log('res', res));
+    }
+  };
+
   const listOfLinks = () =>
     allLinks.map((item, index) => (
       <div key={index}>
@@ -62,7 +71,9 @@ const Subscriber = () => {
               )}
             </>
           </div>
-          <Button variant="danger">Delete</Button>{' '}
+          <Button onClick={() => handleDelete(item.id)} variant="danger">
+            Delete
+          </Button>{' '}
           <Button variant="primary">Update</Button>
         </Alert>
       </div>
