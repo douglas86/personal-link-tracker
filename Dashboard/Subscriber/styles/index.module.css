@@ -1,16 +1,27 @@
 .heading {
-    margin: 2%;
-    text-align: center;
+  margin: 2%;
+  text-align: center;
 }
 
 .flexbox {
-    display: flex;
+  display: flex;
 }
 .leftSide {
-    width: 25%;
-    padding: 1%;
+  width: 25%;
+  padding: 1%;
 }
 .rightSide {
-    width: 75%;
-    padding: 1%;
+  width: 75%;
+  padding: 1%;
+}
+.alert_bottom_flex {
+  display: flex;
+}
+
+.alert_bottom_left {
+  display: flex;
+}
+
+.alert_p {
+  color: red;
 }

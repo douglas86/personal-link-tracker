@@ -16,10 +16,17 @@ export default async (req, res) => {
             skip,
             take: 3,
           })
-          .then((r) => {
-            res.json({
-              data: r,
-            });
+          .then(async (r) => {
+            const Length = await prisma.links
+              .findMany({
+                where: { userName: session.user.name },
+              })
+              .then((re) => {
+                res.json({
+                  data: r,
+                  leng: re.length,
+                });
+              });
           });
       } else {
         const Links = await prisma.links
@@ -35,6 +42,24 @@ export default async (req, res) => {
           });
       }
       break;
+    case 'GET':
+      await prisma.links
+        .findMany({
+          where: { userName: session.user.name },
+          take: 3,
+        })
+        .then(async (r) => {
+          await prisma.links
+            .findMany({
+              where: { userName: session.user.name },
+            })
+            .then((re) => {
+              res.json({
+                data: r,
+                leng: re.length,
+              });
+            });
+        });
     default:
       console.log('default hit');
       break;
