@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useContext } from 'react';
 import axios from 'axios';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Button, Alert } from 'react-bootstrap';
@@ -6,17 +6,11 @@ import { Button, Alert } from 'react-bootstrap';
 import Link from 'next/link';
 
 import styles from './styles/index.module.css';
+import { SubscriberContext } from '../../Context/Dashboard/Subscriber/SubscriberContext.jsx';
 
 const Read = () => {
-  const [allLinks, setAllLinks] = useState();
-  const [skip, setSkip] = useState(0);
-  const [leng, setLeng] = useState(0);
-
-  useEffect(async () => {
-    const response = await axios.get('/api/pagination');
-    setAllLinks(response.data.data);
-    setLeng(response.data.leng);
-  }, []);
+  const context = useContext(SubscriberContext);
+  const { allLinks, setAllLinks, skip, setSkip, leng } = context;
 
   const loadMore = async () => {
     let toSkip = skip + 3;
