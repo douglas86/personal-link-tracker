@@ -44,7 +44,10 @@ export default async (req, res) => {
       }
       break;
     case 'DELETE':
-      await prisma.link.delete({});
+      const { id } = body;
+      await prisma.links.delete({ where: { id } }).then((r) => {
+        res.send('Successfully deleted');
+      });
     default:
       res.status(400).json({
         error: 'No response',

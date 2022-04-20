@@ -33,9 +33,9 @@ const Subscriber = () => {
   const handleDelete = async (id) => {
     let answer = window.confirm('Are you sure you want to delete');
     if (answer) {
-      await axios
-        .delete('/api/link', { id })
-        .then((res) => console.log('res', res));
+      await axios.delete('/api/link', { data: { id } }).then(() => {
+        window.location.reload();
+      });
     }
   };
 
