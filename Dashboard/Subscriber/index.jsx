@@ -1,21 +1,18 @@
-import { useSession } from 'next-auth/react';
+import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import axios from 'axios';
 
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
+
 import styles from './styles/index.module.css';
-import Read from './read';
+import { SubscriberContext } from '../../Context/Dashboard/Subscriber/SubscriberContext.jsx';
 
 const Subscriber = () => {
   const { data: session } = useSession();
+  const context = useContext(SubscriberContext);
 
-  const handleDelete = async (id) => {
-    let answer = window.confirm('Are you sure you want to delete');
-    if (answer) {
-      await axios.delete('/api/link', { data: { id } }).then(() => {
-        window.location.reload();
-      });
-    }
-  };
+  const { loadComponent } = context;
 
   return (
     <div>
@@ -24,7 +21,18 @@ const Subscriber = () => {
           This is {session.user.name}'s Dashboard
         </h1>
         <hr />
-        <Read />
+        <div className={styles.flexbox}>
+          <div className={styles.leftSide}>
+            <Link href="/user/link/create" passHref>
+              <a>Submit a link</a>
+            </Link>
+            <br />
+            <Link href="/user/profile/update" passHref>
+              <a>Update a profile</a>
+            </Link>
+          </div>
+          <div className={styles.rightSide}>{loadComponent}</div>
+        </div>
       </Container>
     </div>
   );
