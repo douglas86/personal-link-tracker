@@ -15,12 +15,6 @@ export const SubscriberProvider = ({ children }) => {
     categoryNames: [],
   });
 
-  const [alert, setAlert] = useState({
-    showAlert: false,
-    message: '',
-    alertColor: '',
-  });
-
   const [allLinks, setAllLinks] = useState();
   const [skip, setSkip] = useState(0);
   const [leng, setLeng] = useState(0);
@@ -33,23 +27,11 @@ export const SubscriberProvider = ({ children }) => {
     setLeng(response.data.leng);
   }, []);
 
-  useEffect(async () => {
-    if (alert.showAlert) {
-      const response = await axios.get('/api/pagination');
-      setAllLinks(response.data.data);
-      setTimeout(() => {
-        setAlert({ ...alert, showAlert: false });
-      }, 5000);
-    }
-  }, [alert]);
-
   return (
     <SubscriberContext.Provider
       value={{
         state,
         setState,
-        alert,
-        setAlert,
         allLinks,
         setAllLinks,
         skip,

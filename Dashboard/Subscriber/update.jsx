@@ -8,8 +8,7 @@ import Read from './read.jsx';
 
 const Update = () => {
   const context = useContext(SubscriberContext);
-  const { state, setState, allLinks, setAllLinks, setAlert, setLoadComponent } =
-    context;
+  const { state, setState, setLoadComponent } = context;
   const { id, title, url, medium, type, categoryNames } = state;
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -25,8 +24,6 @@ const Update = () => {
     }
     setState({ ...state, categoryNames: all });
   };
-
-  console.log('state', state);
 
   const showCategories = () => {
     return (
@@ -121,13 +118,8 @@ const Update = () => {
         body: JSON.stringify({ id, title, url, medium, type, categoryNames }),
       }).then((res) => {
         console.log('res', res);
-        setLoadComponent(<Read />);
         if (res.status === 200) {
-          setAlert({
-            showAlert: true,
-            message: 'Successfully updated document',
-            alertColor: 'success',
-          });
+          location.reload();
         }
       });
     }
