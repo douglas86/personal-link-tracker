@@ -8,7 +8,8 @@ import Read from './read.jsx';
 
 const Update = () => {
   const context = useContext(SubscriberContext);
-  const { state, setState, setLoadComponent } = context;
+  const { state, setState, allLinks, setAllLinks, setAlert, setLoadComponent } =
+    context;
   const { id, title, url, medium, type, categoryNames } = state;
 
   const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -26,23 +27,22 @@ const Update = () => {
   };
 
   console.log('state', state);
-  console.log('data', data);
 
   const showCategories = () => {
     return (
       <>
         <p style={{ marginBottom: '-5px' }}>Category</p>
         {data !== undefined
-          ? categoryNames.map((item, index) => (
-              <li className="list-unstyled" key={index}>
+          ? Object.entries(data.data).map(([key, value]) => (
+              <li className="list-unstyled" key={key}>
                 <input
                   type="checkbox"
-                  name={item}
+                  name={value.title}
                   className="mr-2"
-                  checked={categoryNames.includes(`${item}`)}
-                  onChange={handleToggle(item)}
-                />{' '}
-                <label className="form-check-label">{item}</label>
+                  checked={categoryNames.includes(`${value.title}`)}
+                  onChange={handleToggle(value.title)}
+                />
+                <label className="form-check-label">{value.title}</label>
               </li>
             ))
           : null}
@@ -112,6 +112,27 @@ const Update = () => {
     </>
   );
 
+  const handleSubmit = () => {
+    let answer = window.confirm('Are you sure that you want to update?');
+    if (answer) {
+      fetch('/api/link', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, title, url, medium, type, categoryNames }),
+      }).then((res) => {
+        console.log('res', res);
+        setLoadComponent(<Read />);
+        if (res.status === 200) {
+          setAlert({
+            showAlert: true,
+            message: 'Successfully updated document',
+            alertColor: 'success',
+          });
+        }
+      });
+    }
+  };
+
   return (
     <div>
       <h4>Updating: {title}</h4>
@@ -150,7 +171,7 @@ const Update = () => {
           <br />
           <Button
             className={styles.button}
-            onClick={() => setLoadComponent(<Read />)}
+            onClick={() => handleSubmit()}
             variant="warning"
           >
             Update

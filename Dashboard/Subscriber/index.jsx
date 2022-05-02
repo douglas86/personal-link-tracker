@@ -1,6 +1,5 @@
 import { useContext } from 'react';
-import { Container } from 'react-bootstrap';
-import axios from 'axios';
+import { Container, Alert } from 'react-bootstrap';
 
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
@@ -12,7 +11,9 @@ const Subscriber = () => {
   const { data: session } = useSession();
   const context = useContext(SubscriberContext);
 
-  const { loadComponent } = context;
+  const { alert, loadComponent } = context;
+
+  console.log('alert', alert);
 
   return (
     <div>
@@ -31,7 +32,14 @@ const Subscriber = () => {
               <a>Update a profile</a>
             </Link>
           </div>
-          <div className={styles.rightSide}>{loadComponent}</div>
+          <div className={styles.rightSide}>
+            {alert.showAlert ? (
+              <Alert variant={alert.alertColor}>
+                <p>{alert.message}</p>
+              </Alert>
+            ) : null}
+            {loadComponent}
+          </div>
         </div>
       </Container>
     </div>
