@@ -1,0 +1,16 @@
+.flexbox {
+  display: flex;
+  margin: 1%;
+}
+
+.leftSide {
+  width: 25%;
+}
+
+.rightSide {
+  width: 75%;
+}
+
+.button {
+  margin: 3%;
+}

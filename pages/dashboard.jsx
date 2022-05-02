@@ -1,5 +1,4 @@
 import { getSession, useSession } from 'next-auth/react';
-import 'react-quill/dist/quill.bubble.css';
 
 import prisma from '../lib/prisma';
 
@@ -9,8 +8,8 @@ import Subscriber from '../Dashboard/Subscriber';
 import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
 
-const Dashboard = ({ data }) => {
-  const { session } = useSession();
+const Dashboard = ({ data, categories }) => {
+  const { data: session } = useSession();
 
   const Role = (role) => {
     switch (role) {
@@ -45,8 +44,9 @@ export const getServerSideProps = async (ctx) => {
         },
       })
     : null;
+  const categories = await prisma.category.findMany();
   const data = JSON.stringify(user);
-  return { props: { data } };
+  return { props: { data, categories: JSON.stringify(categories) } };
 };
 
 export default Dashboard;
