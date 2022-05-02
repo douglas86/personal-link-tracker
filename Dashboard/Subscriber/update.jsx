@@ -28,28 +28,100 @@ const Update = () => {
   console.log('state', state);
   console.log('data', data);
 
+  const showCategories = () => {
+    return (
+      <>
+        <p style={{ marginBottom: '-5px' }}>Category</p>
+        {data !== undefined
+          ? categoryNames.map((item, index) => (
+              <li className="list-unstyled" key={index}>
+                <input
+                  type="checkbox"
+                  name={item}
+                  className="mr-2"
+                  checked={categoryNames.includes(`${item}`)}
+                  onChange={handleToggle(item)}
+                />{' '}
+                <label className="form-check-label">{item}</label>
+              </li>
+            ))
+          : null}
+      </>
+    );
+  };
+
+  const showTypes = () => (
+    <>
+      <p style={{ marginBottom: '-5px' }}>Type</p>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value={type}
+            className="form-check-input"
+            checked={type === 'Free'}
+            onChange={() => setState({ ...state, type: 'Free' })}
+            name="type"
+          />{' '}
+          Free
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            value={type}
+            className="form-check-input"
+            checked={type === 'Paid'}
+            onChange={() => setState({ ...state, type: 'Paid' })}
+            name="type"
+          />{' '}
+          Paid
+        </label>
+      </div>
+    </>
+  );
+
+  const showMedium = () => (
+    <>
+      <p style={{ marginBottom: '-5px' }}>Medium</p>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            className="form-check-input"
+            checked={medium === 'Video'}
+            onChange={() => setState({ ...state, medium: 'Video' })}
+            name="medium"
+          />{' '}
+          Video
+        </label>
+      </div>
+      <div className="form-check ml-3">
+        <label className="form-check-label">
+          <input
+            type="radio"
+            className="form-check-input"
+            checked={medium === 'Book'}
+            onChange={() => setState({ ...state, medium: 'Book' })}
+            name="medium"
+          />{' '}
+          Book
+        </label>
+      </div>
+    </>
+  );
+
   return (
     <div>
-      <h4>This is for updating the link</h4>
+      <h4>Updating: {title}</h4>
       <div className={styles.flexbox}>
         <div className={styles.leftSide}>
-          <p>This is the left</p>
-          <p>Categories:</p>
-          {data !== undefined
-            ? data.data.map((item, index) => (
-                <div key={index}>
-                  <input
-                    type="checkbox"
-                    checked={categoryNames.includes(`${item.title}`)}
-                    onChange={handleToggle(item.title)}
-                  />{' '}
-                  <label>{item.title}</label>
-                </div>
-              ))
-            : null}
+          {showCategories()}
+          {showTypes()}
+          {showMedium()}
         </div>
         <div className={styles.rightSide}>
-          <p>This is the right side</p>
           <label>Title</label>
           <br />
           <input
@@ -76,6 +148,13 @@ const Update = () => {
             }}
           />
           <br />
+          <Button
+            className={styles.button}
+            onClick={() => setLoadComponent(<Read />)}
+            variant="warning"
+          >
+            Update
+          </Button>
           <Button
             className={styles.button}
             onClick={() => setLoadComponent(<Read />)}
