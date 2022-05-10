@@ -5,6 +5,8 @@ import Create from './Create';
 import Read from './Read';
 import Update from './Update';
 
+import ReadLinks from './links/Read';
+
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 
 const Admin = () => {
@@ -44,6 +46,9 @@ const Admin = () => {
             <Update />
           </Tab>
         ) : null}
+        <Tab eventKey="links" title="Links">
+          <ReadLinks />
+        </Tab>
       </Tabs>
     </>
   );
