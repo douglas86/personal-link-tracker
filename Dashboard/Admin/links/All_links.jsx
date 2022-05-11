@@ -1,28 +1,33 @@
-import axios from 'axios';
 import { useState, useEffect } from 'react';
 import InfinteScroll from 'react-infinite-scroller';
 import { Alert } from 'react-bootstrap';
 
+import { pagination } from '../../../API/index2';
 import styles from '../../../public/static/styles/[slug].module.css';
 
 const All_links = () => {
   const [skip, setSkip] = useState(0);
   const [link, setLink] = useState();
-  const [len, setLen] = useState(2);
+  const [len, setLen] = useState();
 
   useEffect(() => {
-    fetch('/api/data?skip=0').then(async (res) => {
-      let result = await res.json();
-      setLink(result.data);
+    let mounted = true;
+
+    pagination('/api/data?skip=0').then((items) => {
+      if (mounted) {
+        setLink(items.data);
+        setLen(items.len);
+      }
     });
+    return () => (mounted = false);
   }, []);
 
   const loadMore = async () => {
     let toSkip = skip + 2;
-    const response = await axios.get(`/api/data?skip=${toSkip}`);
-    setLink([...link, ...response.data.data]);
-    setSkip(toSkip);
-    setLen(response.data.data.length);
+    pagination(`/api/data?skip=${toSkip}`).then((items) => {
+      setLink([...link, ...items.data]);
+      setSkip(toSkip);
+    });
   };
 
   const listOfLinks = () =>
@@ -64,15 +69,15 @@ const All_links = () => {
 
   return (
     <div>
-      <p>This is for all links</p>
+      <p>This is a link</p>
       <InfinteScroll
         pageStart={0}
         loadMore={loadMore}
-        hasMore={len === 2}
+        hasMore={skip - 2 <= len}
         loader={<h4 key={0}>Loading...</h4>}
       >
         {listOfLinks()}
-      </InfinteScroll>
+      </InfinteScroll>{' '}
     </div>
   );
 };
