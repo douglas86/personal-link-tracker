@@ -69,7 +69,6 @@ const All_links = () => {
 
   return (
     <div>
-      <p>This is a link</p>
       <InfinteScroll
         pageStart={0}
         loadMore={loadMore}
