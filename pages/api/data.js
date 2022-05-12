@@ -12,7 +12,7 @@ export default async (req, res) => {
       const session = await getSession({ req });
 
       if (user === 'false') {
-        Get(query, res);
+        Get(query, res, req);
       } else {
         GetUser(query, res, req);
       }
