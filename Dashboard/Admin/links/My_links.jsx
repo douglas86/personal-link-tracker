@@ -1,7 +1,9 @@
+import Pagination from '../../../components/pagination';
+
 const My_links = () => {
   return (
     <>
-      <p>This is the other one</p>
+      <Pagination endpoint="/api/data" user="true" />
     </>
   );
 };
