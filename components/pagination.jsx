@@ -1,9 +1,16 @@
 import { useState, useEffect } from 'react';
 import InfinteScroll from 'react-infinite-scroller';
-import { Alert } from 'react-bootstrap';
+import { Alert, Spinner } from 'react-bootstrap';
 
 import { pagination } from '../API/index2.jsx';
 import styles from '../public/static/styles/[slug].module.css';
+
+// Description of component
+// This component takes in two props
+// The endpoint: This is the url that you want to reach
+// the user: pass in true or false
+// true: being that you want to grab data based on the logged in user
+// false: being that you want to grab all data from that endpoint
 
 const Pagination = ({ endpoint, user }) => {
   const [skip, setSkip] = useState(0);
@@ -73,9 +80,19 @@ const Pagination = ({ endpoint, user }) => {
         pageStart={0}
         loadMore={loadMore}
         hasMore={skip - 2 <= len}
-        loader={<h4 key={0}>Loading...</h4>}
+        loader={
+          <Spinner animation="border" role="status" key={0}>
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        }
       >
-        {listOfLinks()}
+        {listOfLinks() !== undefined ? (
+          listOfLinks()
+        ) : (
+          <Spinner animation="border" role="status" key={0}>
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        )}
       </InfinteScroll>{' '}
     </div>
   );
