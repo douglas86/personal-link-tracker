@@ -6,6 +6,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
+import Pagination from '../../components/pagination.jsx';
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
@@ -16,6 +17,8 @@ const Links = (props) => {
   const prop = JSON.parse(props.data);
   const links = JSON.parse(props.links);
   const leng = JSON.parse(props.leng).length;
+
+  console.log('links', links);
 
   const router = useRouter();
   const { slug } = router.query;
@@ -70,8 +73,11 @@ const Links = (props) => {
       </div>
     ));
 
+  console.log('links', links);
+
   return (
     <Container>
+      <Pagination endpoint="/api/data" user="false" links={links} />
       <div className={styles.flex_container}>
         <div className={styles.flex_left}>
           <h1 className="display-4 font-weight-bold">
@@ -129,7 +135,7 @@ export const getServerSideProps = async ({ query }) => {
         has: slug,
       },
     },
-    take: 3,
+    take: 2,
   });
 
   const { title, description, s3BucketKey } = Prisma;

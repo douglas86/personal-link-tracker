@@ -1,3 +1,5 @@
+import { useRouter } from 'next/router';
+
 import { useState, useEffect } from 'react';
 import InfinteScroll from 'react-infinite-scroller';
 import { Alert, Spinner } from 'react-bootstrap';
@@ -6,13 +8,11 @@ import { pagination } from '../API/index2.jsx';
 import styles from '../public/static/styles/[slug].module.css';
 
 // Description of component
-// This component takes in two props
-// The endpoint: This is the url that you want to reach
-// the user: pass in true or false
-// true: being that you want to grab data based on the logged in user
-// false: being that you want to grab all data from that endpoint
+// takes in a user as props only need to pass true
+// only pass in user={true}
+// if you are wanting to grab info based on that user
 
-const Pagination = ({ endpoint, user }) => {
+const Pagination = ({ user }) => {
   const [skip, setSkip] = useState(0);
   const [link, setLink] = useState();
   const [len, setLen] = useState();
@@ -20,18 +20,19 @@ const Pagination = ({ endpoint, user }) => {
   useEffect(() => {
     let mounted = true;
 
-    pagination(`${endpoint}?skip=0&user=${user}`).then((items) => {
-      if (mounted) {
+    if (mounted) {
+      pagination(`/api/data?skip=${skip}`).then((items) => {
         setLink(items.data);
         setLen(items.len);
-      }
-    });
+      });
+    }
+
     return () => (mounted = false);
   }, []);
 
   const loadMore = async () => {
     let toSkip = skip + 2;
-    pagination(`${endpoint}?skip=${toSkip}&user=${user}`).then((items) => {
+    pagination(`/api/data?skip=${toSkip}&user=${user}`).then((items) => {
       setLink([...link, ...items.data]);
       setSkip(toSkip);
     });
@@ -97,5 +98,4 @@ const Pagination = ({ endpoint, user }) => {
     </div>
   );
 };
-
 export default Pagination;
