@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
-import Create from './Create';
+import CreateCategory from './CreateCategoryTab';
 import Read from './Read';
 import Update from './Update';
 
@@ -36,7 +36,7 @@ const Admin = () => {
         className="mb-3"
       >
         <Tab eventKey="create" title="Create Category">
-          <Create />
+          <CreateCategory />
         </Tab>
         <Tab eventKey="all" title="All Categories">
           <Read />
