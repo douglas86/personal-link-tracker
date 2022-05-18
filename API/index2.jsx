@@ -1,12 +1,17 @@
-import { useContext } from 'react';
+import { useState, useContext } from 'react';
 import useSWR from 'swr';
 
 import { useRouter } from 'next/router';
 
 import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
+import { Fetcher } from '../actionTypes/apiCalls.jsx';
 
 export const pagination = async (endpoint) => {
   return await fetch(endpoint).then((res) => res.json());
+};
+
+export const GetRoute = (endpoint) => {
+  return Fetcher(endpoint);
 };
 
 const AdminApis = () => {
@@ -40,13 +45,13 @@ const AdminApis = () => {
   };
 
   // read;
-  const Fetcher = (endpoint) => {
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data } = useSWR(endpoint, fetcher, {
-      revalidateOnFocus: false,
-    });
-    return data;
-  };
+  // const Fetcher = (endpoint) => {
+  //   const fetcher = (url) => fetch(url).then((res) => res.json());
+  //   const { data } = useSWR(endpoint, fetcher, {
+  //     revalidateOnFocus: false,
+  //   });
+  //   return data;
+  // };
 
   // update
   const Putting = (endpoint, body) => {
@@ -90,7 +95,7 @@ const AdminApis = () => {
       .catch((err) => console.log('err', err));
   };
 
-  return { Posting, Fetcher, Putting, Deleting };
+  return { Posting, Putting, Deleting };
 };
 
 export default AdminApis;

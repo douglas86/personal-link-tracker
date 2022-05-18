@@ -4,14 +4,14 @@ import Image from 'next/image';
 
 import Header from '../../../components/Admin/header.jsx';
 import ShowAlert from '../../../components/Admin/alert.jsx';
-import AdminApis from '../../../API/index2.jsx';
+import { GetRoute } from '../../../API/index2.jsx';
 import Submit from '../../../components/Admin/Submit.jsx';
 import styles from '../styles/Read.module.css';
 
 const AllCategories = () => {
-  const { Fetcher } = AdminApis();
-  const fetching = Fetcher('/api/category');
   const { handleConfirm, handleUpdate } = Submit();
+
+  const { data } = GetRoute('/api/category');
 
   return (
     <>
@@ -20,8 +20,8 @@ const AllCategories = () => {
         <ShowAlert />
       </Container>
       <div className={styles.flex_container}>
-        {fetching !== undefined
-          ? Object.entries(fetching.data).map(([k, v]) => (
+        {data !== undefined
+          ? Object.entries(data).map(([k, v]) => (
               <div key={k} className={styles.contents}>
                 <div className={styles.flex_image}>
                   <Image
