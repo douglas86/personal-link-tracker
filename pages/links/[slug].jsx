@@ -1,8 +1,6 @@
 import { useState } from 'react';
 import renderHTML from 'react-render-html';
-import useSWR from 'swr';
 import { Container, Alert } from 'react-bootstrap';
-import InfiniteScroll from 'react-infinite-scroller';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 
@@ -17,8 +15,6 @@ const Links = (props) => {
   const prop = JSON.parse(props.data);
   const links = JSON.parse(props.links);
   const leng = JSON.parse(props.leng).length;
-
-  console.log('links', links);
 
   const router = useRouter();
   const { slug } = router.query;
@@ -73,11 +69,8 @@ const Links = (props) => {
       </div>
     ));
 
-  console.log('links', links);
-
   return (
     <Container>
-      <Pagination endpoint="/api/data" user="false" links={links} />
       <div className={styles.flex_container}>
         <div className={styles.flex_left}>
           <h1 className="display-4 font-weight-bold">
@@ -86,14 +79,7 @@ const Links = (props) => {
           <div className="lead alert alert-secondary pt-4">
             {renderHTML(prop.description || '')}
           </div>
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={loadMore}
-            hasMore={skip <= leng}
-            loader={<h4 key={0}>Loading...</h4>}
-          >
-            {listOfLinks()}
-          </InfiniteScroll>
+          <Pagination slug={slug} />
         </div>
         <div className={styles.flex_right}>
           <img

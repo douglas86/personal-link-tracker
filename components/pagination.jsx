@@ -1,5 +1,3 @@
-import { useRouter } from 'next/router';
-
 import { useState, useEffect } from 'react';
 import InfinteScroll from 'react-infinite-scroller';
 import { Alert, Spinner } from 'react-bootstrap';
@@ -12,7 +10,7 @@ import styles from '../public/static/styles/[slug].module.css';
 // only pass in user={true}
 // if you are wanting to grab info based on that user
 
-const Pagination = ({ user }) => {
+const Pagination = ({ user, slug }) => {
   const [skip, setSkip] = useState(0);
   const [link, setLink] = useState();
   const [len, setLen] = useState();
@@ -21,7 +19,7 @@ const Pagination = ({ user }) => {
     let mounted = true;
 
     if (mounted) {
-      pagination(`/api/data?skip=${skip}`).then((items) => {
+      pagination(`/api/data?skip=0&user=${user}&slug=${slug}`).then((items) => {
         setLink(items.data);
         setLen(items.len);
       });
@@ -32,10 +30,12 @@ const Pagination = ({ user }) => {
 
   const loadMore = async () => {
     let toSkip = skip + 2;
-    pagination(`/api/data?skip=${toSkip}&user=${user}`).then((items) => {
-      setLink([...link, ...items.data]);
-      setSkip(toSkip);
-    });
+    pagination(`/api/data?skip=${toSkip}&user=${user}&slug=${slug}`).then(
+      (items) => {
+        setLink([...link, ...items.data]);
+        setSkip(toSkip);
+      }
+    );
   };
 
   const listOfLinks = () =>
@@ -80,7 +80,7 @@ const Pagination = ({ user }) => {
       <InfinteScroll
         pageStart={0}
         loadMore={loadMore}
-        hasMore={skip - 2 <= len}
+        hasMore={skip <= len}
         loader={
           <Spinner animation="border" role="status" key={0}>
             <span className="visually-hidden">Loading...</span>
@@ -98,4 +98,5 @@ const Pagination = ({ user }) => {
     </div>
   );
 };
+
 export default Pagination;

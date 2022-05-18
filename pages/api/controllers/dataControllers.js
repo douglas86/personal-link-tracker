@@ -1,4 +1,4 @@
-import { FindMany } from '../services/dataServices';
+import { FindMany, FindUser, FindSlug } from '../services/dataServices';
 
 export const Default = async (res) => {
   res.status(400).json({
@@ -7,14 +7,14 @@ export const Default = async (res) => {
   });
 };
 
-export const Get = async (query, res, req) => {
-  const { skip, user } = query;
-
-  FindMany(skip, user, res, req);
+export const Get = async (skip, res, req) => {
+  FindMany(skip, res);
 };
 
-export const GetUser = async (query, res, req) => {
-  const { skip, user } = query;
+export const GetSlug = async (slug, skip, res, req) => {
+  FindSlug(slug, skip, res);
+};
 
-  FindMany(skip, user, res, req);
+export const GetUser = async (skip, res, req) => {
+  FindUser(skip, req, res);
 };
