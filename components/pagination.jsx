@@ -19,10 +19,12 @@ const Pagination = ({ user, slug }) => {
     let mounted = true;
 
     if (mounted) {
-      pagination(`/api/data?skip=0&user=${user}&slug=${slug}`).then((items) => {
-        setLink(items.data);
-        setLen(items.len);
-      });
+      pagination(`/api/pagination?skip=0&user=${user}&slug=${slug}`).then(
+        (items) => {
+          setLink(items.data);
+          setLen(items.len);
+        }
+      );
     }
 
     return () => (mounted = false);
@@ -30,7 +32,7 @@ const Pagination = ({ user, slug }) => {
 
   const loadMore = async () => {
     let toSkip = skip + 2;
-    pagination(`/api/data?skip=${toSkip}&user=${user}&slug=${slug}`).then(
+    pagination(`/api/pagination?skip=${toSkip}&user=${user}&slug=${slug}`).then(
       (items) => {
         setLink([...link, ...items.data]);
         setSkip(toSkip);
