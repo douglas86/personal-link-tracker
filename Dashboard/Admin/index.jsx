@@ -3,7 +3,7 @@ import { Tabs, Tab } from 'react-bootstrap';
 
 import CreateCategory from './CreateCategoryTab';
 import AllCategories from './AllCategoriesTab';
-import Update from './Update';
+import UpdateCategory from './UpdateCategoriesTab';
 
 import ReadLinks from './links/Read';
 
@@ -43,7 +43,7 @@ const Admin = () => {
         </Tab>
         {isUpdateState ? (
           <Tab eventKey="update" title="Update Category">
-            <Update />
+            <UpdateCategory />
           </Tab>
         ) : null}
         <Tab eventKey="links" title="Links">
