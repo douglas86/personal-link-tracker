@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 import CreateCategory from './CreateCategoryTab';
-import Read from './Read';
+import AllCategories from './AllCategoriesTab';
 import Update from './Update';
 
 import ReadLinks from './links/Read';
@@ -39,7 +39,7 @@ const Admin = () => {
           <CreateCategory />
         </Tab>
         <Tab eventKey="all" title="All Categories">
-          <Read />
+          <AllCategories />
         </Tab>
         {isUpdateState ? (
           <Tab eventKey="update" title="Update Category">
