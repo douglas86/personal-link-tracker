@@ -4,12 +4,12 @@ import { Container } from 'react-bootstrap';
 
 import Header from '../../components/Admin/header';
 import ShowAlert from '../../components/Admin/alert';
-import Apis from '../../API';
+import AdminApis from '../../API/index2';
 import Submit from '../../components/Admin/Submit';
 import styles from './styles/Read.module.css';
 
 const Read = () => {
-  const { Fetcher } = Apis();
+  const { Fetcher } = AdminApis();
   const fetching = Fetcher('/api/category');
   const { handleConfirm, handleUpdate } = Submit();
 
