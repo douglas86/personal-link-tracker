@@ -1,7 +1,6 @@
 import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-// import Apis from '../../API';
 import AdminApis from '../../API/index2';
 
 const Submit = () => {
@@ -35,7 +34,6 @@ const Submit = () => {
   };
 
   const handleContent = (e) => {
-    console.log('handleContent', e);
     context.setContent(e);
   };
 
