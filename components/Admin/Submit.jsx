@@ -2,7 +2,7 @@ import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 // import Apis from '../../API';
-import AdminApis, { PostRoute } from '../../API/index2';
+import AdminApis from '../../API/index2';
 
 const Submit = () => {
   const context = useContext(AdminContext);
@@ -10,19 +10,11 @@ const Submit = () => {
   const { state, content, isTab } = context;
   const { title, image, id } = state;
 
-  // PostRoute('/api/category', { title, content, image, id });
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = { title, content, image, id };
     if (isTab === 'create') {
       if (title !== '' && content !== '' && image !== '') {
-        // PostRoute('/api/category', {
-        //   title,
-        //   content,
-        //   image,
-        //   id,
-        // });
         Posting('/api/category', body);
         context.setState({ ...state, buttonText: 'Creating' });
       } else {

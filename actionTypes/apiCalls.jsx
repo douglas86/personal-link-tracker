@@ -9,7 +9,7 @@ export const Fetcher = (endpoint) => {
 };
 
 const actionTypes = () => {
-  const { postCreators } = actionCreators();
+  const { postCreators, putCreators, deleteCreators } = actionCreators();
 
   const postActions = (endpoint, body) => {
     fetch(endpoint, {
@@ -21,7 +21,30 @@ const actionTypes = () => {
       postCreators(result);
     });
   };
-  return { postActions };
+
+  const putActions = (endpoint, body) => {
+    fetch(endpoint, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(async (items) => {
+      let result = await items.json();
+      putCreators(result);
+    });
+  };
+
+  const deleteActions = (endpoint, body) => {
+    fetch(endpoint, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    }).then(async (items) => {
+      let result = await items.json();
+      deleteCreators(result);
+    });
+  };
+
+  return { postActions, putActions, deleteActions };
 };
 
 export default actionTypes;

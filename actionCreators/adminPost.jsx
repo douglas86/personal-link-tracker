@@ -15,13 +15,41 @@ const actionCreators = () => {
       ...state,
       image: '',
       title: '',
+      statusColor: status !== 200 ? 'danger' : 'success',
       statusCode: status,
       message,
       showAlert: true,
     });
     router.reload(window.location.pathname);
   };
-  return { postCreators };
+
+  const putCreators = (props) => {
+    const { status, message } = props;
+    setContent('');
+    setState({
+      ...state,
+      message,
+      alertColor: status !== 200 ? 'danger' : 'success',
+      statusCode: status,
+      showAlert: true,
+    });
+    router.reload(window.location.pathname);
+  };
+
+  const deleteCreators = (props) => {
+    const { status, message } = props;
+    setContent('');
+    setState({
+      ...state,
+      message,
+      alertColor: status !== 200 ? 'danger' : 'success',
+      statusCode: status,
+      showAlert: true,
+    });
+    router.reload(window.location.pathname);
+  };
+
+  return { postCreators, putCreators, deleteCreators };
 };
 
 export default actionCreators;
