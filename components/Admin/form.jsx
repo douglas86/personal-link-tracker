@@ -1,13 +1,9 @@
-// import dynamic from 'next/dynamic';
 import { useEffect, useContext } from 'react';
 import { useQuill } from 'react-quilljs';
 
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Submit from '../../components/Admin/Submit';
 import 'quill/dist/quill.snow.css';
-// import 'react-quill/dist/quill.bubble.css';
-
-// const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 const Form = () => {
   const { handleSubmit, handleChange, handleContent, handleImage } = Submit();
@@ -18,6 +14,9 @@ const Form = () => {
 
   useEffect(() => {
     if (quill) {
+      if (content !== '') {
+        quill.clipboard.dangerouslyPasteHTML(`${content}`);
+      }
       quill.on('text-change', (delta, oldDelta, source) => {
         handleContent(quillRef.current.firstChild.innerHTML);
       });
@@ -70,15 +69,3 @@ const Form = () => {
 };
 
 export default Form;
-
-// <div className="form-group">
-//   <label className="text-muted">Content</label>
-//   <ReactQuill
-//     onChange={handleContent}
-//     value={content}
-//     placeholder="Write something ..."
-//     theme="bubble"
-//     className="pb-5 mb-3"
-//     style={{ border: '1px solid #666' }}
-//   />
-// </div>;
