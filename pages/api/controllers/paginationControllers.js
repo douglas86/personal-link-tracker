@@ -1,4 +1,8 @@
-import { FindMany, FindUser, FindSlug } from '../services/paginationServices';
+import {
+  FindAllLinks,
+  FindMyLinks,
+  FindCategory,
+} from '../services/paginationServices';
 
 export const Default = async (res) => {
   res.status(400).json({
@@ -7,14 +11,16 @@ export const Default = async (res) => {
   });
 };
 
-export const Get = async (skip, res) => {
-  FindMany(skip, res);
-};
-
-export const GetSlug = async (slug, skip, res) => {
-  FindSlug(slug, skip, res);
-};
-
-export const GetUser = async (skip, res, req) => {
-  FindUser(skip, req, res);
+export const Get = (slug, skip, req, res) => {
+  switch (slug) {
+    case 'allLinks':
+      FindAllLinks(slug, skip, res, req);
+      break;
+    case 'myLinks':
+      FindMyLinks(slug, skip, res, req);
+      break;
+    default:
+      FindCategory(slug, skip, res, req);
+      break;
+  }
 };

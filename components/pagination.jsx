@@ -6,11 +6,12 @@ import { pagination } from '../API/index2.jsx';
 import styles from '../public/static/styles/[slug].module.css';
 
 // Description of component
-// takes in a user as props only need to pass true
-// only pass in user={true}
-// if you are wanting to grab info based on that user
+// takes in a name as a slug
+// allLinks - this will gather all data of all the links in db
+// myLinks - this is to gather all links based on logged in user
+// if slug is given as an argument - it will gather links based on category name
 
-const Pagination = ({ user, slug }) => {
+const Pagination = ({ slug }) => {
   const [skip, setSkip] = useState(0);
   const [link, setLink] = useState();
   const [len, setLen] = useState();
@@ -19,12 +20,10 @@ const Pagination = ({ user, slug }) => {
     let mounted = true;
 
     if (mounted) {
-      pagination(`/api/pagination?skip=0&user=${user}&slug=${slug}`).then(
-        (items) => {
-          setLink(items.data);
-          setLen(items.len);
-        }
-      );
+      pagination(`/api/pagination?slug=${slug}&skip=0`).then((items) => {
+        setLink(items.data);
+        setLen(items.len);
+      });
     }
 
     return () => (mounted = false);
@@ -32,12 +31,10 @@ const Pagination = ({ user, slug }) => {
 
   const loadMore = async () => {
     let toSkip = skip + 2;
-    pagination(`/api/pagination?skip=${toSkip}&user=${user}&slug=${slug}`).then(
-      (items) => {
-        setLink([...link, ...items.data]);
-        setSkip(toSkip);
-      }
-    );
+    pagination(`/api/pagination?slug=${slug}&skip=${skip}`).then((items) => {
+      setLink([...link, ...items.data]);
+      setSkip(toSkip);
+    });
   };
 
   const listOfLinks = () =>

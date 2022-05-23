@@ -1,25 +1,12 @@
-import {
-  Default,
-  Get,
-  GetUser,
-  GetSlug,
-} from './controllers/paginationControllers';
+import { Get } from './controllers/paginationControllers';
 
 export default async (req, res) => {
   const { method, query } = req;
 
   switch (method) {
     case 'GET':
-      const { skip, user, slug } = query;
-
-      if (user === 'true') {
-        GetUser(skip, res, req);
-      } else if (slug !== 'undefined') {
-        GetSlug(slug, skip, res, req);
-      } else {
-        Get(skip, res, req);
-      }
-
+      const { slug, skip } = query;
+      Get(slug, skip, req, res);
       break;
     default:
       Default(res);

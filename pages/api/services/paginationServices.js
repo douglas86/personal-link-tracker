@@ -3,34 +3,34 @@ import prisma from '../../../lib/prisma';
 
 let len = 0;
 
-export const Len = async (query, req) => {
+export const Len = async (slug, req) => {
   const session = await getSession({ req });
 
-  if (query === 'true') {
-    await prisma.links
-      .findMany({
-        where: { userName: session?.user.name },
-      })
-      .then((items) => {
+  switch (slug) {
+    case 'allLinks':
+      await prisma.links.findMany({}).then((items) => {
         len = items.length;
       });
-  } else if (query !== undefined) {
-    await prisma.links
-      .findMany({
-        where: { categoryNames: { has: 'Next' } },
-      })
-      .then((items) => {
-        len = items.length;
-      });
-  } else {
-    await prisma.links.findMany({}).then((items) => {
-      len = items.length;
-    });
+      break;
+    case 'myLinks':
+      await prisma.links
+        .findMany({ where: { userName: session?.user.name } })
+        .then((items) => {
+          len = items.length;
+        });
+      break;
+    default:
+      await prisma.links
+        .findMany({ where: { categoryNames: { has: slug } } })
+        .then((items) => {
+          len = items.length;
+        });
+      break;
   }
 };
 
-export const FindMany = async (skip, res) => {
-  await Len();
+export const FindAllLinks = async (slug, skip, res, req) => {
+  await Len(slug, req);
 
   await prisma.links
     .findMany({ skip: parseInt(skip), take: 2 })
@@ -43,10 +43,10 @@ export const FindMany = async (skip, res) => {
     });
 };
 
-export const FindUser = async (skip, req, res) => {
+export const FindMyLinks = async (slug, skip, res, req) => {
   const session = await getSession({ req });
 
-  await Len('true', req);
+  await Len(slug, req);
 
   await prisma.links
     .findMany({
@@ -63,8 +63,8 @@ export const FindUser = async (skip, req, res) => {
     });
 };
 
-export const FindSlug = async (slug, skip, res) => {
-  await Len(slug);
+export const FindCategory = async (slug, skip, res, req) => {
+  await Len(slug, req);
 
   await prisma.links
     .findMany({

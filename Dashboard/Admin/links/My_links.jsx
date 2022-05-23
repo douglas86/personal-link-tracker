@@ -3,7 +3,7 @@ import Pagination from '../../../components/pagination';
 const My_links = () => {
   return (
     <>
-      <Pagination user={true} />
+      <Pagination slug="myLinks" />
     </>
   );
 };
