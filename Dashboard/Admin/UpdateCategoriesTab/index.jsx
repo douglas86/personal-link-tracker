@@ -1,14 +1,13 @@
 import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 
-import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext.jsx';
-import Form from '../../components/Admin/form';
-import styles from './styles/Update.module.css';
-import Header from '../../components/Admin/header.jsx';
+import { AdminContext } from '../../../Context/Dashboard/Admin/AdminContext.jsx';
+import Form from '../../../components/Admin/form.jsx';
+import styles from '../styles/Update.module.css';
+import Header from '../../../components/Admin/header.jsx';
 
-const Update = () => {
+const UpdateCategory = () => {
   const context = useContext(AdminContext);
-  console.log('context', context);
 
   return (
     <div>
@@ -34,4 +33,4 @@ const Update = () => {
   );
 };
 
-export default Update;
+export default UpdateCategory;

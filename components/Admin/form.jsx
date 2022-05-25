@@ -1,16 +1,27 @@
-import dynamic from 'next/dynamic';
-import { useContext } from 'react';
+import { useEffect, useContext } from 'react';
+import { useQuill } from 'react-quilljs';
 
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import Submit from '../../components/Admin/Submit';
-
-const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
+import 'quill/dist/quill.snow.css';
 
 const Form = () => {
   const { handleSubmit, handleChange, handleContent, handleImage } = Submit();
   const context = useContext(AdminContext);
   const { state, content, imageUploadButtonName } = context;
   const { title, buttonText } = state;
+  const { quill, quillRef } = useQuill();
+
+  useEffect(() => {
+    if (quill) {
+      if (content !== '') {
+        quill.clipboard.dangerouslyPasteHTML(`${content}`);
+      }
+      quill.on('text-change', (delta, oldDelta, source) => {
+        handleContent(quillRef.current.firstChild.innerHTML);
+      });
+    }
+  }, [quill, quillRef]);
 
   return (
     <>
@@ -25,16 +36,10 @@ const Form = () => {
             className="form-control"
             required
           />
-          <div className="form-group">
-            <label className="text-muted">Content</label>
-            <ReactQuill
-              onChange={handleContent}
-              value={content}
-              placeholder="Write something ..."
-              theme="bubble"
-              className="pb-5 mb-3"
-              style={{ border: '1px solid #666' }}
-            />
+        </div>
+        <div className="form-group">
+          <div style={{ height: '100px', marginBottom: '50px' }}>
+            <div ref={quillRef} />
           </div>
         </div>
         <div className="form-group">

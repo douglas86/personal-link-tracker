@@ -1,19 +1,17 @@
-import { useContext } from 'react';
-import Image from 'next/image';
 import { Container } from 'react-bootstrap';
 
-import Header from '../../components/Admin/header';
-import ShowAlert from '../../components/Admin/alert';
-import Apis from '../../API';
-import Submit from '../../components/Admin/Submit';
-import styles from './styles/Read.module.css';
+import Image from 'next/image';
 
-const Read = () => {
-  const { Fetcher } = Apis();
-  const fetching = Fetcher('/api/category');
+import Header from '../../../components/Admin/header.jsx';
+import ShowAlert from '../../../components/Admin/alert.jsx';
+import { GetRoute } from '../../../API/index2.jsx';
+import Submit from '../../../components/Admin/Submit.jsx';
+import styles from '../styles/Read.module.css';
+
+const AllCategories = () => {
   const { handleConfirm, handleUpdate } = Submit();
 
-  console.log('fetching', fetching);
+  const { data } = GetRoute('/api/category');
 
   return (
     <>
@@ -22,8 +20,8 @@ const Read = () => {
         <ShowAlert />
       </Container>
       <div className={styles.flex_container}>
-        {fetching !== undefined
-          ? Object.entries(fetching.data).map(([k, v]) => (
+        {data !== undefined
+          ? Object.entries(data).map(([k, v]) => (
               <div key={k} className={styles.contents}>
                 <div className={styles.flex_image}>
                   <Image
@@ -57,4 +55,4 @@ const Read = () => {
   );
 };
 
-export default Read;
+export default AllCategories;

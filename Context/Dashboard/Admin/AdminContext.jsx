@@ -15,6 +15,10 @@ export const AdminProvider = ({ children }) => {
     isUpdateState: false,
   });
 
+  const [linksTab, setLinksTab] = useState({
+    title: 'All Links',
+  });
+
   const { showAlert } = state;
 
   const [content, setContent] = useState('');
@@ -35,6 +39,8 @@ export const AdminProvider = ({ children }) => {
       value={{
         state,
         setState,
+        linksTab,
+        setLinksTab,
         content,
         setContent,
         imageUploadButtonName,

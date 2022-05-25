@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
-import Create from './Create';
-import Read from './Read';
-import Update from './Update';
+import CreateCategory from './CreateCategoryTab';
+import AllCategories from './AllCategoriesTab';
+import UpdateCategory from './UpdateCategoriesTab';
+
+import ReadLinks from './links/Read';
 
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 
@@ -34,16 +36,19 @@ const Admin = () => {
         className="mb-3"
       >
         <Tab eventKey="create" title="Create Category">
-          <Create />
+          <CreateCategory />
         </Tab>
         <Tab eventKey="all" title="All Categories">
-          <Read />
+          <AllCategories />
         </Tab>
         {isUpdateState ? (
           <Tab eventKey="update" title="Update Category">
-            <Update />
+            <UpdateCategory />
           </Tab>
         ) : null}
+        <Tab eventKey="links" title="Links">
+          <ReadLinks />
+        </Tab>
       </Tabs>
     </>
   );

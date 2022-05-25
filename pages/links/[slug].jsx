@@ -1,11 +1,8 @@
-import { useState } from 'react';
 import renderHTML from 'react-render-html';
-import useSWR from 'swr';
-import { Container, Alert } from 'react-bootstrap';
-import InfiniteScroll from 'react-infinite-scroller';
-import axios from 'axios';
+import { Container } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
+import Pagination from '../../components/pagination.jsx';
 import prisma from '../../lib/prisma';
 import { s3 } from '../../lib/s3Client';
 import { keys } from '../../lib/keys';
@@ -14,61 +11,9 @@ import styles from '../../public/static/styles/[slug].module.css';
 
 const Links = (props) => {
   const prop = JSON.parse(props.data);
-  const links = JSON.parse(props.links);
-  const leng = JSON.parse(props.leng).length;
 
   const router = useRouter();
   const { slug } = router.query;
-
-  const [skip, setSkip] = useState(0);
-  const [link, setLink] = useState(links);
-
-  const loadMore = async () => {
-    let toSkip = skip + 3;
-    const response = await axios.post('/api/pagination', {
-      skip: toSkip,
-      slug,
-    });
-    setLink([...link, ...response.data.data]);
-    setSkip(toSkip);
-  };
-
-  const listOfLinks = () =>
-    link.map((item, index) => (
-      <div key={index}>
-        <Alert variant="primary">
-          <Alert.Heading>{item.title}</Alert.Heading>
-          <p>{item.url}</p>
-          <div className={styles.alert_bottom_flex}>
-            <>
-              {item.medium === 'Book' ? (
-                <p className={styles.alert_p}>Book</p>
-              ) : (
-                <p>Book/</p>
-              )}
-              {item.medium === 'Video' ? (
-                <p className={styles.alert_p}>Video</p>
-              ) : (
-                <p>/Video</p>
-              )}
-              {item.type === 'Free' ? (
-                <p style={{ marginLeft: '10px' }} className={styles.alert_p}>
-                  Free
-                </p>
-              ) : (
-                <p style={{ marginLeft: '10px' }}>Free/</p>
-              )}
-              {item.type === 'Paid' ? (
-                <p className={styles.alert_p}>Paid</p>
-              ) : (
-                <p>/Paid</p>
-              )}
-              <p style={{ marginLeft: '10%' }}>Created by {item.userName}</p>
-            </>
-          </div>
-        </Alert>
-      </div>
-    ));
 
   return (
     <Container>
@@ -80,14 +25,7 @@ const Links = (props) => {
           <div className="lead alert alert-secondary pt-4">
             {renderHTML(prop.description || '')}
           </div>
-          <InfiniteScroll
-            pageStart={0}
-            loadMore={loadMore}
-            hasMore={skip <= leng}
-            loader={<h4 key={0}>Loading...</h4>}
-          >
-            {listOfLinks()}
-          </InfiniteScroll>
+          <Pagination slug={slug} />
         </div>
         <div className={styles.flex_right}>
           <img
@@ -115,23 +53,6 @@ export const getServerSideProps = async ({ query }) => {
     },
   });
 
-  const Length = await prisma.links.findMany({
-    where: {
-      categoryNames: {
-        has: slug,
-      },
-    },
-  });
-
-  const Links = await prisma.links.findMany({
-    where: {
-      categoryNames: {
-        has: slug,
-      },
-    },
-    take: 3,
-  });
-
   const { title, description, s3BucketKey } = Prisma;
 
   const params = {
@@ -155,8 +76,6 @@ export const getServerSideProps = async ({ query }) => {
   return {
     props: {
       data: JSON.stringify(data),
-      links: JSON.stringify(Links),
-      leng: JSON.stringify(Length),
     },
   };
 };

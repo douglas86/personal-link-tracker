@@ -8,7 +8,7 @@ import Subscriber from '../Dashboard/Subscriber';
 import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
 
-const Dashboard = ({ data, categories }) => {
+const Dashboard = ({ data }) => {
   const { data: session } = useSession();
 
   const Role = (role) => {
@@ -44,9 +44,8 @@ export const getServerSideProps = async (ctx) => {
         },
       })
     : null;
-  const categories = await prisma.category.findMany();
   const data = JSON.stringify(user);
-  return { props: { data, categories: JSON.stringify(categories) } };
+  return { props: { data } };
 };
 
 export default Dashboard;

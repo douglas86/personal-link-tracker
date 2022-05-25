@@ -1,18 +1,17 @@
 import Resizer from 'react-image-file-resizer';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-import Apis from '../../API';
+import AdminApis from '../../API/index2';
 
 const Submit = () => {
   const context = useContext(AdminContext);
-  const { Posting, Putting, Deleting } = Apis();
+  const { Posting, Putting, Deleting } = AdminApis();
   const { state, content, isTab } = context;
   const { title, image, id } = state;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = { title, content, image, id };
-    console.log('handleBody', body);
     if (isTab === 'create') {
       if (title !== '' && content !== '' && image !== '') {
         Posting('/api/category', body);
