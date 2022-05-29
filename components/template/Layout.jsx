@@ -1,9 +1,9 @@
-import Navbar from '../Navbar.jsx';
+import Header from '../organism/Header';
 
 const Layout = ({ children }) => {
     return (
         <>
-            <Navbar />
+            <Header />
             <main>{children}</main>
         </>
     );
