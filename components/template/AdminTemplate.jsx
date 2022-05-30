@@ -2,7 +2,8 @@ import { useEffect, useContext } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 
 // Context
-import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
+// import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
+import { AdminContext } from '../../Context/AdminContext';
 
 // Tabs
 import CreateCategory from '../organism/AdminTabs/CreateCategory';
@@ -12,27 +13,7 @@ import ReadLinks from '../organism/AdminTabs/ReadLinks';
 
 const AdminTemplate = () => {
     const context = useContext(AdminContext);
-    const { state, setState, setContent, isTab, setIsTab } = context;
-    const { isUpdateState } = state;
-
-    console.log('context', context);
-
-    useEffect(() => {
-        let mounted = true;
-
-        if (mounted) {
-            setContent('');
-            setState({
-                id: '',
-                image: '',
-                isUpdateState: false,
-                title: '',
-                buttonText: 'Create',
-            });
-        }
-
-        return () => mounted === false;
-    }, [setState, setContent]);
+    const { isTab, setIsTab } = context;
 
     return (
         <>
@@ -48,11 +29,9 @@ const AdminTemplate = () => {
                 <Tab eventKey="all" title="All Categories">
                     <AllCategories />
                 </Tab>
-                {isUpdateState ? (
-                    <Tab eventKey="update" title="Update Category">
-                        <UpdateCategory />
-                    </Tab>
-                ) : null}
+                <Tab eventKey="update" title="Update Category">
+                    <UpdateCategory />
+                </Tab>
                 <Tab eventKey="links" title="Links">
                     <ReadLinks />
                 </Tab>
