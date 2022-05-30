@@ -1,6 +1,6 @@
 import { Alert } from 'react-bootstrap';
 
-export const alert = (color, message) => {
+export const displayAlert = (color, message) => {
     return (
         <>
             <Alert variant={color}>

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import { AdminContext } from '../Context/AdminContext';
 
 const actionCreators = () => {
-    const { alert, setAlert } = useContext(AdminContext);
+    const { alert, setAlert, setIsTab } = useContext(AdminContext);
     const router = useRouter();
 
     const postCreators = (props) => {
@@ -16,7 +16,7 @@ const actionCreators = () => {
             alertColor: status !== 200 ? 'danger' : 'success',
             alertMessage: message,
         });
-        router.reload(window.location.pathname);
+        setIsTab('all');
     };
 
     const putCreators = (props) => {

@@ -23,10 +23,7 @@ export const AdminProvider = ({ children }) => {
 
     useEffect(() => {
         if (alert.showAlert) {
-            setTimeout(
-                () => setShowAlert({ ...alert, showAlert: false }),
-                5000
-            );
+            setTimeout(() => setAlert({ ...alert, showAlert: false }), 5000);
         }
     }, [alert]);
 
