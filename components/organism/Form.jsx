@@ -6,6 +6,7 @@ import { useQuill } from 'react-quilljs';
 import OnSubmit from './OnSubmit';
 import { AdminContext } from '../../Context/AdminContext';
 import { inputForm } from '../molecule/inputForm';
+import { submitButton } from '../atom/button';
 
 const Form = () => {
     const context = useContext(AdminContext);
@@ -58,15 +59,7 @@ const Form = () => {
                         />
                     </label>
                 </div>
-                <div className="form-group">
-                    <button
-                        style={{ margin: '0.5%' }}
-                        className="btn btn-outline-warning"
-                        onClick={handleSubmit}
-                    >
-                        {isForm.buttonText}
-                    </button>
-                </div>
+                {submitButton(handleSubmit, isForm.buttonText)}
             </form>
         </Container>
     );

@@ -27,3 +27,17 @@ export const signout = (signOut) => {
         </Button>
     );
 };
+
+export const submitButton = (handleSubmit, Name) => {
+    return (
+        <div className="form-group" style={{ padding: '10px' }}>
+            <Button
+                className="justify-content-right"
+                variant="btn btn-outline-warning"
+                onClick={handleSubmit}
+            >
+                {Name}
+            </Button>
+        </div>
+    );
+};
