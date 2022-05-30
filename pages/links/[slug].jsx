@@ -1,83 +1,23 @@
-import renderHTML from 'react-render-html';
-import { Container } from 'react-bootstrap';
 import { useRouter } from 'next/router';
 
-import Pagination from '../../components/pagination.jsx';
-import prisma from '../../lib/prisma';
-import { s3 } from '../../lib/s3Client';
-import { keys } from '../../lib/keys';
+import SlugTemplate from '../../components/template/SlugTemplate.jsx';
+import { GetRoute } from '../../API/index2.jsx';
+import { spinner } from '../../components/atom/spinner.jsx';
 
-import styles from '../../public/static/styles/[slug].module.css';
+const Links = () => {
+    const router = useRouter();
+    const { slug } = router.query;
+    const fetcher = GetRoute(`/api/singleItem?slug=${slug}`).data;
 
-const Links = (props) => {
-  const prop = JSON.parse(props.data);
-
-  const router = useRouter();
-  const { slug } = router.query;
-
-  return (
-    <Container>
-      <div className={styles.flex_container}>
-        <div className={styles.flex_left}>
-          <h1 className="display-4 font-weight-bold">
-            {prop.title} - URL/Links
-          </h1>
-          <div className="lead alert alert-secondary pt-4">
-            {renderHTML(prop.description || '')}
-          </div>
-          <Pagination slug={slug} />
-        </div>
-        <div className={styles.flex_right}>
-          <img
-            src={`data:image/jpeg;base64,${prop.image}`}
-            alt="image"
-            width={400}
-            height={200}
-          />
-          <div className={styles.popular_links}>
-            <h2 className="lead">Most popular in {prop.title}</h2>
-            <p>show popular links</p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  );
-};
-
-export const getServerSideProps = async ({ query }) => {
-  const { slug } = query;
-
-  const Prisma = await prisma.category.findFirst({
-    where: {
-      title: slug,
-    },
-  });
-
-  const { title, description, s3BucketKey } = Prisma;
-
-  const params = {
-    Bucket: keys.aws.s3Bucket,
-    Key: s3BucketKey,
-  };
-
-  const S3 = await s3
-    .getObject(params)
-    .promise()
-    .then((res) => {
-      return res;
-    });
-
-  const data = {
-    title,
-    description,
-    image: S3.Body.toString('base64'),
-  };
-
-  return {
-    props: {
-      data: JSON.stringify(data),
-    },
-  };
+    return (
+        <>
+            {slug === undefined ? (
+                spinner()
+            ) : (
+                <SlugTemplate slug={slug} data={fetcher} />
+            )}
+        </>
+    );
 };
 
 export default Links;
