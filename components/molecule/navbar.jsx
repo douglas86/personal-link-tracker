@@ -1,8 +1,10 @@
 import Link from 'next/link';
+import { Nav } from 'react-bootstrap';
 
 import { signin, signout } from '../atom/button';
 import { image } from '../atom/image';
-import { dashboard_links, submit_links } from '../atom/navBarLinks';
+import { links } from '../atom/links';
+
 import HomeLogo from '../../public/static/Images/home.jpeg';
 
 export const authButtons = (session, signIn, signOut) => {
@@ -13,9 +15,11 @@ export const navbarLinks = (session, url) => {
     return (
         <>
             {session !== undefined && url !== '/dashboard'
-                ? dashboard_links()
+                ? links('/dashboard', <Nav.Link>Dashboard</Nav.Link>)
                 : null}
-            {url !== '/user/link/create' ? submit_links() : null}
+            {url !== '/user/link/create'
+                ? links('/user/link/create', <Nav.Link>Submit a Link</Nav.Link>)
+                : null}
         </>
     );
 };
