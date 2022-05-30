@@ -13,7 +13,7 @@ import ReadLinks from '../organism/AdminTabs/ReadLinks';
 
 const AdminTemplate = () => {
     const context = useContext(AdminContext);
-    const { isTab, setIsTab } = context;
+    const { isTab, setIsTab, isUpdatedTab } = context;
 
     return (
         <>
@@ -29,9 +29,11 @@ const AdminTemplate = () => {
                 <Tab eventKey="all" title="All Categories">
                     <AllCategories />
                 </Tab>
-                <Tab eventKey="update" title="Update Category">
-                    <UpdateCategory />
-                </Tab>
+                {isUpdatedTab ? (
+                    <Tab eventKey="update" title="Update Category">
+                        <UpdateCategory />
+                    </Tab>
+                ) : null}
                 <Tab eventKey="links" title="Links">
                     <ReadLinks />
                 </Tab>
