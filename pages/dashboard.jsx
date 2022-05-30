@@ -1,5 +1,7 @@
 import { useSession } from 'next-auth/react';
 
+import AdminTemplate from '../components/template/AdminTemplate';
+
 import Admin from '../Dashboard/Admin';
 import Subscriber from '../Dashboard/Subscriber';
 
@@ -18,7 +20,7 @@ const Dashboard = () => {
             case 'admin':
                 return (
                     <AdminProvider>
-                        <Admin />
+                        <AdminTemplate />
                     </AdminProvider>
                 );
             default:
