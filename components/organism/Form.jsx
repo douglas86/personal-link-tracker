@@ -24,8 +24,6 @@ const Form = () => {
         }
     }, [quill, quillRef, setContent]);
 
-    console.log('isForm', isForm);
-
     return (
         <Container>
             <form>

@@ -3,9 +3,14 @@ import { createContext, useState, useEffect } from 'react';
 export const AdminContext = createContext();
 
 export const AdminProvider = ({ children }) => {
-    const [showAlert, setShowAlert] = useState(false);
     const [isUpdatedTab, setIsUpdatedTab] = useState(false);
     const [isTab, setIsTab] = useState('all');
+
+    const [alert, setAlert] = useState({
+        showAlert: false,
+        alertColor: '',
+        alertMessage: '',
+    });
 
     const [isForm, setIsForm] = useState({
         title: '',
@@ -17,20 +22,23 @@ export const AdminProvider = ({ children }) => {
     const [content, setContent] = useState('');
 
     useEffect(() => {
-        if (showAlert) {
-            setTimeout(() => setShowAlert(false), 5000);
+        if (alert.showAlert) {
+            setTimeout(
+                () => setShowAlert({ ...alert, showAlert: false }),
+                5000
+            );
         }
-    }, [showAlert]);
+    }, [alert]);
 
     return (
         <AdminContext.Provider
             value={{
-                showAlert,
-                setShowAlert,
                 isUpdatedTab,
                 setIsUpdatedTab,
                 isTab,
                 setIsTab,
+                alert,
+                setAlert,
                 isForm,
                 setIsForm,
                 imageUploadButtonName,
