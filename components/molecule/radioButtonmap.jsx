@@ -6,7 +6,11 @@ export const RadioButtonmap = ({ array, handleChange }) => {
             {array.map((items, index) => (
                 <div
                     key={index}
-                    style={{ display: 'inline-block', marginRight: '10px' }}
+                    style={{
+                        display: 'inline-block',
+                        marginRight: '10px',
+                        marginBottom: '10px',
+                    }}
                 >
                     <RadioButton
                         value={items}
