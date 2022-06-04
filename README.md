@@ -1,9 +1,4 @@
-Problems that I have encounted:
-	All categories tab in the Admin Dashboard:
-		- Once delete is pressed it asks if I am sure to delete
-		- If ok is pressed it performs a refresh of the browser and updates the array
-		- What I want to do is use mutate from useSWR to update just that endpoint on request
-		- So that the browser doesn't have to be refreshed everytime
+
 
 
 
