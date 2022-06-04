@@ -1,4 +1,10 @@
-
+This Project uses the following Technologies:
+css
+JavaScript
+Nextjs Framework
+Prisma with postgres as my database
+AWS (Amazon web service)
+useSWR (Stale while revalidating) hook for data fetching
 
 
 
