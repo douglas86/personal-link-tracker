@@ -4,14 +4,11 @@ This Project uses the following Technologies:<br/>
 <img src="./public/static/readmeImages/nextjs.png" alt="no image" height="50" width="50">
 <img src="./public/static/readmeImages/prisma.png" alt="no image" height="50" width="50">
 <img src="./public/static/readmeImages/aws.png" alt="no image" height="50" width="50">
-Nextjs Framework<br/>
-Prisma with postgres as my database<br/>
-AWS (Amazon web service)<br/>
-useSWR (Stale while revalidating) hook for data fetching<br/>
+<img src="./public/static/readmeImages/useSWR.jpeg" alt="no image" height="50" width="50">
 
-css, JavaScript
+css, JavaScript, Nextjs Framework, Prisma with postgres as my database, AWS (Amazon web service), useSWR (Stale while revalidating) hook for data fetching
 
-<img src="./public/static/Images/home.jpeg" alt="no image" height="200px" width="200px">
+<img src="./public/static/Images/home.jpeg" alt="no image" height="201" width="250">
 
 
 
