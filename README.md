@@ -12,7 +12,14 @@ revalidating) hook for data fetching
 ### This is a screenshot of the Home Page on this site
 
 <img src="./public/static/readmeImages/Home Page.png" alt="no image" height="auto" width="100%"><br/>
-<img src="./public/static/Images/home.jpeg" alt="no image" height="201" width="250">
+
+### This is a screenshot of the Categories page
+
+<img src="./public/static/readmeImages/Category Page.png" alt="no image" height="auto" width="100%"><br/>
+
+#### Description
+
+This page uses prefetch for loading documents from database
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped
 with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
