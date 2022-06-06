@@ -1,6 +1,9 @@
 This Project uses the following Technologies:<br/>
-<img src="./public/readmeImages/CSS3.png" alt="no image" height="50" width="50">
-<img src="./public/readmeImages/javascript.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/CSS3.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/javascript.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/nextjs.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/prisma.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/aws.png" alt="no image" height="50" width="50">
 Nextjs Framework<br/>
 Prisma with postgres as my database<br/>
 AWS (Amazon web service)<br/>
