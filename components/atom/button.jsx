@@ -28,12 +28,12 @@ export const signout = (signOut) => {
     );
 };
 
-export const submitButton = (handleSubmit, Name) => {
+export const submitButton = (handleSubmit, Name, variant) => {
     return (
         <div className="form-group" style={{ padding: '10px' }}>
             <Button
                 className="justify-content-right"
-                variant="btn btn-outline-warning"
+                variant={variant}
                 onClick={handleSubmit}
             >
                 {Name}

@@ -5,6 +5,7 @@ import { AdminContext } from '../../../Context/AdminContext';
 
 import { displayAlert } from '../../atom/displayAlert';
 import { spinner } from '../../atom/spinner';
+import { card } from '../../molecule/card';
 import { Cards } from '../Cards';
 import styles from './AllCategories.module.css';
 
@@ -14,6 +15,8 @@ const AllCategories = () => {
     const context = useContext(AdminContext);
     const { alert } = context;
     const { showAlert, alertColor, alertMessage } = alert;
+
+    const handleSubmit = () => console.log('You rang');
 
     return (
         <Container>
@@ -28,12 +31,10 @@ const AllCategories = () => {
                                   padding: '2%',
                               }}
                           >
-                              {Cards(
-                                  `/links/${value.title}`,
+                              {card(
+                                  value.title,
                                   `data:image/jpeg;base64,${value.image}`,
-                                  250,
-                                  180,
-                                  value.title
+                                  handleSubmit
                               )}
                           </div>
                       </div>

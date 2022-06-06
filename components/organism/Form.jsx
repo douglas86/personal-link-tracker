@@ -57,7 +57,11 @@ const Form = () => {
                         />
                     </label>
                 </div>
-                {submitButton(handleSubmit, isForm.buttonText)}
+                {submitButton(
+                    handleSubmit,
+                    isForm.buttonText,
+                    'btn btn-outline-warning'
+                )}
             </form>
         </Container>
     );
