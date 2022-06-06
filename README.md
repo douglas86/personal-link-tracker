@@ -7,7 +7,7 @@
 <img src="./public/static/readmeImages/prisma.png" alt="no image" height="50" width="50">
 <img src="./public/static/readmeImages/aws.png" alt="no image" height="50" width="50">
 <img src="./public/static/readmeImages/useSWR.jpeg" alt="no image" height="50" width="50">
-<br/>
+
 css, JavaScript, Nextjs Framework, Prisma with postgres as my database, AWS (Amazon web service), useSWR (Stale while
 revalidating) hook for data fetching
 <hr/>
