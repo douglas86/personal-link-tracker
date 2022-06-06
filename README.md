@@ -1,46 +1,77 @@
-Problems that I have encounted:
-	All categories tab in the Admin Dashboard:
-		- Once delete is pressed it asks if I am sure to delete
-		- If ok is pressed it performs a refresh of the browser and updates the array
-		- What I want to do is use mutate from useSWR to update just that endpoint on request
-		- So that the browser doesn't have to be refreshed everytime
+This Project uses the following Technologies:<br/>
+<img src="./public/static/readmeImages/CSS3.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/javascript.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/nextjs.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/prisma.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/aws.png" alt="no image" height="50" width="50">
+<img src="./public/static/readmeImages/useSWR.jpeg" alt="no image" height="50" width="50">
 
+css, JavaScript, Nextjs Framework, Prisma with postgres as my database, AWS (Amazon web service), useSWR (Stale while
+revalidating) hook for data fetching
 
+### This is a screenshot of the Home Page on this site
 
+<img src="./public/static/readmeImages/Home Page.png" alt="no image" height="auto" width="100%"><br/>
 
+### This is a screenshot of the Categories page
 
+<img src="./public/static/readmeImages/Category Page.png" alt="no image" height="auto" width="100%"><br/>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#### Description
 
-## Getting Started
+This page uses prefetch for loading documents from database
 
-First, run the development server:
+## Getting setup on AWS
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+### Setting up s3 Buckets
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. Add a IAM role to your user:
+   1. Go to the top search bar and search for IAM
+   2. The first one that pops up should say IAM
+   3. when you are on the IAM dashboard
+   4. Under the IAM resource section
+   5. There should be a heading that says Users
+   6. click on users
+   7. click on the user that you want to handle the s3 bucket
+   8. click on Add permissions
+   9. There will be 3 different policies
+   10. click on the one that says, "Attach existing policies directly"
+   11. in the search bar type s3 which should bring up all existing policies
+   12. click on the policy that says, "AmazonS3FullAccess"
+   13. which gives full access to the user
+   14. keep on clicking the next blue button at the bottom to add the policy
+2. Once the policy is added
+3. In the search bar at the top type s3 to go to the s3 Dashboard
+4. click the button that says create a bucket
+5. type the name of the bucket
+6. bear in mind that this name needs to be unique across the hole of aws
+7. select what region you want your bucket to be in
+8. under object ownership select ACL's enabled
+9. unselect the Block all public access under the heading Block public access
+10. all other setting you can leave as is, just click the orange button at the bottom
+11. that says, "Create bucket"
+12. once the bucket is created store your environment variables in the .env file
+13. connect to the s3 bucket as I did in the server directory
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+### How to set up SES (Simple Email Service) on AWS
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+The first thing that I had to do was make sure that I had created a new user on the IAM Dashboard There is a panel on
+the left-hand side that says Users, click on the Big blue button on the right hand side that says "Add users On the
+form", enter your name and click the checkbox that says Access key - Programmatic access. Then click on Next:
+Permissions blue button bottom right You need to now add permissions policy to use AWS SES Click on the Document that
+says, "Attach existing policies directly". Once you click on that there will be a list of all the policies that AWS
+offers In the search field type: SES this will show all policies related to SES service Click on the checkbox that says
+AmazonSESFullAccess Click the Next: Tags big blue button bottom right-hand side Keep on clicking the big blue button
+until it says Create user It will then show you a Success Screen with your access key and Secret key Make sure to keep
+that safe and backed up. The secret and Access key you need to place in the .env file
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+AWS_ACCESS_KEY_ID=key goes here AWS_SECRET_KEY=key goes here AWS_REGION=region goes here
 
-## Learn More
+The next step would be to go the SES Dashboard. To do that at the top there is a search field type SES in that field SES
+should pop up as first result Then I need to Create an Identity to use this service Click on the orange button that
+says, "Create identity" Click on the document that says Email address Enter your email address in the input field and
+click the orange button that says Create identity It will then send you, an email to the email address provided, which
+needs to be verified Click on the link that was sent to you to verify it.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The next step is then to program it out under the server directory in controllers/auth.js If you go onto google and type
+AWS SES node It will show you how it is done with nodejs
