@@ -3,6 +3,9 @@
 # vscode
 .vscode
 
+# webstorm
+*.idea
+
 # neovim or vim
 *.vim
 
