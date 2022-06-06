@@ -21,44 +21,35 @@ revalidating) hook for data fetching
 
 This page uses prefetch for loading documents from database
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped
-with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## Getting setup on AWS
 
-## Getting Started
+### Setting up s3 Buckets
 
-First, run the development server:
+1. Add a IAM role to your user:
+   1. Go to the top search bar and search for IAM
+   2. The first one that pops up should say IAM
+   3. when you are on the IAM dashboard
+   4. Under the IAM resource section
+   5. There should be a heading that says Users
+   6. click on users
+   7. click on the user that you want to handle the s3 bucket
+   8. click on Add permissions
+   9. There will be 3 different policies
+   10. click on the one that says, "Attach existing policies directly"
+   11. in the search bar type s3 which should bring up all existing policies
+   12. click on the policy that says, "AmazonS3FullAccess"
+   13. which gives full access to the user
+   14. keep on clicking the next blue button at the bottom to add the policy
+2. Once the policy is added
+3. In the search bar at the top type s3 to go to the s3 Dashboard
+4. click the button that says create a bucket
+5. type the name of the bucket
+6. bear in mind that this name needs to be unique across the hole of aws
+7. select what region you want your bucket to be in
+8. under object ownership select ACL's enabled
+9. unselect the Block all public access under the heading Block public access
+10. all other setting you can leave as is, just click the orange button at the bottom
+11. that says, "Create bucket"
+12. once the bucket is created store your environment variables in the .env file
+13. connect to the s3 bucket as I did in the server directory
 
-```bash
-npm run dev
-# or
-yarn dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed
-on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited
-in `pages/api/hello.js`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated
-as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions
-are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use
-the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme)
-from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
