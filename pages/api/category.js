@@ -1,14 +1,6 @@
-import { Get, Post, Put, Delete } from '../../Helper/api/categoryHelper';
-import prisma from '../../lib/prisma';
-import { s3 } from '../../lib/s3Client';
-import { keys } from '../../lib/keys';
+import { Get, Post, Put } from '../../Helper/api/categoryHelper';
 
-const goParams = (title) => {
-    return {
-        Bucket: keys.aws.s3Bucket,
-        Key: `category/${title}.jpeg`,
-    };
-};
+import { deleteController } from './controllers/categoryControllers';
 
 const Handler = async (req, res) => {
     const { method, body } = req;
@@ -55,25 +47,8 @@ const Handler = async (req, res) => {
             break;
         // delete
         case 'DELETE':
-            // TODO: import prisma from lib
-
             try {
-                await prisma.category.delete({ where: { id } }).then(() => {
-                    s3.deleteObject(goParams(title), (err) => {
-                        if (err) {
-                            res.json({
-                                status: 400,
-                                message: err.message,
-                            });
-                        } else {
-                            res.json({
-                                status: 200,
-                                message:
-                                    'All objects have successfully been deleted',
-                            });
-                        }
-                    });
-                });
+                deleteController(body, res);
             } catch (err) {
                 res.json({
                     status: 400,
