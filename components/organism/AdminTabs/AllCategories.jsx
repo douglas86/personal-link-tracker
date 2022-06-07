@@ -18,7 +18,14 @@ const AllCategories = () => {
     const handleUpdate = (id, title, image) =>
         console.log('update was clicked', id, title, image);
 
-    const handleDelete = (id) => deleteRoute('/api/category', id);
+    const handleConfirm = (body) => {
+        let answer = window.confirm('Are you sure you want to delete');
+        if (answer) {
+            handleDelete(body);
+        }
+    };
+
+    const handleDelete = (body) => deleteRoute('/api/category', body);
 
     return (
         <Container>
@@ -35,7 +42,7 @@ const AllCategories = () => {
                                   padding: '2%',
                               }}
                           >
-                              {card(value, handleDelete, handleUpdate)}
+                              {card(value, handleConfirm, handleUpdate)}
                           </div>
                       </div>
                   ))

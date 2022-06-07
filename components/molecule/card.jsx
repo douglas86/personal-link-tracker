@@ -12,7 +12,6 @@ export const card = (cardData, handleDelete, handleUpdate) => {
         return handleUpdate(id, title, image);
     };
 
-    // TODO: this needs to give an alert to promt for if you want to delete or not
     const deleteItem = () => {
         return handleDelete({ id, title });
     };
