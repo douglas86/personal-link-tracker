@@ -7,11 +7,13 @@ const Api = () => {
     const { alerts, setAlert } = alertContext;
     const { show, color, message } = alerts;
 
-    const deleteRoute = (endpoint, id) => {
+    // TODO: break this deleteRoute up into actionTypes and actionCreators
+
+    const deleteRoute = (endpoint, body) => {
         fetch(endpoint, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(id),
+            body: JSON.stringify(body),
         }).then(async (items) => {
             let result = await items.json();
             const { status, message } = result;
