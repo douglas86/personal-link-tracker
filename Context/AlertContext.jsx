@@ -3,7 +3,7 @@ import { createContext, useState, useEffect } from 'react';
 export const AlertContext = createContext();
 
 export const AlertProvider = ({ children }) => {
-    const [alerts, setAlert] = useState({
+    const [alerts, setAlerts] = useState({
         show: false,
         color: '',
         message: '',
@@ -13,14 +13,14 @@ export const AlertProvider = ({ children }) => {
     useEffect(() => {
         if (show) {
             setTimeout(
-                () => setAlert({ show: false, color: '', message: '' }),
+                () => setAlerts({ show: false, color: '', message: '' }),
                 5000
             );
         }
     }, [alerts, show]);
 
     return (
-        <AlertContext.Provider value={{ alerts, setAlert }}>
+        <AlertContext.Provider value={{ alerts, setAlerts }}>
             {children}
         </AlertContext.Provider>
     );

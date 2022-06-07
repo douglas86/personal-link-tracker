@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import actionTypes from '../actionTypes/apiCalls';
 
 import { AlertContext } from '../Context/AlertContext';
 
@@ -7,19 +8,10 @@ const Api = () => {
     const { alerts, setAlert } = alertContext;
     const { show, color, message } = alerts;
 
-    // TODO: break this deleteRoute up into actionTypes and actionCreators
+    const { deleteActions } = actionTypes();
 
     const deleteRoute = (endpoint, body) => {
-        fetch(endpoint, {
-            method: 'DELETE',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(body),
-        }).then(async (items) => {
-            let result = await items.json();
-            const { status, message } = result;
-            const color = status === 200 ? 'success' : 'danger';
-            setAlert({ show: true, color, message });
-        });
+        deleteActions(endpoint, body);
     };
 
     return {
