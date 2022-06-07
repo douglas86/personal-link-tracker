@@ -44,14 +44,31 @@ const Handler = async (req, res) => {
             break;
         // delete
         case 'DELETE':
+            // TODO: comment out this code
+            // TODO: get the id of body first
+            // TODO: then re-right code in controllers and services manner
+
             try {
-                Delete(body, res);
+                console.log('body', body);
+                res.json({
+                    status: 200,
+                    message: 'You have successfully deleted from db',
+                });
             } catch (err) {
                 res.json({
                     status: 400,
                     message: 'Something went wrong',
                 });
             }
+
+            // try {
+            //     Delete(body, res);
+            // } catch (err) {
+            //     res.json({
+            //         status: 400,
+            //         message: 'Something went wrong',
+            //     });
+            // }
             break;
         default:
             res.json({

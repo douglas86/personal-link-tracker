@@ -1,31 +1,44 @@
 import { submitButton } from '../atom/button';
-import { image } from '../atom/image';
+import { img } from '../atom/image';
 import { links } from '../atom/links';
 import { titles } from '../atom/titles';
 
 import styles from './card.module.css';
 
-export const card = (title, img, handleSubmit) => (
-    <>
+export const card = (cardData, handleDelete, handleUpdate) => {
+    const { id, title, image } = cardData;
+
+    const updateItem = () => {
+        return handleUpdate(id, title, image);
+    };
+
+    const deleteItem = () => {
+        return handleDelete(id);
+    };
+
+    return (
         <div className={styles.container}>
             <div className={styles.image}>
-                {links(`/links/${title}`, <a>{image(img, 200, 200)}</a>)}
+                {links(
+                    `/links/${title}`,
+                    <a>{img(`data:image/jpeg;base64,${image}`, 200, 200)}</a>
+                )}
             </div>
             <div className={styles.titles}>
                 {titles(title)}
                 <div className={styles.buttons}>
                     {submitButton(
-                        handleSubmit,
+                        updateItem,
                         'Update',
                         'btn btn-outline-success'
                     )}
                     {submitButton(
-                        handleSubmit,
+                        deleteItem,
                         'Delete',
                         'btn btn-outline-danger'
                     )}
                 </div>
             </div>
         </div>
-    </>
-);
+    );
+};

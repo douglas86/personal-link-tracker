@@ -1,26 +1,30 @@
 import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
 import { GetRoute } from '../../../API/index2';
-import { AdminContext } from '../../../Context/AdminContext';
+import { AlertContext } from '../../../Context/AlertContext';
 
-import { displayAlert } from '../../atom/displayAlert';
 import { spinner } from '../../atom/spinner';
 import { card } from '../../molecule/card';
-import { Cards } from '../Cards';
 import styles from './AllCategories.module.css';
+import { alert } from '../../atom/alert';
+import Api from '../../../API';
 
 const AllCategories = () => {
+    const alertContext = useContext(AlertContext);
+
     const fetcher = GetRoute('/api/category').data;
+    const { deleteRoute } = Api();
 
-    const context = useContext(AdminContext);
-    const { alert } = context;
-    const { showAlert, alertColor, alertMessage } = alert;
+    const handleUpdate = (id, title, image) =>
+        console.log('update was clicked', id, title, image);
 
-    const handleSubmit = () => console.log('You rang');
+    const handleDelete = (id) => deleteRoute('/api/category', id);
 
     return (
         <Container>
-            {showAlert ? displayAlert(alertColor, alertMessage) : null}
+            {alertContext.alerts.show
+                ? alert(alertContext.alerts.color, alertContext.alerts.message)
+                : null}
             {fetcher !== undefined
                 ? Object.entries(fetcher).map(([key, value]) => (
                       <div key={key} className={styles.flex}>
@@ -31,11 +35,7 @@ const AllCategories = () => {
                                   padding: '2%',
                               }}
                           >
-                              {card(
-                                  value.title,
-                                  `data:image/jpeg;base64,${value.image}`,
-                                  handleSubmit
-                              )}
+                              {card(value, handleDelete, handleUpdate)}
                           </div>
                       </div>
                   ))

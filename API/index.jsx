@@ -1,91 +1,28 @@
 import { useContext } from 'react';
-import useSWR from 'swr';
-import { useRouter } from 'next/router';
 
-import { AdminContext } from '../Context/Dashboard/Admin/AdminContext';
+import { AlertContext } from '../Context/AlertContext';
 
-const Apis = () => {
-  const context = useContext(AdminContext);
-  const { state } = context;
-  const router = useRouter();
+const Api = () => {
+    const alertContext = useContext(AlertContext);
+    const { alerts, setAlert } = alertContext;
+    const { show, color, message } = alerts;
 
-  // create;
-  const Posting = (endpoint, body) => {
-    fetch(endpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(body),
-    }).then(async (res) => {
-      let result = await res.json();
-      context.setContent('');
-      context.setImageUploadButtonName('Upload image');
-      context.setState({
-        ...state,
-        title: '',
-        message: result.message,
-        image: '',
-        alertColor: result.status !== 200 ? 'danger' : 'success',
-        statusCode: result.status,
-        showAlert: true,
-      });
-      router.reload(window.location.pathname);
-    });
-  };
-
-  // read;
-  const Fetcher = (endpoint) => {
-    const fetcher = (url) => fetch(url).then((res) => res.json());
-    const { data } = useSWR(endpoint, fetcher, {
-      revalidateOnFocus: false,
-    });
-    return data;
-  };
-
-  // update
-  const Putting = (endpoint, body) => {
-    fetch(endpoint, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    }).then(async (res) => {
-      let result = await res.json();
-      context.setState({
-        ...state,
-        message: result.message,
-        alertColor: result.status !== 200 ? 'danger' : 'success',
-        statusCode: result.status,
-        showAlert: true,
-      });
-      router.reload(window.location.pathname);
-      return result;
-    });
-  };
-
-  // delete
-  const Deleting = (endpoint, body) => {
-    fetch(endpoint, {
-      method: 'DELETE',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(body),
-    })
-      .then(async (res) => {
-        let result = await res.json();
-        context.setState({
-          ...state,
-          message: result.message,
-          alertColor: result.status !== 200 ? 'danger' : 'success',
-          statusCode: result.status,
-          showAlert: true,
+    const deleteRoute = (endpoint, id) => {
+        fetch(endpoint, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(id),
+        }).then(async (items) => {
+            let result = await items.json();
+            const { status, message } = result;
+            const color = status === 200 ? 'success' : 'danger';
+            setAlert({ show: true, color, message });
         });
-        router.reload(window.location.pathname);
-        return result;
-      })
-      .catch((err) => console.log('err', err));
-  };
+    };
 
-  return { Posting, Fetcher, Putting, Deleting };
+    return {
+        deleteRoute,
+    };
 };
 
-export default Apis;
+export default Api;

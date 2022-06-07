@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export const image = (src, width, height) => {
+export const img = (src, width, height) => {
     return (
         <>
             <Image

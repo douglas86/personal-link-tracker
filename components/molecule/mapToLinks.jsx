@@ -1,8 +1,8 @@
 import { links } from '../atom/links';
 import styles from '../../public/static/styles/index.module.css';
-import { image } from '../atom/image';
+import { img } from '../atom/image';
 
-export const mapToLinks = (url, img, width, height, title) => {
+export const mapToLinks = (url, src, width, height, title) => {
     return (
         <>
             {links(
@@ -10,7 +10,7 @@ export const mapToLinks = (url, img, width, height, title) => {
                 <a className={styles.button}>
                     <div className={styles.contents}>
                         <div className={styles.flex_image}>
-                            {image(img, width, height)}
+                            {img(src, width, height)}
                         </div>
                         <div className={styles.title}>
                             <h5>{title}</h5>
