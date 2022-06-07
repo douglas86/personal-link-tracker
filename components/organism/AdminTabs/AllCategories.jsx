@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
-import { GetRoute } from '../../../API/index2';
+import { GetRoute } from '../../../API/index';
 import { AlertContext } from '../../../Context/AlertContext';
 
 import { spinner } from '../../atom/spinner';

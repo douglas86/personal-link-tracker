@@ -8,7 +8,7 @@ import { spinner } from '../components/atom/spinner';
 import { AdminProvider } from '../Context/AdminContext';
 
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
-import { GetRoute } from '../API/index2';
+import { GetRoute } from '../API/index';
 
 const Dashboard = () => {
     const { data: session } = useSession();

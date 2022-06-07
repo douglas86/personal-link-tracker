@@ -1,9 +1,9 @@
 import { Container } from 'react-bootstrap';
 import renderHTML from 'react-render-html';
 
-import { image } from '../atom/image';
+import { img } from '../atom/image';
 import { spinner } from '../atom/spinner';
-import { GetRoute } from '../../API/index2';
+import { GetRoute } from '../../API/index';
 import Pagination from '../pagination';
 import styles from '../../public/static/styles/[slug].module.css';
 
@@ -30,7 +30,7 @@ const SlugTemplate = ({ slug, data }) => {
                         <div className={styles.flex_right}>
                             {s3Image.data === undefined
                                 ? spinner()
-                                : image(
+                                : img(
                                       `data:image/jpeg;base64,${s3Image.data}`,
                                       400,
                                       250

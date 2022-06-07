@@ -1,4 +1,4 @@
-import { GetRoute } from '../API/index2';
+import { GetRoute } from '../API/index';
 import { Cards } from '../components/organism/Cards';
 
 import styles from '../public/static/styles/index.module.css';
