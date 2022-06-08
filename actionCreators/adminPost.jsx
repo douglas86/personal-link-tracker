@@ -6,20 +6,19 @@ import { AdminContext } from '../Context/AdminContext';
 import { AlertContext } from '../Context/AlertContext';
 
 const actionCreators = () => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { alert, setAlert, setIsTab } = useContext(AdminContext);
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter();
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { alerts, setAlerts } = useContext(AlertContext);
     const { show, color, message } = alerts;
 
     const postCreators = (props) => {
         const { status, message } = props;
-        setAlert({
-            ...alert,
-            showAlert: true,
-            alertColor: status !== 200 ? 'danger' : 'success',
-            alertMessage: message,
-        });
+        const color = status === 200 ? 'success' : 'danger';
+        setAlerts({ show: true, color, message });
         setIsTab('all');
     };
 
