@@ -1,5 +1,4 @@
 import { GetRoute } from '../API/index';
-import { Cards } from '../components/organism/Cards';
 import { displayCategory } from '../components/molecule/displayCategory';
 
 import styles from '../public/static/styles/index.module.css';
