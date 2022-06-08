@@ -3,7 +3,7 @@ import { img } from '../atom/image';
 import { links } from '../atom/links';
 import { titles } from '../atom/titles';
 
-import styles from './updateDeleteCategory.module.css';
+import styles from './categoryCard.module.css';
 
 export const updateDeleteCategory = (cardData, handleDelete, handleUpdate) => {
     const { id, title, image } = cardData;

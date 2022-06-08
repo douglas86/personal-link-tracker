@@ -19,6 +19,10 @@
     justify-content: center;
 }
 
+.flex {
+    display: flex;
+}
+
 .contents {
     display: flex;
     flex-flow: row wrap;
