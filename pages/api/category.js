@@ -1,7 +1,10 @@
-import { Get, Post, Put, Delete } from '../../Helper/api/categoryHelper';
+import { Get, Post, Put } from '../../Helper/api/categoryHelper';
+
+import { deleteController } from './controllers/categoryControllers';
 
 const Handler = async (req, res) => {
     const { method, body } = req;
+    const { id, title } = body;
 
     switch (method) {
         // create
@@ -45,13 +48,14 @@ const Handler = async (req, res) => {
         // delete
         case 'DELETE':
             try {
-                Delete(body, res);
+                deleteController(body, res);
             } catch (err) {
                 res.json({
                     status: 400,
                     message: 'Something went wrong',
                 });
             }
+
             break;
         default:
             res.json({

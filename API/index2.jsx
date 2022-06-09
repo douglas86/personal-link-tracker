@@ -1,12 +1,5 @@
-import actionTypes, { Fetcher } from '../actionTypes/apiCalls.jsx';
-
-export const pagination = async (endpoint) => {
-    return await fetch(endpoint).then((res) => res.json());
-};
-
-export const GetRoute = (endpoint) => {
-    return Fetcher(endpoint);
-};
+import actionTypes from '../actionTypes/apiCalls.jsx';
+import Alert from '../components/organism/Alert';
 
 const AdminApis = () => {
     const { postActions, putActions, deleteActions } = actionTypes();

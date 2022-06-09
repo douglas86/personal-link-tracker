@@ -2,15 +2,13 @@ import { useSession } from 'next-auth/react';
 
 import AdminTemplate from '../components/template/AdminTemplate';
 
-// import Admin from '../Dashboard/Admin';
 import Subscriber from '../Dashboard/Subscriber';
 
 import { spinner } from '../components/atom/spinner';
 import { AdminProvider } from '../Context/AdminContext';
-// import { AdminProvider } from '../Context/Dashboard/Admin/AdminContext';
 
 import { SubscriberProvider } from '../Context/Dashboard/Subscriber/SubscriberContext';
-import { GetRoute } from '../API/index2';
+import { GetRoute } from '../API/index';
 
 const Dashboard = () => {
     const { data: session } = useSession();

@@ -11,18 +11,31 @@ import { submitButton } from '../atom/button';
 const Form = () => {
     const context = useContext(AdminContext);
     const { handleSubmit, handleImage } = OnSubmit();
-    const { isForm, setIsForm, content, setContent, imageUploadButtonName } =
-        context;
+    const {
+        isTab,
+        setisTab,
+        isForm,
+        setIsForm,
+        content,
+        setContent,
+        imageUploadButtonName,
+    } = context;
 
     const { quill, quillRef } = useQuill();
 
     useEffect(() => {
         if (quill) {
+            if (content !== '') {
+                quill.clipboard.dangerouslyPasteHTML(`${content}`);
+            }
             quill.on('text-change', (delta, oldDelta, source) => {
                 setContent(quillRef.current.firstChild.innerHTML);
             });
         }
-    }, [quill, quillRef, setContent]);
+    }, [quill, quillRef, content, isTab, setContent]);
+
+    console.log('isForm', isForm);
+    console.log('content', content);
 
     return (
         <Container>
@@ -57,7 +70,11 @@ const Form = () => {
                         />
                     </label>
                 </div>
-                {submitButton(handleSubmit, isForm.buttonText)}
+                {submitButton(
+                    handleSubmit,
+                    isForm.buttonText,
+                    'btn btn-outline-warning'
+                )}
             </form>
         </Container>
     );

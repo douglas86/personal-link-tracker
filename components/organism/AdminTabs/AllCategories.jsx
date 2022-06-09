@@ -1,41 +1,37 @@
 import { useContext } from 'react';
 import { Container } from 'react-bootstrap';
-import { GetRoute } from '../../../API/index2';
-import { AdminContext } from '../../../Context/AdminContext';
+import { GetRoute } from '../../../API/index';
 
-import { displayAlert } from '../../atom/displayAlert';
 import { spinner } from '../../atom/spinner';
-import { Cards } from '../Cards';
 import styles from './AllCategories.module.css';
+import { alert } from '../../atom/alert';
+import Api from '../../../API';
+
+import Handler from '../Handler';
+import { updateDeleteCategory } from '../../molecule/updateDeleteCategory';
+
+import { AdminContext } from '../../../Context/AdminContext';
+import { AlertContext } from '../../../Context/AlertContext';
 
 const AllCategories = () => {
-    const fetcher = GetRoute('/api/category').data;
+    const { handleConfirm, handleUpdate } = Handler();
 
-    const context = useContext(AdminContext);
-    const { alert } = context;
-    const { showAlert, alertColor, alertMessage } = alert;
+    const alertContext = useContext(AlertContext);
+    const fetcher = GetRoute('/api/category').data;
 
     return (
         <Container>
-            {showAlert ? displayAlert(alertColor, alertMessage) : null}
+            {alertContext.alerts.show
+                ? alert(alertContext.alerts.color, alertContext.alerts.message)
+                : null}
             {fetcher !== undefined
                 ? Object.entries(fetcher).map(([key, value]) => (
                       <div key={key} className={styles.flex}>
-                          <div
-                              style={{
-                                  width: '20rem',
-                                  height: '12rem',
-                                  padding: '2%',
-                              }}
-                          >
-                              {Cards(
-                                  `/links/${value.title}`,
-                                  `data:image/jpeg;base64,${value.image}`,
-                                  250,
-                                  180,
-                                  value.title
-                              )}
-                          </div>
+                          {updateDeleteCategory(
+                              value,
+                              handleConfirm,
+                              handleUpdate
+                          )}
                       </div>
                   ))
                 : spinner()}

@@ -1,5 +1,5 @@
-import { GetRoute } from '../API/index2';
-import { Cards } from '../components/organism/Cards';
+import { GetRoute } from '../API/index';
+import { displayCategory } from '../components/molecule/displayCategory';
 
 import styles from '../public/static/styles/index.module.css';
 
@@ -9,18 +9,10 @@ const Home = () => {
     return (
         <div>
             <h1 className={styles.title}>Browse Tutorial/Courses</h1>
-            <div className={styles.flex_container}>
+            <div className={styles.flex}>
                 {fetcher !== undefined
                     ? Object.entries(fetcher).map(([key, value]) => (
-                          <div key={key}>
-                              {Cards(
-                                  `/links/${value.title}`,
-                                  `data:image/jpeg;base64,${value.image}`,
-                                  250,
-                                  180,
-                                  value.title
-                              )}
-                          </div>
+                          <div key={key}>{displayCategory(value)}</div>
                       ))
                     : null}
             </div>
