@@ -7,12 +7,21 @@ import { AdminContext } from '../../Context/AdminContext';
 const Handler = () => {
     const { deleteRoute } = Api();
 
-    const { isTab, setIsTab, setIsUpdatedTab } = useContext(AdminContext);
+    const {
+        isTab,
+        setIsTab,
+        setIsUpdatedTab,
+        isForm,
+        setIsForm,
+        content,
+        setContent,
+    } = useContext(AdminContext);
 
-    const handleUpdate = (id, title, image) => {
+    const handleUpdate = (id, title, description, image) => {
         setIsTab('update');
         setIsUpdatedTab(true);
-        console.log('update was clicked', id, title, image);
+        setIsForm({ title, image, buttonText: 'Update' });
+        setContent(description);
     };
 
     const handleConfirm = (body) => {

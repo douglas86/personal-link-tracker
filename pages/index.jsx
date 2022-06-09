@@ -9,13 +9,13 @@ const Home = () => {
     return (
         <div>
             <h1 className={styles.title}>Browse Tutorial/Courses</h1>
-            {fetcher !== undefined
-                ? Object.entries(fetcher).map(([key, value]) => (
-                      <div key={key} className={styles.flex}>
-                          {displayCategory(value)}
-                      </div>
-                  ))
-                : null}
+            <div className={styles.flex}>
+                {fetcher !== undefined
+                    ? Object.entries(fetcher).map(([key, value]) => (
+                          <div key={key}>{displayCategory(value)}</div>
+                      ))
+                    : null}
+            </div>
         </div>
     );
 };

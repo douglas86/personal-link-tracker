@@ -13,8 +13,7 @@ import ReadLinks from '../organism/AdminTabs/ReadLinks';
 import { AlertProvider } from '../../Context/AlertContext';
 
 const AdminTemplate = () => {
-    const context = useContext(AdminContext);
-    const { isTab, setIsTab, isUpdatedTab } = context;
+    const { isTab, setIsTab } = useContext(AdminContext);
 
     return (
         <>
@@ -25,13 +24,15 @@ const AdminTemplate = () => {
                     onSelect={(k) => setIsTab(k)}
                     className="mb-3"
                 >
-                    <Tab eventKey="create" title="Create Category">
-                        <CreateCategory />
-                    </Tab>
+                    {isTab !== 'update' ? (
+                        <Tab eventKey="create" title="Create Category">
+                            <CreateCategory />
+                        </Tab>
+                    ) : null}
                     <Tab eventKey="all" title="All Categories">
                         <AllCategories />
                     </Tab>
-                    {isUpdatedTab ? (
+                    {isTab !== 'create' ? (
                         <Tab eventKey="update" title="Update Category">
                             <UpdateCategory />
                         </Tab>

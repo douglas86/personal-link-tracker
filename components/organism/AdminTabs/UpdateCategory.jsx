@@ -1,7 +1,9 @@
+import Form from '../Form';
+
 const UpdateCategory = () => {
     return (
         <>
-            <h3>Update Category</h3>
+            <Form />
         </>
     );
 };

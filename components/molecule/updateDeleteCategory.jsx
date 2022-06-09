@@ -5,11 +5,13 @@ import { titles } from '../atom/titles';
 
 import styles from './categoryCard.module.css';
 
-export const updateDeleteCategory = (cardData, handleDelete, handleUpdate) => {
-    const { id, title, image } = cardData;
-
+export const updateDeleteCategory = (
+    { id, title, description, image },
+    handleDelete,
+    handleUpdate
+) => {
     const updateItem = () => {
-        return handleUpdate(id, title, image);
+        return handleUpdate(id, title, description, image);
     };
 
     const deleteItem = () => {
