@@ -1,83 +1,51 @@
-import 'quill/dist/quill.snow.css';
-import { useEffect, useContext } from 'react';
-import { Container } from 'react-bootstrap';
-import { useQuill } from 'react-quilljs';
+import "quill/dist/quill.snow.css";
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import { useQuill } from "react-quilljs";
 
-import OnSubmit from './OnSubmit';
-import { AdminContext } from '../../Context/AdminContext';
-import { inputForm } from '../molecule/inputForm';
-import { submitButton } from '../atom/button';
+import { useForm } from "react-hook-form";
 
 const Form = () => {
-    const context = useContext(AdminContext);
-    const { handleSubmit, handleImage } = OnSubmit();
-    const {
-        isTab,
-        setisTab,
-        isForm,
-        setIsForm,
-        content,
-        setContent,
-        imageUploadButtonName,
-    } = context;
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm();
 
-    const { quill, quillRef } = useQuill();
+  const { quill, quillRef } = useQuill();
+  const [title, setTitle] = useState("");
 
-    useEffect(() => {
-        if (quill) {
-            if (content !== '') {
-                quill.clipboard.dangerouslyPasteHTML(`${content}`);
-            }
-            quill.on('text-change', (delta, oldDelta, source) => {
-                setContent(quillRef.current.firstChild.innerHTML);
-            });
-        }
-    }, [quill, quillRef, content, isTab, setContent]);
+  useEffect(() => {
+    if (quill) {
+      // if (content !== "") {
+      //   quill.clipboard.dangerouslyPasteHTML(`${content}`);
+      // }
+      quill.on("text-change", () => {
+        setValue("description", quillRef.current.firstChild.innerHTML);
+      });
+    }
+    register("description", { required: true, minLength: 11 });
+  }, [quill, quillRef, register, setValue]);
 
-    console.log('isForm', isForm);
-    console.log('content', content);
+  const onSubmit = (data) => console.log("data", data);
 
-    return (
-        <Container>
-            <form>
-                {inputForm(
-                    'Name',
-                    'Category title goes here ...',
-                    isForm,
-                    setIsForm
-                )}
-                <div className="form-group">
-                    <div
-                        style={{
-                            width: '100%',
-                            height: 100,
-                            marginTop: '20px',
-                            marginBottom: '50px',
-                        }}
-                    >
-                        <div ref={quillRef} />
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label className="btn btn-outline-secondary">
-                        {imageUploadButtonName}
-                        <input
-                            onChange={handleImage}
-                            type="file"
-                            accept="image/*"
-                            className="form-control"
-                            hidden
-                        />
-                    </label>
-                </div>
-                {submitButton(
-                    handleSubmit,
-                    isForm.buttonText,
-                    'btn btn-outline-warning'
-                )}
-            </form>
-        </Container>
-    );
+  console.log("err", errors);
+  console.log("title", title);
+
+  return (
+    <Container>
+      <input
+        type="text"
+        onChange={(e) => setTitle(e.target.value)}
+        {...register("title", { required: true })}
+      />
+      <p>{errors.title && "Enter valid title"}</p>
+      <div ref={quillRef} />
+      <p className="Error">{errors.description && "Enter valid content"}</p>
+      <input type="submit" onClick={handleSubmit(onSubmit)} />
+    </Container>
+  );
 };
 
 export default Form;
