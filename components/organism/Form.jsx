@@ -8,10 +8,15 @@ import { AdminContext } from "../../Context/AdminContext";
 import ImageUploading from "react-images-uploading";
 
 import { formErrors } from "../atom/formErrors";
+import { submitButton } from "../atom/button";
+import { img } from "../atom/image";
+import Api from "../../API";
 
 const Form = () => {
-  const { content } = useContext(AdminContext);
-  const [images, setImages] = useState([]);
+  const { content, setIsTab } = useContext(AdminContext);
+  const [images, setImages] = useState("");
+  const { quill, quillRef } = useQuill();
+  const [title, setTitle] = useState("");
 
   const {
     register,
@@ -20,18 +25,13 @@ const Form = () => {
     formState: { errors },
   } = useForm();
 
-  const { quill, quillRef } = useQuill();
-  const [title, setTitle] = useState("");
+  const { Posting } = Api();
 
-  const onChange = (imageList, addUpdateIndex) => {
-    console.log("imageList", imageList, addUpdateIndex);
-    setImages(imageList);
+  const onChange = (imageList) => {
     const { data_url } = imageList[0];
+    setImages(data_url);
     setValue("image", data_url);
   };
-
-  // console.log("images", images[0].data_url);
-  console.log("err", errors);
 
   useEffect(() => {
     if (quill) {
@@ -49,19 +49,13 @@ const Form = () => {
   }, [title, quill, quillRef, register, setValue, content]);
 
   const onSubmit = (data) => {
-    console.log("data", data);
+    setIsTab("all");
+    Posting("/api/category", data);
   };
 
   return (
     <Container>
-      {form(
-        setTitle,
-        register,
-        "title",
-        handleSubmit(onSubmit),
-        errors,
-        quillRef
-      )}
+      {form(setTitle, register, "title", errors, quillRef)}
       <div className="image-uploaded">
         <ImageUploading
           multiple
@@ -84,56 +78,20 @@ const Form = () => {
                 onClick={() => onImageUpdate}
                 {...dragProps}
               >
-                +
+                {images === "" ? "+" : img(images, 200, 100)}
               </button>
             </div>
           )}
         </ImageUploading>
       </div>
       {formErrors(errors.image, "No image selected")}
+      {submitButton(
+        handleSubmit(onSubmit),
+        "Create",
+        "btn btn-outline-warning"
+      )}
     </Container>
   );
 };
-
-// <div className="app">
-//   <ImageUploading
-//       multiple
-//       value={images}
-//       onChange={onChange}
-//       maxNumber={maxNumber}
-//       dataURLKey="data_url"
-//   >
-//     {({
-//         imageList,
-//         onImageUpload,
-//         onImageRemoveAll,
-//         onImageUpdate,
-//         onImageRemove,
-//         isDragging,
-//         dragProps,
-//       }) => (
-//         <div className="upload_image-wrapper">
-//           <button
-//               style={isDragging ? { color: "red" } : undefined}
-//               onClick={onImageUpdate}
-//               {...dragProps}
-//           >
-//             Click or Drop here
-//           </button>
-//           &nbsp;
-//           <button onClick={onImageRemoveAll}>Remove all images</button>
-//           {imageList.map((image, index) => (
-//               <div key={index} className="image-item">
-//                 <img src={image["data_url"]} alt="" width="100" />
-//                 <div className="image-item_btn-wrapper">
-//                   <button onClick={() => onImageUpdate(index)}>Update</button>
-//                   <button onClick={() => onImageRemove(index)}>Remove</button>
-//                 </div>
-//               </div>
-//           ))}
-//         </div>
-//     )}
-//   </ImageUploading>
-// </div>
 
 export default Form;
