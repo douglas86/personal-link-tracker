@@ -17,8 +17,6 @@ const AllCategories = () => {
   const alertContext = useContext(AlertContext);
   const fetcher = GetRoute("/api/category").data;
 
-  console.log("fetcher", fetcher);
-
   return (
     <Container>
       {alertContext.alerts.show

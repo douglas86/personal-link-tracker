@@ -1,22 +1,25 @@
 import "quill/dist/quill.snow.css";
+
 import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
 import { useForm } from "react-hook-form";
-import { form } from "../molecule/form";
-import { AdminContext } from "../../Context/AdminContext";
 import ImageUploading from "react-images-uploading";
+
+import { AdminContext } from "../../Context/AdminContext";
 
 import { formErrors } from "../atom/formErrors";
 import { submitButton } from "../atom/button";
 import { img } from "../atom/image";
-import Api from "../../API";
+import { form, reg } from "../molecule/form";
+
+import Handler from "./Handler";
 
 const Form = () => {
-  const { content, setIsTab } = useContext(AdminContext);
-  const [images, setImages] = useState("");
+  const { content } = useContext(AdminContext);
   const { quill, quillRef } = useQuill();
   const [title, setTitle] = useState("");
+  const [images, setImages] = useState("");
 
   const {
     register,
@@ -25,7 +28,7 @@ const Form = () => {
     formState: { errors },
   } = useForm();
 
-  const { Posting } = Api();
+  const { onSubmit } = Handler();
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
@@ -43,15 +46,8 @@ const Form = () => {
       });
     }
     setValue("title", title);
-    register("title", { required: true });
-    register("description", { required: true });
-    register("image", { required: true });
+    reg(["title", "description", "image"], register);
   }, [title, quill, quillRef, register, setValue, content]);
-
-  const onSubmit = (data) => {
-    setIsTab("all");
-    Posting("/api/category", data);
-  };
 
   return (
     <Container>

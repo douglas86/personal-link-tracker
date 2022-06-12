@@ -1,11 +1,11 @@
-import Form from '../Form';
+import Form from "../Form";
 
 const UpdateCategory = () => {
-    return (
-        <>
-            <Form />
-        </>
-    );
+  return (
+    <>
+      <Form />
+    </>
+  );
 };
 
 export default UpdateCategory;

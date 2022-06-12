@@ -25,7 +25,10 @@ export const AdminProvider = ({ children }) => {
     if (alert.showAlert) {
       setTimeout(() => setAlert({ ...alert, showAlert: false }), 5000);
     }
-  }, [alert]);
+    if (isTab !== "update") {
+      setContent("");
+    }
+  }, [alert, isTab]);
 
   return (
     <AdminContext.Provider
