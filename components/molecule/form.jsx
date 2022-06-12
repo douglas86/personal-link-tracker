@@ -11,7 +11,7 @@ export const form = (setTitle, register, name, errors, quillRef) => (
   </>
 );
 
-export const reg = (arr, register) => {
+export const registerHookForm = (arr, register) => {
   arr.map((items) => {
     register(items, { required: true });
   });

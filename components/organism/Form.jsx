@@ -11,12 +11,12 @@ import { AdminContext } from "../../Context/AdminContext";
 import { formErrors } from "../atom/formErrors";
 import { submitButton } from "../atom/button";
 import { img } from "../atom/image";
-import { form, reg } from "../molecule/form";
+import { form, registerHookForm } from "../molecule/form";
 
 import Handler from "./Handler";
 
 const Form = () => {
-  const { content } = useContext(AdminContext);
+  const { content, isTab } = useContext(AdminContext);
   const { quill, quillRef } = useQuill();
   const [title, setTitle] = useState("");
   const [images, setImages] = useState("");
@@ -46,7 +46,7 @@ const Form = () => {
       });
     }
     setValue("title", title);
-    reg(["title", "description", "image"], register);
+    registerHookForm(["title", "description", "image"], register);
   }, [title, quill, quillRef, register, setValue, content]);
 
   return (
@@ -83,8 +83,10 @@ const Form = () => {
       {formErrors(errors.image, "No image selected")}
       {submitButton(
         handleSubmit(onSubmit),
-        "Create",
-        "btn btn-outline-warning"
+        isTab === "create" ? "Create" : "Update",
+        isTab === "update"
+          ? "btn btn-outline-success"
+          : "btn btn-outline-warning"
       )}
     </Container>
   );
