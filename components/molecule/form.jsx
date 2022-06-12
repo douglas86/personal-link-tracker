@@ -1,3 +1,8 @@
+import { submitButton } from "../atom/button";
+import { input } from "../atom/input";
+import { formErrors } from "../atom/formErrors";
+import { formQuill } from "../atom/formQuill";
+
 export const form = (
   setTitle,
   register,
@@ -7,12 +12,10 @@ export const form = (
   quillRef
 ) => (
   <>
-    <form onSubmit={handleSubmit}>
-      <input type="text" onChange={(e) => setTitle(e.target.value)} />
-      <p>{errors.title && "Enter valid title"}</p>
-      <div ref={quillRef} />
-      <p>{errors.description && "Enter valid description"}</p>
-      <input type="submit" />
-    </form>
+    {input("text", { width: "100%" }, setTitle)}
+    {formErrors(errors.title, "Enter valid title")}
+    {formQuill(quillRef)}
+    {formErrors(errors.description, "Enter valid description")}
+    {submitButton(handleSubmit, "Create", "btn btn-outline-warning")}
   </>
 );
