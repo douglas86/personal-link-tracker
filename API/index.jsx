@@ -9,10 +9,11 @@ export const GetRoute = (endpoint) => {
 };
 
 const Api = () => {
-  const { deleteActions } = actionTypes();
+  const { postActions, deleteActions } = actionTypes();
 
   const Posting = (endpoint, body) => {
     console.log("Posting", body);
+    postActions(endpoint, body);
     // postActions(endpoint, body);
   };
 
