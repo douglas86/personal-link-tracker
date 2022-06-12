@@ -7,13 +7,13 @@ import { AdminContext } from "../../Context/AdminContext";
 const Handler = () => {
   const { posting, deleteRoute } = Api();
 
-  const { setIsTab, setIsUpdatedTab, setIsForm, setContent } =
+  const { setIsTab, setIsUpdatedTab, setContent, setTitle } =
     useContext(AdminContext);
 
-  const handleUpdate = (id, title, description, image) => {
+  const handleUpdate = (id, title, description) => {
     setIsTab("update");
     setIsUpdatedTab(true);
-    setIsForm({ title, image, buttonText: "Update" });
+    setTitle(title);
     setContent(description);
   };
 
