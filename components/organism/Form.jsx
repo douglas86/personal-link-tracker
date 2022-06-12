@@ -2,8 +2,8 @@ import "quill/dist/quill.snow.css";
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
-
 import { useForm } from "react-hook-form";
+import { form } from "../molecule/form";
 
 const Form = () => {
   const {
@@ -25,8 +25,10 @@ const Form = () => {
         setValue("description", quillRef.current.firstChild.innerHTML);
       });
     }
-    register("description", { required: true, minLength: 11 });
-  }, [quill, quillRef, register, setValue]);
+    setValue("title", title);
+    register("title", { required: true });
+    register("description", { required: true });
+  }, [title, quill, quillRef, register, setValue]);
 
   const onSubmit = (data) => console.log("data", data);
 
@@ -35,15 +37,14 @@ const Form = () => {
 
   return (
     <Container>
-      <input
-        type="text"
-        onChange={(e) => setTitle(e.target.value)}
-        {...register("title", { required: true })}
-      />
-      <p>{errors.title && "Enter valid title"}</p>
-      <div ref={quillRef} />
-      <p className="Error">{errors.description && "Enter valid content"}</p>
-      <input type="submit" onClick={handleSubmit(onSubmit)} />
+      {form(
+        setTitle,
+        register,
+        "title",
+        handleSubmit(onSubmit),
+        errors,
+        quillRef
+      )}
     </Container>
   );
 };
