@@ -1,11 +1,13 @@
 import "quill/dist/quill.snow.css";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
 import { useForm } from "react-hook-form";
 import { form } from "../molecule/form";
+import { AdminContext } from "../../Context/AdminContext";
 
 const Form = () => {
+  const { content } = useContext(AdminContext);
   const {
     register,
     handleSubmit,
@@ -18,9 +20,9 @@ const Form = () => {
 
   useEffect(() => {
     if (quill) {
-      // if (content !== "") {
-      //   quill.clipboard.dangerouslyPasteHTML(`${content}`);
-      // }
+      if (content !== "") {
+        quill.clipboard.dangerouslyPasteHTML(`${content}`);
+      }
       quill.on("text-change", () => {
         setValue("description", quillRef.current.firstChild.innerHTML);
       });
@@ -28,7 +30,7 @@ const Form = () => {
     setValue("title", title);
     register("title", { required: true });
     register("description", { required: true });
-  }, [title, quill, quillRef, register, setValue]);
+  }, [title, quill, quillRef, register, setValue, content]);
 
   const onSubmit = (data) => console.log("data", data);
 
