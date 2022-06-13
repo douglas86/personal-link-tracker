@@ -1,7 +1,7 @@
-import Resizer from 'react-image-file-resizer';
-import { useContext } from 'react';
-import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
-import AdminApis from '../../API/index2';
+import Resizer from "react-image-file-resizer";
+import { useContext } from "react";
+import { AdminContext } from "../../Context/Dashboard/Admin/AdminContext";
+import AdminApis from "../../API/index2";
 
 const Submit = () => {
   const context = useContext(AdminContext);
@@ -12,16 +12,16 @@ const Submit = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const body = { title, content, image, id };
-    if (isTab === 'create') {
-      if (title !== '' && content !== '' && image !== '') {
-        Posting('/api/category', body);
-        context.setState({ ...state, buttonText: 'Creating' });
+    if (isTab === "create") {
+      if (title !== "" && content !== "" && image !== "") {
+        Posting("/api/category2", body);
+        context.setState({ ...state, buttonText: "Creating" });
       } else {
-        alert('You have not finished filling out the form');
+        alert("You have not finished filling out the form");
       }
     } else {
-      Putting('/api/category', body);
-      context.setState({ ...state, buttonText: 'Updating' });
+      Putting("/api/category2", body);
+      context.setState({ ...state, buttonText: "Updating" });
     }
   };
 
@@ -29,7 +29,7 @@ const Submit = () => {
     context.setState({
       ...context.state,
       [name]: e.target.value,
-      message: '',
+      message: "",
     });
   };
 
@@ -38,14 +38,14 @@ const Submit = () => {
   };
 
   const handleConfirm = (body) => {
-    let answer = window.confirm('Are you sure you want to delete');
+    let answer = window.confirm("Are you sure you want to delete");
     if (answer) {
       handleDelete(body);
     }
   };
 
   const handleDelete = async (body) => {
-    Deleting('/api/category', body);
+    Deleting("/api/category2", body);
   };
 
   const handleImage = (event) => {
@@ -60,22 +60,22 @@ const Submit = () => {
           event.target.files[0],
           300,
           300,
-          'JPEG',
+          "JPEG",
           100,
           0,
           (uri) => {
             context.setState({
               ...context.state,
               image: uri,
-              message: '',
+              message: "",
             });
           },
-          'base64',
+          "base64",
           200,
           200
         );
       } catch (err) {
-        console.log('err', err);
+        console.log("err", err);
       }
     }
   };
@@ -89,12 +89,12 @@ const Submit = () => {
       ...state,
       id,
       title,
-      buttonText: 'Update',
+      buttonText: "Update",
       image,
       isUpdateState: true,
     });
 
-    context.setIsTab('update');
+    context.setIsTab("update");
   };
 
   return {

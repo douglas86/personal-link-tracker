@@ -1,11 +1,9 @@
-import { useContext } from "react";
-
 import Api from "../../API";
-
+import { useContext } from "react";
 import { AdminContext } from "../../Context/AdminContext";
 
-const Handler = () => {
-  const { posting, deleteRoute } = Api();
+const Handler2 = () => {
+  const { deleteRoute } = Api();
 
   const { setIsTab, setIsUpdatedTab, setContent, setTitle } =
     useContext(AdminContext);
@@ -17,7 +15,8 @@ const Handler = () => {
     setContent(description);
   };
 
-  const handleConfirm = (body) => {
+  const handleConfirm = (id, title) => {
+    const body = { id, title };
     let answer = window.confirm("Are you sure you want to delete");
     if (answer) {
       handleDelete(body);
@@ -26,23 +25,11 @@ const Handler = () => {
 
   const handleDelete = (body) => deleteRoute("/api/category", body);
 
-  const onSubmit = (data) => {
-    setIsTab("home");
-    posting("/api/category", data);
-  };
-
-  const onChangeImage = (imageList, setImages, setValue) => {
-    const { data_url } = imageList[0];
-    setImages(data_url);
-    setValue("image", data_url);
-  };
-
   return {
     handleUpdate,
     handleConfirm,
-    onSubmit,
-    onChangeImage,
+    handleDelete,
   };
 };
 
-export default Handler;
+export default Handler2;
