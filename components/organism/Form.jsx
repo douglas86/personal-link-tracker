@@ -4,16 +4,15 @@ import { useContext, useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import { useQuill } from "react-quilljs";
 import { useForm } from "react-hook-form";
-import ImageUploading from "react-images-uploading";
 
 import { AdminContext } from "../../Context/AdminContext";
 
 import { formErrors } from "../atom/formErrors";
 import { submitButton } from "../atom/button";
-import { img } from "../atom/image";
 import { form, registerHookForm } from "../molecule/form";
 
 import Handler from "./Handler";
+import { imageUpload } from "../molecule/imageUpload";
 
 const Form = () => {
   const { content, isTab } = useContext(AdminContext);
@@ -52,34 +51,7 @@ const Form = () => {
   return (
     <Container>
       {form(setTitle, register, "title", errors, quillRef)}
-      <div className="image-uploaded">
-        <ImageUploading
-          multiple
-          value={images}
-          onChange={onChange}
-          maxNumber="1"
-          dataURLKey="data_url"
-        >
-          {({ onImageUpdate, isDragging, dragProps }) => (
-            <div className="upload_image-wrapper">
-              <button
-                style={{
-                  width: "100%",
-                  height: "14.5rem",
-                  textAlign: "center",
-                  fontSize: "8rem",
-                  color: isDragging ? "red" : "black",
-                  border: isDragging ? "5px red solid" : "1px black solid",
-                }}
-                onClick={() => onImageUpdate}
-                {...dragProps}
-              >
-                {images === "" ? "+" : img(images, 200, 100)}
-              </button>
-            </div>
-          )}
-        </ImageUploading>
-      </div>
+      <div className="image-uploaded">{imageUpload(images, onChange)}</div>
       {formErrors(errors.image, "No image selected")}
       {submitButton(
         handleSubmit(onSubmit),
