@@ -1,8 +1,8 @@
-export const input = (type, style, change, placeholder) => (
+export const input = (type, name, state, setState, placeholder) => (
   <input
     type={type}
-    style={style}
-    onChange={(e) => change(e.target.value)}
+    style={{ width: "100%", margin: "2% 1%" }}
+    onChange={(e) => setState({ ...state, [name]: e.target.value })}
     placeholder={placeholder}
   />
 );

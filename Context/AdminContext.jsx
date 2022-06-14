@@ -4,7 +4,7 @@ export const AdminContext = createContext(undefined);
 
 export const AdminProvider = ({ children }) => {
   const [isUpdatedTab, setIsUpdatedTab] = useState(false);
-  const [isTab, setIsTab] = useState("home");
+  const [isTab, setIsTab] = useState("create");
 
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState("Upload image");
@@ -37,6 +37,8 @@ export const AdminProvider = ({ children }) => {
         setContent,
         title,
         setTitle,
+        isForm,
+        setIsForm,
       }}
     >
       {children}

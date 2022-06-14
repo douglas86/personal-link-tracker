@@ -1,8 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 
 import { AdminContext } from "../../Context/AdminContext";
-import { useQuill } from "react-quilljs";
 import { useForm } from "react-hook-form";
 import { registerHookForm } from "../atom/registerHookForm2";
 import { createForm2 } from "../molecule/createForm2";
@@ -10,13 +9,9 @@ import { updateForm2 } from "../molecule/updateForm2";
 import Handler2 from "./Handler2";
 
 const Form2 = () => {
-  const { isTab } = useContext(AdminContext);
-  const { quill, quillRef } = useQuill();
-  const { onSubmit, handleUpdate } = Handler2();
-
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [images, setImages] = useState("");
+  const { isTab, isForm, setIsForm } = useContext(AdminContext);
+  const { title, description, image } = isForm;
+  const { onSubmit } = Handler2();
 
   const {
     register,
@@ -26,23 +21,18 @@ const Form2 = () => {
   } = useForm();
 
   useEffect(() => {
-    if (quill) {
-      if (isTab === "update") {
-        quill.clipboard.dangerouslyPasteHTML(`${content}`);
-      }
-      quill.on("text-change", () => {
-        setValue("description", quillRef.current.firstChild.innerHTML);
-      });
-    }
     setValue("title", title);
+    setValue("description", description);
     registerHookForm(["title", "description", "image"], register);
-  }, [title, quill, quillRef, register, setValue, content, isTab]);
+  }, [title, description, register, setValue, isTab]);
 
   console.log("isTab", isTab);
+  console.log("title", title);
+  console.log("isForm", isForm);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
-    setImages(data_url);
+    setIsForm({ ...isForm, image: data_url });
     setValue("image", data_url);
   };
 
@@ -50,30 +40,15 @@ const Form2 = () => {
     switch (isTab) {
       case "create":
         return createForm2(
-          "text",
-          setTitle,
-          "Title",
-          errors.title,
-          errors.description,
-          errors.image,
-          quillRef,
-          images,
+          isForm,
+          setIsForm,
+          image,
+          errors,
           onChange,
           handleSubmit(onSubmit)
         );
       case "update":
-        return updateForm2(
-          "text",
-          setTitle,
-          "Title",
-          errors.title,
-          errors.description,
-          errors.image,
-          quillRef,
-          images,
-          onChange,
-          handleSubmit(handleUpdate)
-        );
+        return updateForm2();
       default:
         return (
           <>

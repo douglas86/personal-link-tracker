@@ -8,10 +8,6 @@ const Handler2 = () => {
   const { setIsTab } = useContext(AdminContext);
 
   const handleUpdate = (data) => {
-    // setIsTab("update");
-    // setIsUpdatedTab(true);
-    // setTitle(title);
-    // setContent(description);
     console.log(`handleUpdate was clicked and your data is: ${data}`);
   };
 
