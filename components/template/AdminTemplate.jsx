@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Tabs, Tab } from "react-bootstrap";
 
 // Context
-// import { AdminContext } from '../../Context/Dashboard/Admin/AdminContext';
 import { AdminContext } from "../../Context/AdminContext";
 
 // Tabs
@@ -26,7 +25,6 @@ const AdminTemplate = () => {
         >
           {isTab !== "update" ? (
             <Tab eventKey="create" title="Create Category">
-              {/*<CreateCategory />*/}
               <CreateCategory2 />
             </Tab>
           ) : null}
