@@ -7,7 +7,9 @@ import { AlertContext } from "../Context/AlertContext";
 
 const actionCreators = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { alert, setIsTab } = useContext(AdminContext);
+  const { setIsTab } = useContext(AdminContext);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { alert } = useContext(AlertContext);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
 

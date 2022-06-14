@@ -1,7 +1,6 @@
-export const input = (type, style, change, placeholder, value) => (
+export const input = (type, style, change, placeholder) => (
   <input
     type={type}
-    value={value}
     style={style}
     onChange={(e) => change(e.target.value)}
     placeholder={placeholder}

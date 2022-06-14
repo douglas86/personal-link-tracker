@@ -3,16 +3,16 @@ import { useContext } from "react";
 import { AdminContext } from "../../Context/AdminContext";
 
 const Handler2 = () => {
-  const { deleteRoute } = Api();
+  const { posting, deleteRoute } = Api();
 
-  const { setIsTab, setIsUpdatedTab, setContent, setTitle } =
-    useContext(AdminContext);
+  const { setIsTab } = useContext(AdminContext);
 
-  const handleUpdate = (id, title, description) => {
-    setIsTab("update");
-    setIsUpdatedTab(true);
-    setTitle(title);
-    setContent(description);
+  const handleUpdate = (data) => {
+    // setIsTab("update");
+    // setIsUpdatedTab(true);
+    // setTitle(title);
+    // setContent(description);
+    console.log(`handleUpdate was clicked and your data is: ${data}`);
   };
 
   const handleConfirm = (id, title) => {
@@ -25,10 +25,16 @@ const Handler2 = () => {
 
   const handleDelete = (body) => deleteRoute("/api/category", body);
 
+  const onSubmit = (data) => {
+    setIsTab("home");
+    posting("/api/category", data);
+  };
+
   return {
     handleUpdate,
     handleConfirm,
     handleDelete,
+    onSubmit,
   };
 };
 

@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-export const AdminContext = createContext();
+export const AdminContext = createContext(undefined);
 
 export const AdminProvider = ({ children }) => {
   const [isUpdatedTab, setIsUpdatedTab] = useState(false);
@@ -10,6 +10,13 @@ export const AdminProvider = ({ children }) => {
     useState("Upload image");
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
+
+  const [isForm, setIsForm] = useState({
+    id: "",
+    title: "",
+    description: "",
+    image: "",
+  });
 
   useEffect(() => {
     if (isTab !== "update") {
