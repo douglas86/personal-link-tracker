@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { AdminContext } from "../../Context/AdminContext";
 
 const Handler2 = () => {
-  const { posting, deleteRoute } = Api();
+  const { posting, putting, deleteRoute } = Api();
 
   const { setIsUpdatedTab, setIsTab, setIsForm, setImg } =
     useContext(AdminContext);
@@ -16,7 +16,7 @@ const Handler2 = () => {
   };
 
   const handleUpdate = (data) => {
-    posting("/api/category", data);
+    putting("/api/category", data);
   };
 
   const handleConfirm = (id, title) => {

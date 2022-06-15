@@ -10,7 +10,7 @@ import Handler2 from "./Handler2";
 
 const Form2 = () => {
   const { isTab, isForm, setIsForm, img } = useContext(AdminContext);
-  const { title, description, image } = isForm;
+  const { id, title, description, image } = isForm;
   const { onSubmit, handleUpdate, handleCancel } = Handler2();
 
   const {
@@ -23,8 +23,9 @@ const Form2 = () => {
   useEffect(() => {
     setValue("title", title);
     setValue("description", description);
-    registerHookForm(["title", "description", "image"], register);
-  }, [title, description, register, setValue, isTab]);
+    setValue("id", id);
+    registerHookForm(["id", "title", "description", "image"], register);
+  }, [id, title, description, register, setValue, isTab]);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
