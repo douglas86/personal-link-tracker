@@ -11,7 +11,7 @@ import Handler2 from "./Handler2";
 const Form2 = () => {
   const { isTab, isForm, setIsForm } = useContext(AdminContext);
   const { title, description, image } = isForm;
-  const { onSubmit } = Handler2();
+  const { onSubmit, handleCancel } = Handler2();
 
   const {
     register,
@@ -48,7 +48,15 @@ const Form2 = () => {
           handleSubmit(onSubmit)
         );
       case "update":
-        return updateForm2();
+        return updateForm2(
+          isForm,
+          setIsForm,
+          image,
+          errors,
+          onChange,
+          handleSubmit(onSubmit),
+          handleCancel
+        );
       default:
         return (
           <>
