@@ -7,11 +7,11 @@ import { submitButton } from "../atom/button";
 
 export const category2 = (
   { id, title, description, image },
-  handleUpdate,
+  handleUpdateClick,
   handleDelete
 ) => {
   const updateItem = () => {
-    return handleUpdate(id, title, description, image);
+    return handleUpdateClick(id, title, description, image);
   };
 
   const deleteItem = () => {

@@ -5,12 +5,18 @@ import { AdminContext } from "../../Context/AdminContext";
 const Handler2 = () => {
   const { posting, deleteRoute } = Api();
 
-  const { setIsUpdatedTab, setIsTab, setIsForm } = useContext(AdminContext);
+  const { setIsUpdatedTab, setIsTab, setIsForm, setImg } =
+    useContext(AdminContext);
 
-  const handleUpdate = (id, title, description) => {
+  const handleUpdateClick = (id, title, description, image) => {
     setIsUpdatedTab(true);
     setIsTab("update");
     setIsForm({ id, title, description, image: "" });
+    setImg(image);
+  };
+
+  const handleUpdate = (data) => {
+    posting("/api/category", data);
   };
 
   const handleConfirm = (id, title) => {
@@ -33,6 +39,7 @@ const Handler2 = () => {
   };
 
   return {
+    handleUpdateClick,
     handleUpdate,
     handleConfirm,
     handleDelete,

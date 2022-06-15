@@ -11,6 +11,7 @@ export const GetRoute = (endpoint) => {
 const Api = () => {
   const { postActions, deleteActions } = actionTypes();
 
+  // create
   const posting = (endpoint, body) => {
     postActions(endpoint, body);
   };

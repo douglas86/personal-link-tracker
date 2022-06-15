@@ -17,6 +17,7 @@ export const AdminProvider = ({ children }) => {
     description: "",
     image: "",
   });
+  const [img, setImg] = useState("");
 
   // useEffect(() => {
   //   if (isTab !== "update") {
@@ -39,6 +40,8 @@ export const AdminProvider = ({ children }) => {
         setTitle,
         isForm,
         setIsForm,
+        img,
+        setImg,
       }}
     >
       {children}

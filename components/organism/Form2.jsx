@@ -9,9 +9,9 @@ import { updateForm2 } from "../molecule/updateForm2";
 import Handler2 from "./Handler2";
 
 const Form2 = () => {
-  const { isTab, isForm, setIsForm } = useContext(AdminContext);
+  const { isTab, isForm, setIsForm, img } = useContext(AdminContext);
   const { title, description, image } = isForm;
-  const { onSubmit, handleCancel } = Handler2();
+  const { onSubmit, handleUpdate, handleCancel } = Handler2();
 
   const {
     register,
@@ -25,10 +25,6 @@ const Form2 = () => {
     setValue("description", description);
     registerHookForm(["title", "description", "image"], register);
   }, [title, description, register, setValue, isTab]);
-
-  console.log("isTab", isTab);
-  console.log("title", title);
-  console.log("isForm", isForm);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
@@ -54,8 +50,9 @@ const Form2 = () => {
           image,
           errors,
           onChange,
-          handleSubmit(onSubmit),
-          handleCancel
+          handleSubmit(handleUpdate),
+          handleCancel,
+          img
         );
       default:
         return (
