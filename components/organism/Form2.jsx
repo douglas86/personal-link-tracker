@@ -21,11 +21,12 @@ const Form2 = () => {
   } = useForm();
 
   useEffect(() => {
+    setValue("id", id);
     setValue("title", title);
     setValue("description", description);
-    setValue("id", id);
+    setValue("image", img);
     registerHookForm(["id", "title", "description", "image"], register);
-  }, [id, title, description, register, setValue, isTab]);
+  }, [id, title, description, img, register, setValue, isTab]);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
