@@ -34,7 +34,6 @@ export const postServices = async ({ title, description, image }, res) => {
     .promise()
     .then(async (resources) => {
       const { Key, Location } = resources;
-      console.log("Location", Location);
       await prisma.category
         .create({
           data: {
@@ -50,6 +49,43 @@ export const postServices = async ({ title, description, image }, res) => {
             message: "Content successfully saved to db",
           });
         });
+    });
+};
+
+// put service
+export const putServices = async ({ id, title, description, image }, res) => {
+  await prisma.category
+    .update({
+      where: { id },
+      data: { title, description },
+    })
+    .then(async () => {
+      s3.deleteObject(goParams(title), async (err) => {
+        if (err) {
+          res.json({
+            status: 400,
+            message: err.message,
+          });
+        } else {
+          await s3
+            .upload(params(title, image))
+            .promise()
+            .then(async (re) => {
+              const { Key, Location } = re;
+              await prisma.category
+                .update({
+                  where: { id: id },
+                  data: { s3BucketKey: Key, image: Location },
+                })
+                .then(() => {
+                  res.json({
+                    status: 200,
+                    message: "Data successfully updated",
+                  });
+                });
+            });
+        }
+      });
     });
 };
 

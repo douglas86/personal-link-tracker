@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { Tabs, Tab } from "react-bootstrap";
+import { Tab, Tabs } from "react-bootstrap";
 
 // Context
 import { AdminContext } from "../../Context/AdminContext";
 
 // Tabs
-import UpdateCategory from "../organism/AdminTabs/UpdateCategory";
+import UpdateCategory from "./AdminTabs/UpdateCategory2";
 import ReadLinks from "../organism/AdminTabs/ReadLinks";
 import { AlertProvider } from "../../Context/AlertContext";
 import Home2 from "./AdminTabs/Home2";
@@ -23,15 +23,13 @@ const AdminTemplate = () => {
           onSelect={(k) => setIsTab(k)}
           className="mb-3"
         >
-          {isTab !== "update" ? (
-            <Tab eventKey="create" title="Create Category">
-              <CreateCategory2 />
-            </Tab>
-          ) : null}
+          <Tab eventKey="create" title="Create Category">
+            <CreateCategory2 />
+          </Tab>
           <Tab eventKey="home" title="All Categories">
             <Home2 />
           </Tab>
-          {isTab !== "create" ? (
+          {isTab !== "create" && isTab !== "home" ? (
             <Tab eventKey="update" title="Update Category">
               <UpdateCategory />
             </Tab>

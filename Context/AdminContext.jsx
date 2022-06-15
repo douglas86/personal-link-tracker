@@ -1,10 +1,10 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState } from "react";
 
 export const AdminContext = createContext(undefined);
 
 export const AdminProvider = ({ children }) => {
   const [isUpdatedTab, setIsUpdatedTab] = useState(false);
-  const [isTab, setIsTab] = useState("create");
+  const [isTab, setIsTab] = useState("home");
 
   const [imageUploadButtonName, setImageUploadButtonName] =
     useState("Upload image");
@@ -17,12 +17,13 @@ export const AdminProvider = ({ children }) => {
     description: "",
     image: "",
   });
+  const [img, setImg] = useState("");
 
-  useEffect(() => {
-    if (isTab !== "update") {
-      setContent("");
-    }
-  }, [isTab]);
+  // useEffect(() => {
+  //   if (isTab !== "update") {
+  //     setContent("");
+  //   }
+  // }, [isTab]);
 
   return (
     <AdminContext.Provider
@@ -39,6 +40,8 @@ export const AdminProvider = ({ children }) => {
         setTitle,
         isForm,
         setIsForm,
+        img,
+        setImg,
       }}
     >
       {children}

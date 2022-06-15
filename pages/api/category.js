@@ -1,8 +1,9 @@
-import { Get, Put } from "../../Helper/api/categoryHelper";
+import { Get } from "../../Helper/api/categoryHelper";
 
 import {
-  postController,
   deleteController,
+  postController,
+  putController,
 } from "./controllers/categoryControllers";
 
 const Handler = async (req, res) => {
@@ -27,7 +28,7 @@ const Handler = async (req, res) => {
     // update;
     case "PUT":
       try {
-        await Put(body, res);
+        await putController(body, res);
       } catch (err) {
         res.json({
           status: 400,

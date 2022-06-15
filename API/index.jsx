@@ -9,10 +9,16 @@ export const GetRoute = (endpoint) => {
 };
 
 const Api = () => {
-  const { postActions, deleteActions } = actionTypes();
+  const { postActions, putActions, deleteActions } = actionTypes();
 
+  // create
   const posting = (endpoint, body) => {
     postActions(endpoint, body);
+  };
+
+  // update
+  const putting = (endpoint, body) => {
+    putActions(endpoint, body);
   };
 
   // delete
@@ -22,6 +28,7 @@ const Api = () => {
 
   return {
     posting,
+    putting,
     deleteRoute,
   };
 };
