@@ -1,6 +1,6 @@
 import { input } from "../atom/input2";
 import { formErrors } from "../atom/formErrors2";
-import { imageUpload } from "./imageUpload";
+import { imageUpload } from "../atom/imageUpload2";
 import { submitButton } from "../atom/button2";
 import { img } from "../atom/image";
 

@@ -1,7 +1,7 @@
 import { input } from "../atom/input2";
 import { formErrors } from "../atom/formErrors2";
 import { submitButton } from "../atom/button2";
-import { imageUpload } from "./imageUpload";
+import { imageUpload } from "../atom/imageUpload2";
 
 export const createForm2 = (
   state,
@@ -12,6 +12,7 @@ export const createForm2 = (
   handleSubmit
 ) => (
   <>
+    {formErrors(errors.id, "id not in field")}
     {input("text", "title", state, setState, "Title")}
     {formErrors(errors.title, "This field is required")}
     {input("text", "description", state, setState, "Description")}

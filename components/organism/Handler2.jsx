@@ -34,6 +34,7 @@ const Handler2 = () => {
   };
 
   const onSubmit = (data) => {
+    console.log("data", data);
     setIsTab("home");
     posting("/api/category", data);
   };

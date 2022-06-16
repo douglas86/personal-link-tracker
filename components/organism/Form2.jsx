@@ -24,14 +24,15 @@ const Form2 = () => {
     setValue("id", id);
     setValue("title", title);
     setValue("description", description);
-    setValue("image", img);
-    registerHookForm(["id", "title", "description", "image"], register);
-  }, [id, title, description, img, register, setValue, isTab]);
+    image === "" ? setValue("image", img) : setValue("image", image);
+    registerHookForm(["title", "description", "image"], register);
+  }, [id, title, description, img, image, register, setValue, isTab]);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
+    console.log("data_url", data_url);
     setIsForm({ ...isForm, image: data_url });
-    setValue("image", data_url);
+    setValue("image", image);
   };
 
   const loadForm = () => {

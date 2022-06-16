@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import InfinteScroll from "react-infinite-scroller";
 import { Alert, Spinner } from "react-bootstrap";
 
@@ -8,7 +8,7 @@ import styles from "../public/static/styles/[slug].module.css";
 // Description of component
 // takes in a name as a slug
 // allLinks - this will gather all data of all the links in db
-// myLinks - this is to gather all links based on logged in user
+// myLinks - this is to gather all links based on logged-in user
 // if slug is given as an argument - it will gather links based on category2 name
 
 // FIXME: needing to do a cleanup function with useEffect
