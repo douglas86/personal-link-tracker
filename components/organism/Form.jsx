@@ -6,12 +6,12 @@ import { useForm } from "react-hook-form";
 import { registerHookForm } from "../atom/registerHookForm";
 import { createForm2 } from "../molecule/createForm2";
 import { updateForm2 } from "../molecule/updateForm2";
-import Handler2 from "./Handler2";
+import Handler from "./Handler";
 
-const Form2 = () => {
+const Form = () => {
   const { isTab, isForm, setIsForm, img } = useContext(AdminContext);
   const { id, title, description, image } = isForm;
-  const { onSubmit, handleUpdate, handleCancel } = Handler2();
+  const { onSubmit, handleUpdate, handleCancel } = Handler();
 
   const {
     register,
@@ -68,4 +68,4 @@ const Form2 = () => {
   return <Container>{loadForm()}</Container>;
 };
 
-export default Form2;
+export default Form;

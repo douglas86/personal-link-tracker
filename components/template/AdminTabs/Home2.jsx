@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 
-import CategoryMap2 from "../../organism/CategoryMap2";
+import CategoryMap from "../../organism/CategoryMap";
 import { alert } from "../../atom/alert";
 import { spinner } from "../../atom/spinner";
 
@@ -18,7 +18,7 @@ const Home2 = () => {
     <div>
       <Container>
         {show ? alert(color, message) : null}
-        {fetcher ? <CategoryMap2 arr={Object.entries(fetcher)} /> : spinner()}
+        {fetcher ? <CategoryMap arr={Object.entries(fetcher)} /> : spinner()}
       </Container>
     </div>
   );

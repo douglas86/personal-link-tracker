@@ -1,9 +1,9 @@
-import Form2 from "../../organism/Form2";
+import Form from "../../organism/Form";
 
 const CreateCategory2 = () => {
   return (
     <>
-      <Form2 />
+      <Form />
     </>
   );
 };
