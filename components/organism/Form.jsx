@@ -8,7 +8,7 @@ import { useForm } from "react-hook-form";
 import { AdminContext } from "../../Context/AdminContext";
 
 import { formErrors } from "../atom/formErrors";
-import { submitButton } from "../atom/button";
+import { submitButton } from "../atom/button2";
 import { form, registerHookForm } from "../molecule/form";
 
 import Handler from "./Handler";

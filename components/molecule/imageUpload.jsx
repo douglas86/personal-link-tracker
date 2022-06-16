@@ -1,5 +1,5 @@
 import ImageUploading from "react-images-uploading";
-import { imageUploadButton } from "../atom/button";
+import { imageUploadButton } from "../atom/button2";
 
 export const imageUpload = (images, onChange) => (
   <>

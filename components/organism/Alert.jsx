@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { alert } from '../atom/alert';
+import { useState } from "react";
+import { alert } from "../atom/alert2";
 
 const Alert = () => {
-    const [color, setColor] = useState();
-    const [message, setMessage] = useState('');
+  const [color] = useState();
+  const [message] = useState("");
 
-    return <>{alert(color, message)}</>;
+  return <>{alert(color, message)}</>;
 };
 
 export default Alert;
