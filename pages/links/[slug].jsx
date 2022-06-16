@@ -1,23 +1,23 @@
-import { useRouter } from 'next/router';
+import { useRouter } from "next/router";
 
-import SlugTemplate from '../../components/template/SlugTemplate.jsx';
-import { GetRoute } from '../../API/index.jsx';
-import { spinner } from '../../components/atom/spinner.jsx';
+import SlugTemplate from "../../components/template/SlugTemplate.jsx";
+import { GetRoute } from "../../API";
+import { spinner } from "../../components/atom/spinner2.jsx";
 
 const Links = () => {
-    const router = useRouter();
-    const { slug } = router.query;
-    const fetcher = GetRoute(`/api/singleItem?slug=${slug}`).data;
+  const router = useRouter();
+  const { slug } = router.query;
+  const fetcher = GetRoute(`/api/singleItem?slug=${slug}`).data;
 
-    return (
-        <>
-            {slug === undefined ? (
-                spinner()
-            ) : (
-                <SlugTemplate slug={slug} data={fetcher} />
-            )}
-        </>
-    );
+  return (
+    <>
+      {slug === undefined ? (
+        spinner()
+      ) : (
+        <SlugTemplate slug={slug} data={fetcher} />
+      )}
+    </>
+  );
 };
 
 export default Links;

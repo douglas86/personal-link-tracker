@@ -1,12 +1,10 @@
-import { input } from "../atom/input";
-import { formErrors } from "../atom/formErrors";
-import { formQuill } from "../atom/formQuill";
+import { input } from "../atom/input2";
+import { formErrors } from "../atom/formErrors2";
 
-export const form = (setTitle, register, name, errors, quillRef) => (
+export const form = (setTitle, register, name, errors) => (
   <>
     {input("text", { width: "100%" }, setTitle, "Title")}
     {formErrors(errors.title, "Enter valid title")}
-    {formQuill(quillRef)}
     {formErrors(errors.description, "Enter valid description")}
   </>
 );
