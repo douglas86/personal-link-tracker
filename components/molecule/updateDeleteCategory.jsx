@@ -1,4 +1,4 @@
-import { submitButton } from "../atom/button2";
+import { submitButton } from "../atom/button";
 import { img } from "../atom/image";
 import { links } from "../atom/links";
 import { titles } from "../atom/titles";

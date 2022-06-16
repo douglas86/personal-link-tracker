@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import renderHTML from "react-render-html";
 
 import { img } from "../atom/image";
-import { spinner } from "../atom/spinner2";
+import { spinner } from "../atom/spinner";
 import { GetRoute } from "../../API/index";
 import Pagination from "../pagination";
 import styles from "../../public/static/styles/[slug].module.css";

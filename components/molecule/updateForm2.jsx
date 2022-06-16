@@ -1,7 +1,7 @@
-import { input } from "../atom/input2";
-import { formErrors } from "../atom/formErrors2";
-import { imageUpload } from "../atom/imageUpload2";
-import { submitButton } from "../atom/button2";
+import { input } from "../atom/input";
+import { formErrors } from "../atom/formErrors";
+import { imageUpload } from "../atom/imageUpload";
+import { submitButton } from "../atom/button";
 import { img } from "../atom/image";
 
 import { Container } from "react-bootstrap";

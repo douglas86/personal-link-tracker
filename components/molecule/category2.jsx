@@ -3,7 +3,7 @@ import { img } from "../atom/image";
 
 import styles from "./styles.module.css";
 import { titles } from "../atom/titles";
-import { submitButton } from "../atom/button2";
+import { submitButton } from "../atom/button";
 
 export const category2 = (
   { id, title, description, image },

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Nav } from "react-bootstrap";
 
-import { sign_in, sign_out } from "../atom/button2";
+import { sign_in, sign_out } from "../atom/button";
 import { img } from "../atom/image";
 import { links } from "../atom/links";
 

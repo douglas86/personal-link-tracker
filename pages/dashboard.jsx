@@ -4,7 +4,7 @@ import AdminTemplate from "../components/template/AdminTemplate";
 
 import Subscriber from "../Dashboard/Subscriber";
 
-import { spinner } from "../components/atom/spinner2";
+import { spinner } from "../components/atom/spinner";
 import { AdminProvider } from "../Context/AdminContext";
 
 import { SubscriberProvider } from "../Context/Dashboard/Subscriber/SubscriberContext";

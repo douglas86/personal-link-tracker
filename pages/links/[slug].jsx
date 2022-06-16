@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 
 import SlugTemplate from "../../components/template/SlugTemplate.jsx";
 import { GetRoute } from "../../API";
-import { spinner } from "../../components/atom/spinner2.jsx";
+import { spinner } from "../../components/atom/spinner.jsx";
 
 const Links = () => {
   const router = useRouter();

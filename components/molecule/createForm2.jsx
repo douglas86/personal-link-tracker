@@ -1,7 +1,7 @@
-import { input } from "../atom/input2";
-import { formErrors } from "../atom/formErrors2";
-import { submitButton } from "../atom/button2";
-import { imageUpload } from "../atom/imageUpload2";
+import { input } from "../atom/input";
+import { formErrors } from "../atom/formErrors";
+import { submitButton } from "../atom/button";
+import { imageUpload } from "../atom/imageUpload";
 
 export const createForm2 = (
   state,

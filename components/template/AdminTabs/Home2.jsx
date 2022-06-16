@@ -2,8 +2,8 @@ import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
 
 import CategoryMap2 from "../../organism/CategoryMap2";
-import { alert } from "../../atom/alert2";
-import { spinner } from "../../atom/spinner2";
+import { alert } from "../../atom/alert";
+import { spinner } from "../../atom/spinner";
 
 import { GetRoute } from "../../../API";
 import { AlertContext } from "../../../Context/AlertContext";

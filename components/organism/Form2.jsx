@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 import { AdminContext } from "../../Context/AdminContext";
 import { useForm } from "react-hook-form";
-import { registerHookForm } from "../atom/registerHookForm2";
+import { registerHookForm } from "../atom/registerHookForm";
 import { createForm2 } from "../molecule/createForm2";
 import { updateForm2 } from "../molecule/updateForm2";
 import Handler2 from "./Handler2";
@@ -30,7 +30,6 @@ const Form2 = () => {
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
-    console.log("data_url", data_url);
     setIsForm({ ...isForm, image: data_url });
     setValue("image", image);
   };

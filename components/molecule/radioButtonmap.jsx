@@ -1,4 +1,4 @@
-import { RadioButton } from "../atom/button2";
+import { RadioButton } from "../atom/button";
 
 export const RadioButtonmap = ({ array, handleChange }) => {
   return (

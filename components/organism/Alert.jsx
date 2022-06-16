@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { alert } from "../atom/alert2";
+import { alert } from "../atom/alert";
 
 const Alert = () => {
   const [color] = useState();

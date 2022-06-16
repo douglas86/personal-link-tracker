@@ -1,5 +1,5 @@
-import { input } from "../atom/input2";
-import { formErrors } from "../atom/formErrors2";
+import { input } from "../atom/input";
+import { formErrors } from "../atom/formErrors";
 
 export const form = (setTitle, register, name, errors) => (
   <>
