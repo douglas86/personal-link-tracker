@@ -5,11 +5,11 @@ import { Tab, Tabs } from "react-bootstrap";
 import { AdminContext } from "../../Context/AdminContext";
 
 // Tabs
-import UpdateCategory from "./AdminTabs/UpdateCategory2";
+import UpdateCategory from "./AdminTabs/UpdateCategory";
 import ReadLinks from "../organism/AdminTabs/ReadLinks";
 import { AlertProvider } from "../../Context/AlertContext";
-import Home2 from "./AdminTabs/Home2";
-import CreateCategory2 from "./AdminTabs/CreateCategory2";
+import Home from "./AdminTabs/Home";
+import CreateCategory from "./AdminTabs/CreateCategory";
 
 const AdminTemplate = () => {
   const { isTab, setIsTab } = useContext(AdminContext);
@@ -24,10 +24,10 @@ const AdminTemplate = () => {
           className="mb-3"
         >
           <Tab eventKey="create" title="Create Category">
-            <CreateCategory2 />
+            <CreateCategory />
           </Tab>
           <Tab eventKey="home" title="All Categories">
-            <Home2 />
+            <Home />
           </Tab>
           {isTab !== "create" && isTab !== "home" ? (
             <Tab eventKey="update" title="Update Category">

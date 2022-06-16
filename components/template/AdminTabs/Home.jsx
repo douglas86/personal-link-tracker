@@ -8,7 +8,7 @@ import { spinner } from "../../atom/spinner";
 import { GetRoute } from "../../../API";
 import { AlertContext } from "../../../Context/AlertContext";
 
-const Home2 = () => {
+const Home = () => {
   const { alerts } = useContext(AlertContext);
   const { show, color, message } = alerts;
 
@@ -24,4 +24,4 @@ const Home2 = () => {
   );
 };
 
-export default Home2;
+export default Home;

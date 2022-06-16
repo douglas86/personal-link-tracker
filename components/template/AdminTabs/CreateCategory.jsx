@@ -1,6 +1,6 @@
 import Form from "../../organism/Form";
 
-const CreateCategory2 = () => {
+const CreateCategory = () => {
   return (
     <>
       <Form />
@@ -8,4 +8,4 @@ const CreateCategory2 = () => {
   );
 };
 
-export default CreateCategory2;
+export default CreateCategory;
