@@ -13,7 +13,7 @@ import { pag } from "../molecule/pag";
 
 const Pagination = ({ slug }) => {
   const [skip, setSkip] = useState(0);
-  const [link, setLink] = useState();
+  const [link, setLink] = useState([]);
   const [len, setLen] = useState();
 
   const [mounted, setMounted] = useState(true);
