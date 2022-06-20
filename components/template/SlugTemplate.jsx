@@ -4,7 +4,7 @@ import renderHTML from "react-render-html";
 import { img } from "../atom/image";
 import { spinner } from "../atom/spinner";
 import { GetRoute } from "../../API/index";
-import Pagination from "../pagination";
+import Pagination from "../organism/Pagination";
 import styles from "../../public/static/styles/[slug].module.css";
 
 const SlugTemplate = ({ slug, data }) => {
