@@ -6,10 +6,10 @@ import { AdminContext } from "../../Context/AdminContext";
 
 // Tabs
 import UpdateCategory from "./AdminTabs/UpdateCategory";
-import ReadLinks from "../organism/AdminTabs/ReadLinks";
 import { AlertProvider } from "../../Context/AlertContext";
 import Home from "./AdminTabs/Home";
 import CreateCategory from "./AdminTabs/CreateCategory";
+import Links from "./AdminTabs/Links";
 
 const AdminTemplate = () => {
   const { isTab, setIsTab } = useContext(AdminContext);
@@ -35,7 +35,7 @@ const AdminTemplate = () => {
             </Tab>
           ) : null}
           <Tab eventKey="links" title="Links">
-            <ReadLinks />
+            <Links />
           </Tab>
         </Tabs>
       </AlertProvider>

@@ -16,8 +16,10 @@ const Pagination = ({ slug }) => {
   const [link, setLink] = useState();
   const [len, setLen] = useState();
 
+  const [mounted, setMounted] = useState(true);
+
   useEffect(() => {
-    let mounted = true;
+    setMounted(true);
 
     if (mounted) {
       pagination(`/api/pagination?slug=${slug}&skip=0`).then((items) => {
@@ -26,8 +28,8 @@ const Pagination = ({ slug }) => {
       });
     }
 
-    return () => (mounted = false);
-  }, [slug]);
+    return () => setMounted(false);
+  }, [slug, mounted, setMounted]);
 
   const loadMore = async () => {
     let toSkip = skip + 2;

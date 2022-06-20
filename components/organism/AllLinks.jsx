@@ -1,4 +1,6 @@
-import Pagination from "../Pagination";
+// import Pagination from "./Pagination";
+
+import Pagination from "./Pagination";
 
 const AllLinks = () => {
   return (
