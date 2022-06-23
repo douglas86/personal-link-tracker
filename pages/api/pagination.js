@@ -5,7 +5,8 @@ const Handler = async (req, res) => {
 
   switch (method) {
     case "GET":
-      const { _start, _limit } = query;
+      const { _router, _start, _limit } = query;
+      console.log("router", _router);
       await prisma.links
         .findMany({
           skip: parseInt(_start),
