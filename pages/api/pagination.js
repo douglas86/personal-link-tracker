@@ -1,17 +1,24 @@
-import { Get } from './controllers/paginationControllers';
+import { Default } from "./controllers/paginationControllers";
 
 const Handler = async (req, res) => {
-    const { method, query } = req;
+  const { method, query } = req;
 
-    switch (method) {
-        case 'GET':
-            const { slug, skip } = query;
-            Get(slug, skip, req, res);
-            break;
-        default:
-            Default(res);
-            break;
-    }
+  switch (method) {
+    case "GET":
+      const { _start, _limit } = query;
+      await prisma.links
+        .findMany({
+          skip: parseInt(_start),
+          take: parseInt(_limit),
+        })
+        .then((items) => {
+          res.json(items);
+        });
+      break;
+    default:
+      await Default(res);
+      break;
+  }
 };
 
 export default Handler;
