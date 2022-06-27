@@ -1,6 +1,7 @@
 import {
   Default,
   GetAllLinks,
+  GetCategories,
   GetMyLinks,
 } from "./controllers/paginationControllers";
 import { getSession } from "next-auth/react";
@@ -22,7 +23,7 @@ const Handler = async (req, res) => {
           await GetMyLinks(res, session, _start, _limit);
           break;
         default:
-          await Default(res);
+          await GetCategories(res, _router, _start, _limit);
           break;
       }
       break;

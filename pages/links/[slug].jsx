@@ -1,8 +1,31 @@
+import { Alert, Container } from "react-bootstrap";
+import styles from "./styles.module.css";
+import PopularLinksTemplate from "../../components/template/PopularLinksTemplate";
+import { titles } from "../../components/atom/titles";
+import renderHTML from "react-render-html";
+import PaginationTemplates from "../../components/template/PaginationTemplates";
+
 const Links = ({ category, len, data }) => {
+  console.log("category", JSON.parse(category));
+  const { description, s3BucketKey, title } = JSON.parse(category)[0];
+
   return (
-    <>
-      <h1>Links</h1>
-    </>
+    <Container>
+      <div className={styles.flex}>
+        <div className={styles.leftSide}>
+          {titles(title)}
+          <Alert variant="secondary">{renderHTML(description)}</Alert>
+          <PaginationTemplates
+            len={JSON.parse(len)}
+            data={JSON.parse(data)}
+            router={title}
+          />
+        </div>
+        <div className={styles.rightSide}>
+          <PopularLinksTemplate image={s3BucketKey} />
+        </div>
+      </div>
+    </Container>
   );
 };
 

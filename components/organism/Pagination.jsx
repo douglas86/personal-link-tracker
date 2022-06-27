@@ -3,6 +3,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { pagination } from "../molecule/pagination";
 import { Container } from "react-bootstrap";
 import { spinner } from "../atom/spinner";
+import { endMessage } from "../atom/endMessage";
 
 const Pagination = ({ data, len, router }) => {
   const [posts, setPosts] = useState(data);
@@ -29,7 +30,7 @@ const Pagination = ({ data, len, router }) => {
         next={getMorePost}
         hasMore={hasMore}
         loader={spinner()}
-        endMessage={<h4>Nothing more to show</h4>}
+        endMessage={endMessage()}
       >
         {posts.map((data) => (
           <div key={data.id}>{pagination(data)}</div>

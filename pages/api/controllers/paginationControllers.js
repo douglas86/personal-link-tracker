@@ -30,16 +30,16 @@ export const GetMyLinks = async (res, session, _start, _limit) => {
     });
 };
 
-// export const Get = (slug, skip, req, res) => {
-//   switch (slug) {
-//     case 'allLinks':
-//       FindAllLinks(slug, skip, res, req);
-//       break;
-//     case 'myLinks':
-//       FindMyLinks(slug, skip, res, req);
-//       break;
-//     default:
-//       FindCategory(slug, skip, res, req);
-//       break;
-//   }
-// };
+export const GetCategories = async (res, _router, _start, _limit) => {
+  await prisma.links
+    .findMany({
+      where: {
+        categoryNames: { hasEvery: [_router] },
+      },
+      skip: parseInt(_start),
+      take: parseInt(_limit),
+    })
+    .then((items) => {
+      Find(res, items);
+    });
+};
