@@ -4,7 +4,7 @@ import { pagination } from "../molecule/pagination";
 import { Container } from "react-bootstrap";
 import { spinner } from "../atom/spinner";
 
-const Pagination = ({ router, data, len }) => {
+const Pagination = ({ data, len, router }) => {
   const [posts, setPosts] = useState(data);
   const [hasMore, setHasMore] = useState(true);
 

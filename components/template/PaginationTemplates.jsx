@@ -1,12 +1,9 @@
 import Pagination from "../organism/Pagination";
-import { useRouter } from "next/router";
 
-const PaginationTemplates = ({ data, len }) => {
-  const router = useRouter().pathname.split("/");
-
+const PaginationTemplates = ({ data, len, router }) => {
   return (
     <>
-      <Pagination router={router[2]} data={data} len={len} />
+      <Pagination data={data} len={len} router={router} />
     </>
   );
 };

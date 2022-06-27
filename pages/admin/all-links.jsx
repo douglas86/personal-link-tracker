@@ -1,9 +1,16 @@
 import PaginationTemplates from "../../components/template/PaginationTemplates";
+import { useRouter } from "next/router";
 
 const AllLinks = ({ data, len }) => {
+  const router = useRouter().pathname.split("/");
+
   return (
     <>
-      <PaginationTemplates data={JSON.parse(data)} len={JSON.parse(len)} />
+      <PaginationTemplates
+        data={JSON.parse(data)}
+        len={JSON.parse(len)}
+        router={router[2]}
+      />
     </>
   );
 };
