@@ -1,24 +1,17 @@
-import "quill/dist/quill.snow.css";
-
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { useQuill } from "react-quilljs";
-import { useForm } from "react-hook-form";
 
 import { AdminContext } from "../../Context/AdminContext";
-
-import { formErrors } from "../atom/formErrors";
-import { submitButton } from "../atom/button";
-import { form, registerHookForm } from "../molecule/form";
-
+import { useForm } from "react-hook-form";
+import { registerHookForm } from "../atom/registerHookForm";
+import { createForm2 } from "../molecule/createForm2";
+import { updateForm2 } from "../molecule/updateForm2";
 import Handler from "./Handler";
-import { imageUpload } from "../molecule/imageUpload";
 
 const Form = () => {
-  const { content, isTab } = useContext(AdminContext);
-  const { quill, quillRef } = useQuill();
-  const [title, setTitle] = useState("");
-  const [images, setImages] = useState("");
+  const { isTab, isForm, setIsForm, img } = useContext(AdminContext);
+  const { id, title, description, image } = isForm;
+  const { onSubmit, handleUpdate, handleCancel } = Handler();
 
   const {
     register,
@@ -27,41 +20,52 @@ const Form = () => {
     formState: { errors },
   } = useForm();
 
-  const { onSubmit } = Handler();
+  useEffect(() => {
+    setValue("id", id);
+    setValue("title", title);
+    setValue("description", description);
+    image === "" ? setValue("image", img) : setValue("image", image);
+    registerHookForm(["title", "description", "image"], register);
+  }, [id, title, description, img, image, register, setValue, isTab]);
 
   const onChange = (imageList) => {
     const { data_url } = imageList[0];
-    setImages(data_url);
-    setValue("image", data_url);
+    setIsForm({ ...isForm, image: data_url });
+    setValue("image", image);
   };
 
-  useEffect(() => {
-    if (quill) {
-      if (content !== "") {
-        quill.clipboard.dangerouslyPasteHTML(`${content}`);
-      }
-      quill.on("text-change", () => {
-        setValue("description", quillRef.current.firstChild.innerHTML);
-      });
+  const loadForm = () => {
+    switch (isTab) {
+      case "create":
+        return createForm2(
+          isForm,
+          setIsForm,
+          image,
+          errors,
+          onChange,
+          handleSubmit(onSubmit)
+        );
+      case "update":
+        return updateForm2(
+          isForm,
+          setIsForm,
+          image,
+          errors,
+          onChange,
+          handleSubmit(handleUpdate),
+          handleCancel,
+          img
+        );
+      default:
+        return (
+          <>
+            <h1>This is default</h1>
+          </>
+        );
     }
-    setValue("title", title);
-    registerHookForm(["title", "description", "image"], register);
-  }, [title, quill, quillRef, register, setValue, content]);
+  };
 
-  return (
-    <Container>
-      {form(setTitle, register, "title", errors, quillRef)}
-      <div className="image-uploaded">{imageUpload(images, onChange)}</div>
-      {formErrors(errors.image, "No image selected")}
-      {submitButton(
-        handleSubmit(onSubmit),
-        isTab === "create" ? "Create" : "Update",
-        isTab === "update"
-          ? "btn btn-outline-success"
-          : "btn btn-outline-warning"
-      )}
-    </Container>
-  );
+  return <Container>{loadForm()}</Container>;
 };
 
 export default Form;

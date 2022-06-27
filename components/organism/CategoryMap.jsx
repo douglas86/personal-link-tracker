@@ -1,10 +1,10 @@
-import Handler2 from "./Handler2";
+import Handler from "./Handler";
 import { category2 } from "../molecule/category2";
 
 import styles from "./styles.module.css";
 
-function CategoryMap2({ arr }) {
-  const { handleUpdateClick, handleConfirm } = Handler2();
+function CategoryMap({ arr }) {
+  const { handleUpdateClick, handleConfirm } = Handler();
 
   return (
     <>
@@ -17,4 +17,4 @@ function CategoryMap2({ arr }) {
   );
 }
 
-export default CategoryMap2;
+export default CategoryMap;

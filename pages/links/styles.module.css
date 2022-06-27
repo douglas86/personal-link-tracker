@@ -1,0 +1,14 @@
+.flex {
+  display: flex;
+  margin: 1%;
+}
+
+.leftSide {
+  width: 75%;
+  margin: 0.5%;
+}
+
+.rightSide {
+  width: 25%;
+  margin: 0.5%;
+}

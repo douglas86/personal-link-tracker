@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
-import { Container, Alert } from 'react-bootstrap';
+import { useEffect, useState } from "react";
+import { Alert, Container } from "react-bootstrap";
 
-import prisma from '../../../lib/prisma';
-import createHelpers from '../../../Helper/pages/user/link/createHelpers';
-import styles from '../../../public/static/styles/create.module.css';
+import prisma from "../../../lib/prisma";
+import createHelpers from "../../../Helper/pages/user/link/createHelpers";
+import styles from "../../../public/static/styles/create.module.css";
 
-const create = (props) => {
+const Create = (props) => {
   const categories = JSON.parse(props.result);
   const { state, setState, showCategories, showTypes, showMedium, showForm } =
     createHelpers(categories);
@@ -22,9 +22,9 @@ const create = (props) => {
   };
 
   useEffect(function mount() {
-    window.addEventListener('resize', setDimension);
+    window.addEventListener("resize", setDimension);
     return function unMount() {
-      window.removeEventListener('resize', setDimension);
+      window.removeEventListener("resize", setDimension);
     };
   });
 
@@ -34,7 +34,7 @@ const create = (props) => {
         setState({ ...state, showAlert: false });
       }, 10000);
     }
-  }, [showAlert]);
+  }, [setState, state, showAlert]);
 
   return (
     <Container>
@@ -44,15 +44,15 @@ const create = (props) => {
           <label className="text-muted ml-4">Categories</label>
           <ul
             style={{
-              maxHeight: '100px',
-              overflowY: 'scroll',
-              listStyle: 'none',
+              maxHeight: "100px",
+              overflowY: "scroll",
+              listStyle: "none",
               paddingLeft: 0,
-              width: screenSize.dynamicWidth < 800 ? '50%' : '200px',
+              width: screenSize.dynamicWidth < 800 ? "50%" : "200px",
               margin:
                 screenSize.dynamicWidth < 800 && screenSize.dynamicWidth > 0
-                  ? '1% 25%'
-                  : '0%',
+                  ? "1% 25%"
+                  : "0%",
             }}
           >
             {showCategories()}
@@ -88,4 +88,4 @@ export const getServerSideProps = async () => {
   };
 };
 
-export default create;
+export default Create;

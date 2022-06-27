@@ -1,7 +1,7 @@
 import { Button } from "react-bootstrap";
 import { img } from "./image";
 
-export const signin = (signIn) => {
+export const sign_in = (signIn) => {
   return (
     <Button
       className="justify-content-right"
@@ -13,7 +13,7 @@ export const signin = (signIn) => {
   );
 };
 
-export const signout = (signOut) => {
+export const sign_out = (signOut) => {
   return (
     <Button
       className="justify-content-right"
@@ -28,6 +28,17 @@ export const signout = (signOut) => {
     </Button>
   );
 };
+
+export const RadioButton = ({ checked, onChange }) => (
+  <>
+    <input
+      type="radio"
+      onChange={onChange}
+      name="radio"
+      defaultChecked={checked}
+    />
+  </>
+);
 
 export const submitButton = (handleSubmit, Name, variant) => {
   return (
@@ -64,16 +75,5 @@ export const imageUploadButton = (
     >
       {images === "" ? "+" : img(images, 200, 100)}
     </button>
-  </>
-);
-
-export const RadioButton = ({ checked, onChange }) => (
-  <>
-    <input
-      type="radio"
-      onChange={onChange}
-      name="radio"
-      defaultChecked={checked}
-    />
   </>
 );

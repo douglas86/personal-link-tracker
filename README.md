@@ -37,9 +37,9 @@ NOTE: It is also worth mentioning that whenever I use a getServerSideProp or som
 
 <hr/>
 
-### This is a screenshot of the Home2 Page on this site
+### This is a screenshot of the Home Page on this site
 
-<img src="./public/static/readmeImages/Home2 Page.png" alt="no image" height="auto" width="100%"><br/>
+<img src="./public/static/readmeImages/Home Page.png" alt="no image" height="auto" width="100%"><br/>
 
 ### This is a screenshot of the Categories page
 
