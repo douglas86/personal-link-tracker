@@ -1,24 +1,21 @@
-import { Alert, Container } from "react-bootstrap";
-import styles from "./styles.module.css";
+import { Container } from "react-bootstrap";
+
 import PopularLinksTemplate from "../../components/template/PopularLinksTemplate";
-import { titles } from "../../components/atom/titles";
-import renderHTML from "react-render-html";
-import PaginationTemplates from "../../components/template/PaginationTemplates";
+import SlugTemplate from "../../components/template/SlugTemplate";
+
+import styles from "./styles.module.css";
 
 const Links = ({ category, len, data }) => {
-  console.log("category", JSON.parse(category));
-  const { description, s3BucketKey, title } = JSON.parse(category)[0];
+  const { s3BucketKey } = JSON.parse(category)[0];
 
   return (
     <Container>
       <div className={styles.flex}>
         <div className={styles.leftSide}>
-          {titles(title)}
-          <Alert variant="secondary">{renderHTML(description)}</Alert>
-          <PaginationTemplates
+          <SlugTemplate
+            category={JSON.parse(category)[0]}
             len={JSON.parse(len)}
             data={JSON.parse(data)}
-            router={title}
           />
         </div>
         <div className={styles.rightSide}>
