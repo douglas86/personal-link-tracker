@@ -1,5 +1,4 @@
 import { getSession } from "next-auth/react";
-import prisma from "../../lib/prisma";
 
 const Handler = async (req, res) => {
   const { method } = req;
@@ -8,7 +7,7 @@ const Handler = async (req, res) => {
   switch (method) {
     case "GET":
       await prisma.user
-        .findMany({ where: { email: session?.user.email } })
+        .findMany({ where: { name: session?.user.name } })
         .then((items) => {
           res.json({
             status: 200,
@@ -17,6 +16,7 @@ const Handler = async (req, res) => {
         });
       break;
     default:
+      console.log("Default endpoint used");
       break;
   }
 };
