@@ -1,15 +1,17 @@
 import Layout from "../components/template/Layout";
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import 'react-quill/dist/quill.bubble.css';
 import { SessionProvider } from "next-auth/react";
+import Auth from "../components/template/Auth";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (
     <>
       <SessionProvider session={session}>
         <Layout>
-          <Component {...pageProps} />
+          <Auth>
+            <Component {...pageProps} />
+          </Auth>
         </Layout>
       </SessionProvider>
     </>
