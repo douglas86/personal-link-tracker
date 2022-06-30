@@ -1,50 +1,47 @@
-import { useSession } from "next-auth/react";
+import { getSession } from "next-auth/react";
+import prisma from "../lib/prisma";
+import { titles } from "../components/atom/titles";
+import { links } from "../components/atom/links";
+import { Button } from "react-bootstrap";
 
-import AdminTemplate from "../components/template/AdminTemplate";
-
-import Subscriber from "../Dashboard/Subscriber";
-
-import { spinner } from "../components/atom/spinner";
-import { AdminProvider } from "../Context/AdminContext";
-
-import { SubscriberProvider } from "../Context/Dashboard/Subscriber/SubscriberContext";
-import { GetRoute } from "../API/index";
-
-const Dashboard = () => {
-  const { data: session } = useSession();
-
-  const fetcher = GetRoute(`/api/user`).data;
-
-  const Role = (role) => {
-    switch (role) {
-      case "admin":
-        return (
-          <AdminProvider>
-            <AdminTemplate />
-          </AdminProvider>
-        );
-      default:
-        return (
-          <SubscriberProvider>
-            <Subscriber />
-          </SubscriberProvider>
-        );
-    }
-  };
+const Dashboard = ({ data }) => {
+  console.log("data", JSON.parse(data));
 
   return (
     <>
-      {session ? (
-        fetcher === undefined ? (
-          spinner()
-        ) : (
-          Role(fetcher[0].role)
-        )
-      ) : (
-        <h1>You are not signed in</h1>
-      )}
+      <div style={{ marginTop: "5px", textAlign: "center" }}>
+        {titles("Admin Dashboard")}
+      </div>
+
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ margin: "1%" }}>
+          {links(
+            `/admin/all-links`,
+            <a>
+              <Button variant="primary">All Links</Button>
+            </a>
+          )}
+        </div>
+        <div style={{ margin: "1%" }}>
+          {links(
+            `/admin/my-links`,
+            <a>
+              <Button variant="primary">My Links</Button>
+            </a>
+          )}
+        </div>
+      </div>
     </>
   );
+};
+
+export const getServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+  const data = await prisma.user.findMany({
+    where: { name: session?.user.name },
+  });
+
+  return { props: { data: JSON.stringify(data) } };
 };
 
 export default Dashboard;
