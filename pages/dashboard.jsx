@@ -1,38 +1,25 @@
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
+
 import prisma from "../lib/prisma";
-import { titles } from "../components/atom/titles";
-import { links } from "../components/atom/links";
-import { Button } from "react-bootstrap";
+
+import AdminTemplate from "../components/template/AdminTemplate";
+import UserTemplate from "../components/template/UserTemplate";
 
 const Dashboard = ({ data }) => {
+  const { data: session } = useSession();
+
   console.log("data", JSON.parse(data));
 
-  return (
-    <>
-      <div style={{ marginTop: "5px", textAlign: "center" }}>
-        {titles("Admin Dashboard")}
-      </div>
+  const Template = () => {
+    switch (JSON.parse(data)[0].role) {
+      case "admin":
+        return <AdminTemplate />;
+      default:
+        return <UserTemplate />;
+    }
+  };
 
-      <div style={{ display: "flex", justifyContent: "center" }}>
-        <div style={{ margin: "1%" }}>
-          {links(
-            `/admin/all-links`,
-            <a>
-              <Button variant="primary">All Links</Button>
-            </a>
-          )}
-        </div>
-        <div style={{ margin: "1%" }}>
-          {links(
-            `/admin/my-links`,
-            <a>
-              <Button variant="primary">My Links</Button>
-            </a>
-          )}
-        </div>
-      </div>
-    </>
-  );
+  return <>{session ? Template() : <h1>You are not signed in</h1>}</>;
 };
 
 export const getServerSideProps = async ({ req }) => {
@@ -41,7 +28,9 @@ export const getServerSideProps = async ({ req }) => {
     where: { name: session?.user.name },
   });
 
-  return { props: { data: JSON.stringify(data) } };
+  return {
+    props: { data: JSON.stringify(data) },
+  };
 };
 
 export default Dashboard;
