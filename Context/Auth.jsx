@@ -1,9 +1,9 @@
-import { GetRoute } from "../../API";
-import { spinner } from "../atom/spinner";
+import { GetRoute } from "../API";
+import { spinner } from "../components/atom/spinner";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { withAdmin } from "../organism/RoleInOrganisation/withAdmin";
-import { withUser } from "../organism/RoleInOrganisation/withUser";
+import { withAdmin } from "../components/organism/RoleInOrganisation/withAdmin";
+import { withUser } from "../components/organism/RoleInOrganisation/withUser";
 
 const Auth = ({ children }) => {
   const { data: session } = useSession();

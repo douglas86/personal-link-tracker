@@ -8,8 +8,6 @@ import UserTemplate from "../components/template/UserTemplate";
 const Dashboard = ({ data }) => {
   const { data: session } = useSession();
 
-  console.log("data", JSON.parse(data));
-
   const Template = () => {
     switch (JSON.parse(data)[0].role) {
       case "admin":

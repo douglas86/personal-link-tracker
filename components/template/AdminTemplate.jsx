@@ -1,6 +1,9 @@
+import React from "react";
+import { Button } from "react-bootstrap";
+
+import CategoryMap from "../organism/CategoryMap";
 import { titles } from "../atom/titles";
 import { links } from "../atom/links";
-import { Button } from "react-bootstrap";
 
 const AdminTemplate = () => {
   return (
@@ -10,6 +13,14 @@ const AdminTemplate = () => {
       </div>
 
       <div style={{ display: "flex", justifyContent: "center" }}>
+        <div style={{ margin: "1%" }}>
+          {links(
+            `/admin/create-category`,
+            <a>
+              <Button variant="primary">Create Category</Button>{" "}
+            </a>
+          )}
+        </div>
         <div style={{ margin: "1%" }}>
           {links(
             `/admin/all-links`,
@@ -27,6 +38,7 @@ const AdminTemplate = () => {
           )}
         </div>
       </div>
+      <CategoryMap />
     </>
   );
 };
