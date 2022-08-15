@@ -21,6 +21,6 @@ export const createForm2 = (
       {imageUpload(images, onChange)}
     </div>
     {formErrors(errors.image, "No image selected")}
-    {submitButton(handleSubmit, "Create", "btn btn-outline-warning")}
+    {submitButton(handleSubmit, "Create", "button button-outline-warning")}
   </>
 );

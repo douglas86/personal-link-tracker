@@ -14,6 +14,20 @@ revalidating) hook for data fetching
 
 ### This is a short description of the design structure
 
+# File structure
+
+order of imports:
+   npm packages at the top
+   pages directory
+   UI components after:
+      template
+      organism
+      molecule
+      atom
+   assets directory
+   util directory
+   styling
+
 I have used the atomic design structure for components in this project:<br/>
 The meaning of atomic design structure is as follows:<br/>
 atom - this is the smallest form which could be a button, input tag, label etc<br/>

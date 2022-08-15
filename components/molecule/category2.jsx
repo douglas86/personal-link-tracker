@@ -30,8 +30,12 @@ export const category2 = (
         <div className={styles.title}>
           {titles(title)}
           <div className={styles.buttons}>
-            {submitButton(updateItem, "Update", "btn btn-outline-success")}
-            {submitButton(deleteItem, "Delete", "btn btn-outline-danger")}
+            {submitButton(
+              updateItem,
+              "Update",
+              "button button-outline-success"
+            )}
+            {submitButton(deleteItem, "Delete", "button button-outline-danger")}
           </div>
         </div>
       </div>

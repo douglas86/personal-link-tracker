@@ -40,8 +40,16 @@ export const updateForm2 = (
           </div>
           {formErrors(errors.image, "No image selected")}
           <div style={{ display: "flex" }}>
-            {submitButton(handleSubmit, "Update", "btn btn-outline-success")}
-            {submitButton(handleCancel, "Cancel", "btn btn-outline-danger")}
+            {submitButton(
+              handleSubmit,
+              "Update",
+              "button button-outline-success"
+            )}
+            {submitButton(
+              handleCancel,
+              "Cancel",
+              "button button-outline-danger"
+            )}
           </div>
         </div>
         <div
