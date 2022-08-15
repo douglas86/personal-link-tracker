@@ -14,12 +14,12 @@ revalidating) hook for data fetching
 
 ### This is a short description of the design structure
 
-I have used the atomic design stucture for components in this project:<br/>
-The meaning of atomic design stucture is as follows:<br/>
+I have used the atomic design structure for components in this project:<br/>
+The meaning of atomic design structure is as follows:<br/>
 atom - this is the smallest form which could be a button, input tag, label etc<br/>
 molecule - this will consist of atoms together such as input field like a button or search icon etc<br/>
-organism - organisms this will be were functionality starts comming together like cards that I have placed on the home page or a map to iterate around molecules<br/>
-template - this is where the pages start comming together - this will place components in a layout and demonstrate the design<br/>
+organism - organisms this will be were functionality starts coming together like cards that I have placed on the home page or a map to iterate around molecules<br/>
+template - this is where the pages start coming together - this will place components in a layout and demonstrate the design<br/>
 <br/>
 
 Structure of the api calling:<br/>
@@ -28,9 +28,9 @@ actionTypes directory - this is where all the logic for the api's get done<br/>
 actionCreators directory - the helper functions for api's gets called from here<br/>
 <br/>
 
-Stucture for all endpoints:<br/>
+Structure for all endpoints:<br/>
 all routes gets done at the base of the directory<br/>
-controllers directory - this is for all of the logic of the routes<br/>
+controllers directory - this is for all the logic of the routes<br/>
 services directory - these are the helper functions that will help the controllers out<br/>
 NOTE: It is also worth mentioning that whenever I use a getServerSideProp or something along those lines, controllers and services will be used, if they are needed<br/>
 <br/>
