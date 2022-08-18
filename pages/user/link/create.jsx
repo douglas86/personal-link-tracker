@@ -4,6 +4,7 @@ import { Alert, Container } from "react-bootstrap";
 import prisma from "../../../lib/prisma";
 import createHelpers from "../../../Helper/pages/user/link/createHelpers";
 import styles from "../../../public/static/styles/create.module.css";
+import CreateSidePanel from "../../../components/UI/template/CreateSidePanel";
 
 const Create = (props) => {
   const categories = JSON.parse(props.result);
@@ -40,7 +41,7 @@ const Create = (props) => {
     <Container>
       <div className={styles.flex_container}>
         <div className={styles.flex_left}>
-          <h1>Submit Link/URL</h1>
+          <CreateSidePanel categories={categories} />
           <label className="text-muted ml-4">Categories</label>
           <ul
             style={{
