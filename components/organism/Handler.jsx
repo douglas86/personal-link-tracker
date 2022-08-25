@@ -1,6 +1,6 @@
 import Api from "../../API";
 import { useContext } from "react";
-import { AdminContext } from "../../Context/AdminContext";
+import { AdminContext } from "../../Context/Dashboard/AdminContext";
 
 const Handler = () => {
   const { posting, putting, deleteRoute } = Api();

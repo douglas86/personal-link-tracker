@@ -2,11 +2,11 @@ import { useContext } from "react";
 import { Tab, Tabs } from "react-bootstrap";
 
 // Context
-import { AdminContext } from "../../Context/AdminContext";
+import { AdminContext } from "../../Context/Dashboard/AdminContext";
 
 // Tabs
 import UpdateCategory from "./AdminTabs/UpdateCategory";
-import { AlertProvider } from "../../Context/AlertContext";
+import { AlertProvider } from "../../Context/Dashboard/AlertContext";
 import Home from "./AdminTabs/Home";
 import CreateCategory from "./AdminTabs/CreateCategory";
 import Links from "./AdminTabs/Links";

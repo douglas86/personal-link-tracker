@@ -6,7 +6,7 @@ import { alert } from "../../atom/alert";
 import { spinner } from "../../atom/spinner";
 
 import { GetRoute } from "../../../API";
-import { AlertContext } from "../../../Context/AlertContext";
+import { AlertContext } from "../../../Context/Dashboard/AlertContext";
 
 const Home = () => {
   const { alerts } = useContext(AlertContext);

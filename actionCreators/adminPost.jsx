@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
-import { AdminContext } from "../Context/AdminContext";
-import { AlertContext } from "../Context/AlertContext";
+import { AdminContext } from "../Context/Dashboard/AdminContext";
+import { AlertContext } from "../Context/Dashboard/AlertContext";
 
 const actionCreators = () => {
   // eslint-disable-next-line react-hooks/rules-of-hooks

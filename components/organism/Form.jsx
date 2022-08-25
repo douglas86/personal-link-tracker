@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { Container } from "react-bootstrap";
 
-import { AdminContext } from "../../Context/AdminContext";
+import { AdminContext } from "../../Context/Dashboard/AdminContext";
 import { useForm } from "react-hook-form";
 import { registerHookForm } from "../atom/registerHookForm";
 import { createForm2 } from "../molecule/createForm2";

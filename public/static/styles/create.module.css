@@ -9,22 +9,21 @@
 
 .flex_right {
   width: 75%;
-  margin: 5%;
 }
 
-.button {
-  margin-top: 10px;
-}
+/*.button {*/
+/*  margin-top: 10px;*/
+/*}*/
 
-@media screen and (max-width: 800px) {
-  .flex_container {
-    display: block;
-    text-align: center;
-  }
-  .flex_left {
-    width: 100%;
-  }
-  .flex_right {
-    width: 100%;
-  }
-}
+/*@media screen and (max-width: 800px) {*/
+/*  .flex_container {*/
+/*    display: block;*/
+/*    text-align: center;*/
+/*  }*/
+/*  .flex_left {*/
+/*    width: 100%;*/
+/*  }*/
+/*  .flex_right {*/
+/*    width: 100%;*/
+/*  }*/
+/*}*/

@@ -1,21 +1,27 @@
-import { GetRoute } from "../API/index";
-import { displayCategory } from "../components/molecule/displayCategory";
+import { useContext, useEffect } from "react";
 
-import styles from "../public/static/styles/index.module.css";
+import CategoryCards from "../components/UI/organism/CategoryCards";
+import { title } from "../components/UI/atom/title";
+import { spinner } from "../components/UI/atom/spinner";
+
+import useFetch from "../hooks/useFetch";
+
+import { Context } from "../Context/Store";
 
 const Home = () => {
-  const fetcher = GetRoute("/api/category").data;
+  const { data } = useFetch("/api/category");
+  const [state, dispatch] = useContext(Context);
+
+  useEffect(() => {
+    if (data) {
+      dispatch({ type: "data", data: data[0] });
+    }
+  }, [data, dispatch]);
 
   return (
     <div>
-      <h1 className={styles.title}>Browse Tutorial/Courses</h1>
-      <div className={styles.flex}>
-        {fetcher !== undefined
-          ? Object.entries(fetcher).map(([key, value]) => (
-              <div key={key}>{displayCategory(value)}</div>
-            ))
-          : null}
-      </div>
+      {title("Browse Tutorial/Courses")}
+      {data ? <CategoryCards /> : spinner()}
     </div>
   );
 };

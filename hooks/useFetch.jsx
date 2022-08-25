@@ -1,13 +1,10 @@
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 
-const useFetch = (url, options=null) => {
-  const [data, setData] = useState({})
-  useEffect(() => {
-    fetch("/api" + url, options)
-      .then(async (res) => await res.json())
-      .then((data) => setData(data))
-  }, [url, options])
-  return data
-}
+const useFetch = (endpoint) => {
+  const fetcher = () => fetch(endpoint).then(async (res) => await res.json());
+  const { data } = useSWR(endpoint, fetcher, { revalidateOnFocus: false });
 
-export default useFetch
+  return { data: data !== undefined ? data.data : undefined };
+};
+
+export default useFetch;
