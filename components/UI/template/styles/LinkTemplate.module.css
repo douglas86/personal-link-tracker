@@ -1,0 +1,12 @@
+.flex {
+  display: flex;
+  padding: 2%;
+}
+
+.flex_left {
+  width: 30%;
+}
+
+.flex_right {
+  width: 70%;
+}

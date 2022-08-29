@@ -1,4 +1,4 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer } from "react";
 import { useRouter } from "next/router";
 
 import { isReducer } from "./reducer";
@@ -15,12 +15,8 @@ export const Context = createContext(initialState);
 
 export const Provider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const value = reducer.length !== 0 ? [state, dispatch] : null;
+  const value = [state, dispatch];
   location = useRouter().pathname;
-
-  useEffect(() => {
-    dispatch({ type: "reset" });
-  }, []);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

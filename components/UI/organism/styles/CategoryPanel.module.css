@@ -1,0 +1,6 @@
+.checkboxes {
+  max-height: 100px;
+  overflow-y: scroll;
+  list-style: none;
+  padding-left: 0;
+}
