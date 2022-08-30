@@ -1,7 +1,14 @@
 import { Button } from "react-bootstrap";
 
-export const button = (variant, btnName, clickHandler) => (
-  <Button variant={variant} onClick={clickHandler}>
+import styles from "./styles/button.module.css";
+
+export const button = (variant, btnName, clickHandler, disabled = false) => (
+  <Button
+    className={styles.button}
+    variant={variant}
+    onClick={clickHandler}
+    disabled={disabled}
+  >
     {btnName}
   </Button>
 );

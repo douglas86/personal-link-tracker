@@ -14,7 +14,6 @@ const Handler = async (req, res) => {
     case "GET":
       const { _router, _start, _limit } = query;
 
-      // TODO: reformat code to controllers
       switch (_router) {
         case "all-links":
           await GetAllLinks(res, _start, _limit);

@@ -11,11 +11,13 @@ const CategoryCards = () => {
 
   return (
     <div className={styles.div}>
-      {Object.entries(state).map(([key, value]) => (
-        <div key={key}>
-          <CategoryCard value={value} />
-        </div>
-      ))}
+      {state[0]
+        ? Object.entries(state[0].data).map(([key, value]) => (
+            <div key={key}>
+              <CategoryCard value={value} />
+            </div>
+          ))
+        : null}
     </div>
   );
 };
