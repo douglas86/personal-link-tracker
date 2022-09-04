@@ -22,7 +22,7 @@ const Pagination = () => {
       <InfiniteScroll
         pageStart={0}
         loadMore={more}
-        hasMore={state[0].data.length <= state[0].len - 2}
+        hasMore={state[0].data.length < state[0].len}
         loader={<div key={0}>{spinner()}</div>}
         useWindow={false}
       >

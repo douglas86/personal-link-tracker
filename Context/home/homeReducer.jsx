@@ -16,8 +16,8 @@ export const homeReducer = (state, action) => {
       };
     case "reset":
       return {
-        alertStatus,
-        alert,
+        alertStatus: 0,
+        alert: "",
         data,
       };
     default:

@@ -13,12 +13,12 @@ const Home = () => {
 
   useEffect(() => {
     if (data) {
-      dispatch({ type: "reset", alertStatus: 0, alert: "", data });
+      dispatch({ type: "reset", data });
     }
     if (state[0] !== {} && state[0] !== undefined && state[0].alert !== "") {
       setTimeout(() => dispatch({ type: "reset_alert" }), 5000);
     }
-  }, [data, state, dispatch]);
+  }, [data]);
 
   return (
     <div>
