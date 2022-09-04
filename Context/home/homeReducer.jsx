@@ -1,12 +1,7 @@
 export const homeReducer = (state, action) => {
   const { type, data, alertStatus, alert } = action;
+
   switch (type) {
-    case "data":
-      return {
-        alertStatus: 0,
-        alert: "",
-        data,
-      };
     case "alert":
       return {
         ...state[0],
@@ -20,7 +15,11 @@ export const homeReducer = (state, action) => {
         alertStatus: 0,
       };
     case "reset":
-      return {};
+      return {
+        alertStatus,
+        alert,
+        data,
+      };
     default:
       return state;
   }

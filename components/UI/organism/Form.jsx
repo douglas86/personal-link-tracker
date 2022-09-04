@@ -2,12 +2,11 @@ import { useSession } from "next-auth/react";
 import { useForm } from "react-hook-form";
 import { Button } from "react-bootstrap";
 
-import { label } from "../atom/label";
+import { label } from "../atom";
+
+import Handler from "../../utils/handlers/Handler";
 
 import styles from "./styles/Form.module.css";
-import { useContext } from "react";
-import { Context } from "../../../Context/Store";
-import Handler from "../../utils/handlers/Handler";
 
 const Form = ({ array }) => {
   const {
@@ -15,8 +14,6 @@ const Form = ({ array }) => {
     formState: { errors },
     handleSubmit,
   } = useForm();
-
-  const [state, dispatch] = useContext(Context);
 
   const { data: session } = useSession();
   const { handleOnSubmit } = Handler();

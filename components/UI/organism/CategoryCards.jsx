@@ -1,6 +1,7 @@
 import { useContext } from "react";
 
 import CategoryCard from "../molecule/CategoryCard";
+import { spinner } from "../atom";
 
 import { Context } from "../../../Context/Store";
 
@@ -17,7 +18,7 @@ const CategoryCards = () => {
               <CategoryCard value={value} />
             </div>
           ))
-        : null}
+        : spinner()}
     </div>
   );
 };

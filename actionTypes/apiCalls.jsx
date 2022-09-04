@@ -18,7 +18,6 @@ const actionTypes = () => {
       body: JSON.stringify(body),
     }).then(async (items) => {
       let result = await items.json();
-      console.log("result", result);
       postCreators(result);
     });
   };

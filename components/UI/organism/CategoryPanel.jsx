@@ -2,8 +2,7 @@ import { useContext } from "react";
 
 import ShowCheckbox from "../molecule/ShowCheckbox";
 import ShowRadio from "../molecule/ShowRadio";
-import { spinner } from "../atom/spinner";
-import { label } from "../atom/label";
+import { spinner, label } from "../atom";
 
 import { Context } from "../../../Context/Store";
 

@@ -1,5 +1,4 @@
-import { links } from "../atom/links";
-import { img } from "../atom/img";
+import { links, img } from "../atom";
 
 import styles from "./styles/CategoryCard.module.css";
 

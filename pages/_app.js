@@ -1,9 +1,11 @@
-import Layout from "../components/UI/template/Layout";
-import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SessionProvider } from "next-auth/react";
+
+import Layout from "../components/UI/template/Layout";
+
 import { Provider } from "../Context/Store";
-// import Auth from "../components/template/Auth";
+
+import "../styles/globals.css";
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   return (

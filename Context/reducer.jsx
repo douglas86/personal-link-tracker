@@ -1,5 +1,6 @@
 import { homeReducer } from "./home/homeReducer";
-import { linkReducer } from "./link/linkReducer";
+import { linkReducer } from "./create/linkReducer";
+import { slugReducer } from "./slug/slugReducer";
 
 export const isReducer = [
   {
@@ -9,5 +10,9 @@ export const isReducer = [
   {
     path: "/user/link/create",
     reducer: linkReducer,
+  },
+  {
+    path: "/links/[slug]",
+    reducer: slugReducer,
   },
 ];

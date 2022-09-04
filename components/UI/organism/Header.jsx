@@ -2,13 +2,12 @@ import { Navbar, Container, Nav } from "react-bootstrap";
 import { useRouter } from "next/router";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-import { button } from "../atom/button";
+import { button } from "../atom";
+
+import { toLink, toImage } from "../../utils/toFunc";
+import { isRouter } from "../../utils/isFunc";
 
 import HomeLogo from "../../assets/home.jpeg";
-
-import { toLink } from "../../utils/toFunc/toLink";
-import { toImage } from "../../utils/toFunc/toImage";
-import { isRouter } from "../../utils/isFunc/isRouter";
 
 const Header = () => {
   const { data: session } = useSession();

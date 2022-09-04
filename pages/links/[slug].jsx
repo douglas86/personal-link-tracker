@@ -1,30 +1,54 @@
-import { Container } from "react-bootstrap";
+import { useContext, useEffect } from "react";
+import prisma from "../../lib/prisma";
 
-import PopularLinksTemplate from "../../components/template/PopularLinksTemplate";
-import SlugTemplate from "../../components/template/SlugTemplate";
+import SlugTemplate from "../../components/UI/template/SlugTemplate";
 
-import styles from "./styles.module.css";
+import { Context } from "../../Context/Store";
 
 const Links = ({ category, len, data }) => {
-  const { s3BucketKey } = JSON.parse(category)[0];
+  const [state, dispatch] = useContext(Context);
+
+  useEffect(() => {
+    if (data) {
+      dispatch({
+        type: "reset",
+        category: JSON.parse(category),
+        len: JSON.parse(len),
+        data: JSON.parse(data),
+      });
+    }
+  }, [category, data, dispatch, len]);
 
   return (
-    <Container>
-      <div className={styles.flex}>
-        <div className={styles.leftSide}>
-          <SlugTemplate
-            category={JSON.parse(category)[0]}
-            len={JSON.parse(len)}
-            data={JSON.parse(data)}
-          />
-        </div>
-        <div className={styles.rightSide}>
-          <PopularLinksTemplate image={s3BucketKey} />
-        </div>
-      </div>
-    </Container>
+    <div>
+      <SlugTemplate />
+    </div>
   );
 };
+
+// const Links = ({ category, len, data }) => {
+//   const { s3BucketKey } = JSON.parse(category)[0];
+//   const [state, dispatch] = useContext(Context);
+//
+//   console.log("state", state);
+//
+//   return (
+//     <Container>
+//       <div className={styles.flex}>
+//         <div className={styles.leftSide}>
+//           <SlugTemplate
+//             category={JSON.parse(category)[0]}
+//             len={JSON.parse(len)}
+//             data={JSON.parse(data)}
+//           />
+//         </div>
+//         <div className={styles.rightSide}>
+//           <PopularLinksTemplate image={s3BucketKey} />
+//         </div>
+//       </div>
+//     </Container>
+//   );
+// };
 
 export const getServerSideProps = async ({ query }) => {
   const category = await prisma.category.findMany({

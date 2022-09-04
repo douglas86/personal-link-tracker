@@ -117,7 +117,6 @@ const Update = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ id, title, url, medium, type, categoryNames }),
       }).then((res) => {
-        console.log("res", res);
         if (res.status === 200) {
           location.reload();
         }

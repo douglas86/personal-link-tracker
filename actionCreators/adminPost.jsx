@@ -34,7 +34,6 @@ const actionCreators = () => {
 
   const deleteCreators = (result) => {
     const { status, message } = result;
-    console.log("result", result);
     const color = status === 200 ? "success" : "danger";
     setAlerts({ show: true, color, message });
   };

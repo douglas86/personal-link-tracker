@@ -1,0 +1,13 @@
+.flex {
+  display: flex;
+}
+
+.flex_left {
+  width: 70%;
+  margin: 2%;
+}
+
+.flex_right {
+  width: 30%;
+  margin: 2%;
+}

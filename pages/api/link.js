@@ -5,12 +5,29 @@ import { postControllers } from "./controllers/linkController";
 import { onSuccess } from "./utils/onSuccess";
 import { onError } from "./utils/onError";
 import { onDefault } from "./utils/onDefault";
+import prisma from "../../lib/prisma";
 
 const Handler = async (req, res) => {
-  const { method, body } = req;
+  const { method, body, query } = req;
   const session = await getSession({ req });
 
   switch (method) {
+    case "GET":
+      const { slug, skip, take } = query;
+
+      console.log("skip", skip);
+
+      return await prisma.links
+        .findMany({
+          where: { categoryNames: { has: slug } },
+          skip: parseInt(skip),
+          take: parseInt(take),
+        })
+        .then((items) => {
+          res.json({
+            data: items,
+          });
+        });
     case "POST":
       try {
         await postControllers(session, body).then(() => {
