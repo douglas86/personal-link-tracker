@@ -27,7 +27,11 @@ const SlugTemplate = () => {
           )}
         </div>
         <div className={styles.flex_right}>
-          <PopularLinks />
+          {state[0] && Object.keys(state[0]).includes("category") ? (
+            <PopularLinks s3Image={state[0].category[0].s3BucketKey} />
+          ) : (
+            spinner()
+          )}
         </div>
       </div>
     </Container>

@@ -1,14 +1,14 @@
-import { useContext } from "react";
-import { Context } from "../../../Context/Store";
+import { spinner, img } from "../atom";
 
-const PopularLinks = () => {
-  const [state, dispatch] = useContext(Context);
+import useFetch from "../../../hooks/useFetch";
 
-  console.log("state", state);
+const PopularLinks = ({ s3Image }) => {
+  const { data } = useFetch(`/api/s3?s3BucketKey=${s3Image}`);
 
   return (
     <div>
-      <h1>PopularLinks</h1>
+      {data ? img(`data:image/jpeg;base64,${data}`, 250, 250) : spinner()}
+      <p>Popular Links to come, this is just a placeholder for now</p>
     </div>
   );
 };

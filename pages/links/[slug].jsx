@@ -26,30 +26,6 @@ const Links = ({ category, len, data }) => {
   );
 };
 
-// const Links = ({ category, len, data }) => {
-//   const { s3BucketKey } = JSON.parse(category)[0];
-//   const [state, dispatch] = useContext(Context);
-//
-//   console.log("state", state);
-//
-//   return (
-//     <Container>
-//       <div className={styles.flex}>
-//         <div className={styles.leftSide}>
-//           <SlugTemplate
-//             category={JSON.parse(category)[0]}
-//             len={JSON.parse(len)}
-//             data={JSON.parse(data)}
-//           />
-//         </div>
-//         <div className={styles.rightSide}>
-//           <PopularLinksTemplate image={s3BucketKey} />
-//         </div>
-//       </div>
-//     </Container>
-//   );
-// };
-
 export const getServerSideProps = async ({ query }) => {
   const category = await prisma.category.findMany({
     where: { title: query.slug },

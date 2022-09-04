@@ -9,7 +9,7 @@
 <img src="./public/static/readmeImages/useSWR.jpeg" alt="no image" height="50" width="50">
 
 css, JavaScript, Nextjs Framework, Prisma with postgres as my database, AWS (Amazon web service), useSWR (Stale while
-revalidating) hook for data fetching
+revalidating) hook for data fetcher
 <hr/>
 
 ### This is a short description of the design structure
